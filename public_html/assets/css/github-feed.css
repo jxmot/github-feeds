@@ -121,8 +121,13 @@
 	border-radius: 20px;
 }
 
-.github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover {
-	background: #fff;
+.github-feed  .gftabs .aktip, .github-feed  .gftabs {
+/* .github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover { */
+	background: #9e9e9e4a;
+}
+
+.gftab:hover:not(.aktip) {
+	background: #3f97544a;
 }
 
 /* body */
