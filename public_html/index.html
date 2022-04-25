@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	
-		<title>jQuery Github Feed - iBacor.com</title>
+		<title>Github Feeds</title>
 
 		<!-- Include Octicons -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.css"/>
@@ -33,7 +33,7 @@
 	</head>
 	<body>
 		<div class="ghfeed">
-			<div id="unix" data-username="jxmot"></div>
+			<div id="ghdata" data-username="jxmot"></div>
 		</div>
 
 		<!-- Include jQuery -->
@@ -42,15 +42,14 @@
 		<!-- Include jQuery Github Feed-->
 		<script src="assets/js/github-feed.js"></script>
 		<script>
-		$(document).ready(function(){
-			// with id
-			$("#unix").githubfeed(
-                api = 'https://api.github.com/users/',
-				sort = "updated", // Can be one of created, updated, pushed, full_name.
-				width = '100%', // '350px', // width widget
-				height = '400px' // height post
-			);
-		});
+            $(document).ready(function(){
+                $('#ghdata').githubfeed(
+                    api    = 'https://api.github.com/users/',
+                    sort   = 'updated', // For repos only, can be one of created, updated, pushed, full_name.
+                    width  = '100%',    // width of widget within the .ghfeed container
+                    height = '400px'    // height
+                );
+            });
 		</script>
 	</body>
 </html>
