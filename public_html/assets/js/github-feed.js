@@ -295,7 +295,8 @@ $.fn.githubfeed = function(h, width, height) {
         d = (d < 2) ? 2 : d;
         var r = '';
         if (d < 60) {
-            r = 'jst now'
+// jmotyl - "jst" is not the abbreviation for "just"
+            r = 'just now'
         } else if (d < 120) {
             r = 'a min'
         } else if (d < (45 * 60)) {
@@ -309,7 +310,8 @@ $.fn.githubfeed = function(h, width, height) {
         } else {
             dd = (parseInt(d / 86400, 10)).toString();
             if (dd <= 30) {
-                r = dd + ' dys'
+// jmotyl - "dys" is not the abbreviation for "days"
+                r = dd + ' days'
             } else {
                 mm = (parseInt(dd / 30, 10)).toString();
                 if (mm <= 12) {
