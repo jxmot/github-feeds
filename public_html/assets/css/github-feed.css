@@ -158,12 +158,12 @@
 	font-weight: normal;
 }
 
-.github-feed .bod .bachorsactiv .result .icon .octicon {
+.github-feed .bod .feed-activ .result .icon .octicon {
 	font-size: 30px;
 	color: #d8d8d8;
 }
 
-.github-feed .bod .bachorsactiv .result .gfpost {
+.github-feed .bod .feed-activ .result .gfpost {
 	display: inline-block;
 	width: calc(100% - 60px);
 	overflow: hidden;

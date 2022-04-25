@@ -60,7 +60,7 @@ $.fn.githubfeed = function(h, width, height) {
                 $(z + ':eq(' + x + ') .github-feed .feed').css('display', 'none');
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
-                $(z + ':eq(' + x + ') .' + ibacor[3] + a).css('display', 'block');
+                $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
                 return false
             })
         })
@@ -91,7 +91,7 @@ $.fn.githubfeed = function(h, width, height) {
                 c += '	</div>';
                 c += '</div>'
             });
-            $(z + ':eq(' + x + ') .' + ibacor[3] + 'repos').html(c)
+            $(z + ':eq(' + x + ') .' + 'feed-' + 'repos').html(c)
         })
     }
 
@@ -119,8 +119,8 @@ $.fn.githubfeed = function(h, width, height) {
                 c += '	</div>';
                 c += '</div>'
             });
-            $(z + ':eq(' + x + ') .' + ibacor[3] + 'gists').html(c)
-        })
+            $(z + ':eq(' + x + ') .' + 'feed-' + 'gists').html(c)
+        });
     }
 
     function ibacor_activs(f, x, z) {
@@ -276,7 +276,7 @@ $.fn.githubfeed = function(h, width, height) {
                     }
                 }
             });
-            $(z + ':eq(' + x + ') .' + ibacor[3] + 'activ').html(e)
+            $(z + ':eq(' + x + ') .' + 'feed-' + 'activ').html(e)
         })
     }
 
