@@ -5,8 +5,8 @@
 * Updates will be posted to this site.
 ***********************************************************/
 
-$.fn.githubfeed = function(h, width, height) {
-	
+$.fn.githubfeed = function(api, h, width, height) {
+
 	$(this).each(function(i, a) {
 		var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
 			g = $(this).data('username'),
