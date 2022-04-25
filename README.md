@@ -21,8 +21,8 @@ When I started I had considered *forking* the original. However since it is old 
 # Modifications
 
 * Updated:
-  * jQuery
-  * Octicons
+  * jQuery - updated to 3.6.0, local file in `assets/jq`
+  * Octicons - updated to 3.5.0, local files in `assets/css/octicons-3.5.0`
 * Changed:
   * Modified CSS
   * Improved code readability 
@@ -44,6 +44,7 @@ The solution is simple... get the data *in the background* and limit the number 
 
 To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 15 to 30 minutes*) and execute a script:
 
+**getghdata-cron.sh:**
 ```bash
 #!/bin/bash
 # This is the CRON version of this file.
@@ -60,8 +61,37 @@ curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/events" > "./"$owner"events.json" 2>/dev/null
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/gists" > "./"$owner"gists.json" 2>/dev/null
 ```
-
 **NOTE:** You may need to modify the script file to work in your environment. 
+
+Run this script from the command line, do not run it in a CRON job:
+
+**getghdata.sh:**
+```bash
+#!/bin/bash
+# This is the command line version of this file. Do not
+# run it from CRON.
+if [ -z "$1" ];then
+    echo "Missing repository owner ID!"
+    echo "Usage: getghdata.sh GitHubUser"
+    echo "Where: GitHubUser is your github user name."
+    echo "Files will be created in the location where"
+    echo "this script is ran."
+    exit
+fi
+
+owner=$1
+
+echo $owner"user.json"
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner > "./"$owner"user.json" 2>/dev/null
+echo $owner"repos.json"
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
+echo $owner"events.json"
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/events" > "./"$owner"events.json" 2>/dev/null
+echo $owner"gists.json"
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/gists" > "./"$owner"gists.json" 2>/dev/null
+echo "Rate Limit After:"
+curl -I https://api.github.com/users/$owner 2>/dev/null | grep "x-ratelimit"
+```
 
 # Usage
 
