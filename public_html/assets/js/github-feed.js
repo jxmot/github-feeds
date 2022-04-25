@@ -21,7 +21,7 @@ $.fn.githubfeed = function(api, h, width, height) {
 		j += '    <div class="feed feed-activ" style="display:none"></div>';
 		j += '  </div>';
 		j += '  <div class="foot">';
-// jmotyl - using foot for limit stats
+// using foot for limit stats
 //		j += '    Github Feed <a href="https://github.com/bachors/jQuery-Github-Feed" class="jgf" target="_blank">made with <i class="octicon octicon-heart" style="color:salmon"></i></a>';
 		j += '  </div>';
 		j += '</div>';
@@ -34,13 +34,30 @@ $.fn.githubfeed = function(api, h, width, height) {
     });    
 
     function ibacor_profil(d, x, z) {
-        $.ajax({
-            url: 'https://api.github.com/users/' + d,
+// need a variable for access to ajax functions
+        var ajx = $.ajax({
+            url: api + d,
             crossDomain: true,
             dataType: 'json'
-        }).done(function(b) {
-            var c = '<div class="left">',
-                ibacor = $('.jgf').attr('href').split("/");
+        });
+// added all .fail() functions
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(b) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ]
+            };
+
+            var c = '<div class="left">';
             c += '		<a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
             c += '	</div>';
             c += '	<div class="right">';
@@ -54,6 +71,10 @@ $.fn.githubfeed = function(api, h, width, height) {
             }
 			c += '	</div>';
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
+// using foot for rate limit stats
+            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+
             $(z + ':eq(' + x + ') .github-feed sup.repc').html(b.public_repos);
             $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
             $(z + ':eq(' + x + ') .github-feed .gftab').click(function() {
@@ -64,17 +85,43 @@ $.fn.githubfeed = function(api, h, width, height) {
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
                 return false
             })
-        })
+        });
     }
 
     function ibacor_repos(d, x, z) {
-        $.ajax({
-            url: 'https://api.github.com/users/' + d + '/repos?type=all&sort=' + h,
+        var ajx = $.ajax({
+// try to remove unwanted repos, and not have any 
+// "repo not found" errors in the shields.io badges.
+// also needs "&per_page=100" to get almost correct quantity 
+// of repos back. FYI- there is no "pagination" here.
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#pagination
+// https://jesse.sh/async-api-calls-with-pagination/#getting-the-next-page
+            url: api + d + '/repos?type=sources&sort=' + h + '&per_page=100',
             crossDomain: true,
             dataType: 'json'
-        }).done(function(b) {
-            var c = '',
-                ibacor = $('.jgf').attr('href').split("/");
+        });
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(b) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ],
+                link: ajx.getResponseHeader('link').split(',')
+            };
+
+// using .foot for limit stats
+            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+
+            var c = '';
             $.each(b, function(i, a) {
                 c += '<div class="result">';
                 c += '	<div class="icon">';
@@ -86,9 +133,13 @@ $.fn.githubfeed = function(api, h, width, height) {
                 c += '		<p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '	</div>';
                 c += '	<div class="contributor">';
-                c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
-                c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
-                c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
+// shields.io badges
+                c += '		<img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
+                c += '		<br>';
+                c += '		<img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+                //c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
+                //c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
+                //c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
                 c += '	</div>';
                 c += '</div>'
             });
@@ -97,13 +148,32 @@ $.fn.githubfeed = function(api, h, width, height) {
     }
 
     function ibacor_gists(d, x, z) {
-        $.ajax({
-            url: 'https://api.github.com/users/' + d + '/gists',
+        var ajx = $.ajax({
+            url: api + d + '/gists',
             crossDomain: true,
             dataType: 'json'
-        }).done(function(b) {
-            var c = '',
-                ibacor = $('.jgf').attr('href').split("/");
+        });
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(b) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ]
+            };
+
+// using .foot for limit stats
+            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+
+            var c = '';
             $.each(b, function(i, a) {
 				var keys = Object.keys(b[i].files);
                 c += '<div class="result">';
@@ -125,13 +195,33 @@ $.fn.githubfeed = function(api, h, width, height) {
     }
 
     function ibacor_activs(f, x, z) {
-        $.ajax({
-            url: 'https://api.github.com/users/' + f + '/events',
+        var ajx = $.ajax({
+            url: api + f + '/events',
             crossDomain: true,
             dataType: 'json'
-        }).done(function(d) {
-            var e = '',
-                ibacor = $('.jgf').attr('href').split("/");
+        });
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(d) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ]
+            };
+
+// using .foot for rate limit stats (temporary?)
+            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+
+
+            var e = '';
             $.each(d, function(i, a) {
                 if (d[i].type == "WatchEvent") {
                     e += '<div class="result">';
@@ -296,7 +386,6 @@ $.fn.githubfeed = function(api, h, width, height) {
         d = (d < 2) ? 2 : d;
         var r = '';
         if (d < 60) {
-// jmotyl - "jst" is not the abbreviation for "just"
             r = 'just now'
         } else if (d < 120) {
             r = 'a min'
@@ -311,7 +400,6 @@ $.fn.githubfeed = function(api, h, width, height) {
         } else {
             dd = (parseInt(d / 86400, 10)).toString();
             if (dd <= 30) {
-// jmotyl - "dys" is not the abbreviation for "days"
                 r = dd + ' days'
             } else {
                 mm = (parseInt(dd / 30, 10)).toString();
