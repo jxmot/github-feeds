@@ -24,7 +24,7 @@ When I started I had considered *forking* the original. However since it is old 
   * jQuery - updated to 3.6.0, local file in `assets/jq`
   * Octicons - updated to 3.5.0, local files in `assets/css/octicons-3.5.0`
 * Changed:
-  * Modified CSS
+  * Modified CSS, fixed some classes and added a few
   * Improved code readability 
   * Can specify other API URLs for the data (*part of anti-rate limiting*)
 
@@ -44,7 +44,7 @@ The solution is simple... get the data *in the background* and limit the number 
 
 To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 15 to 30 minutes*) and execute a script:
 
-**getghdata-cron.sh:**
+**gfscripts/getghdata-cron.sh:**
 ```bash
 #!/bin/bash
 # This is the CRON version of this file.
@@ -65,7 +65,7 @@ curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"
 
 Run this script from the command line, do not run it in a CRON job:
 
-**getghdata.sh:**
+**gfscripts/getghdata.sh:**
 ```bash
 #!/bin/bash
 # This is the command line version of this file. Do not
@@ -94,4 +94,9 @@ curl -I https://api.github.com/users/$owner 2>/dev/null | grep "x-ratelimit"
 ```
 
 # Usage
+
+## Set Up
+
+## Run 
+
 
