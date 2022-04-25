@@ -15,35 +15,27 @@
 		
 		<!-- Demo -->
 		<style>
-			.demo {
-				display: inline-block;
+            .ghfeed {
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
 				height: auto;
-				width: 45%;
-				margin: 10px;
-			}
+            }
 			@media (max-width: 767px) {
-				.demo {
-					display: block;
-					width: auto;
-				}
-			}
+                .ghfeed {
+                    width: 95%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    height: auto;
+                }
+            }
 		</style>
-		
 	</head>
 	<body>
-		
-		<div class="demo">
-			<div class="anu" data-username="bachors"></div>
+		<div class="ghfeed">
+			<div id="unix" data-username="jxmot"></div>
 		</div>
-		
-		<div class="demo">
-			<div class="anu" data-username="facebook"></div>
-		</div>
-		
-		<center>
-			<div id="unix" data-username="primer"></div>
-		</center>
-		
+
 		<!-- Include jQuery -->
 		<script src="assets/jq/jquery-3.6.0.min.js"></script>
 
@@ -51,19 +43,11 @@
 		<script src="assets/js/github-feed.js"></script>
 		<script>
 		$(document).ready(function(){
-			
-			// with classname
-			$(".anu").githubfeed(
-				sort = "updated", // Can be one of created, updated, pushed, full_name.
-				width = '100%', // width widget
-				height = '400px' // height post
-			);
-			
 			// with id
 			$("#unix").githubfeed(
                 api = 'https://api.github.com/users/',
 				sort = "updated", // Can be one of created, updated, pushed, full_name.
-				width = '350px', // width widget
+				width = '100%', // '350px', // width widget
 				height = '400px' // height post
 			);
 		});
