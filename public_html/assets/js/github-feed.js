@@ -114,7 +114,10 @@ $.fn.githubfeed = function(api, h, width, height) {
                     ajx.getResponseHeader('x-ratelimit-reset'),
                     Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
                 ],
-                link: ajx.getResponseHeader('link').split(',')
+// won't be needed with "&per_page=100", when the 
+// quantity of repos is larger than "&per_page=" (the 
+// default is 30) then this will be present.
+//                link: ajx.getResponseHeader('link').split(',')
             };
 
 // using .foot for limit stats
