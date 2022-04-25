@@ -140,7 +140,7 @@ $.fn.githubfeed = function(api, h, width, height) {
                     e += '	</div>';
                     e += '	<div class="gfpost">';
                     e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += d[i].payload.action + ' ';
+                    e += (d[i].payload.action === 'started' ? 'starred' : d[i].payload.action) + ' ';
                     e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
                     e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
                     e += '	</div>';
