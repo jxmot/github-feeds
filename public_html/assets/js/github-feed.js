@@ -13,19 +13,20 @@ $.fn.githubfeed = function(api, h, width, height) {
 			j = '';
 			
 		j += '<div class="github-feed" style="width: ' + width + '">';
-		j += '<div class="head"></div>';
-		j += '<div class="gftabs"><div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div></div>';
-		j += '<div class="bod" style="height: ' + height + '">';
-		j += '	<div class="feed bachorsrepos"></div>';
-		j += '	<div class="feed bachorsgists" style="display:none"></div>';
-		j += '	<div class="feed bachorsactiv" style="display:none"></div>';
-		j += '</div>';
-		j += '<div class="foot">';
-		j += '	Github Feed <a href="https://github.com/bachors/jQuery-Github-Feed" class="jgf" target="_blank">made with <i class="octicon octicon-heart" style="color:salmon"></i></a>';
-		j += '</div>';
+		j += '  <div class="head"></div>';
+		j += '  <div class="gftabs"><div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div></div>';
+		j += '  <div class="bod" style="height: ' + height + '">';
+		j += '    <div class="feed feed-repos"></div>';
+		j += '    <div class="feed feed-gists" style="display:none"></div>';
+		j += '    <div class="feed feed-activ" style="display:none"></div>';
+		j += '  </div>';
+		j += '  <div class="foot">';
+// jmotyl - using foot for limit stats
+//		j += '    Github Feed <a href="https://github.com/bachors/jQuery-Github-Feed" class="jgf" target="_blank">made with <i class="octicon octicon-heart" style="color:salmon"></i></a>';
+		j += '  </div>';
 		j += '</div>';
 		$(this).html(j);
-		
+
 		ibacor_profil(g, i, b);
 		ibacor_repos(g, i, b);
 		ibacor_gists(g, i, b);
