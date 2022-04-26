@@ -4,7 +4,13 @@
 * https://github.com/bachors/jQuery-Github-Feed
 * Updates will be posted to this site.
 ***********************************************************/
+/*
+    This code has been modified. Please see the README in 
+    the repository that contins this file.
 
+    Author: https://github.com/jxmot
+    Repository: https://github.com/jxmot/github-feeds
+*/
 $.fn.githubfeed = function(api, h, width, height) {
 
 	$(this).each(function(i, a) {
