@@ -12,6 +12,7 @@
     Repository: https://github.com/jxmot/github-feeds
 */
 $.fn.githubfeed = function(api, h, width, height) {
+var debug = false;
 
 	$(this).each(function(i, a) {
 		var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -77,10 +78,11 @@ $.fn.githubfeed = function(api, h, width, height) {
             }
 			c += '	</div>';
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
-// using foot for rate limit stats
-            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
-
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
             $(z + ':eq(' + x + ') .github-feed sup.repc').html(b.public_repos);
             $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
             $(z + ':eq(' + x + ') .github-feed .gftab').click(function() {
@@ -127,9 +129,11 @@ $.fn.githubfeed = function(api, h, width, height) {
 //                link: ajx.getResponseHeader('link').split(',')
             };
 
-// using .foot for limit stats
-            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
 
             var c = '';
             $.each(b, function(i, a) {
@@ -179,9 +183,11 @@ $.fn.githubfeed = function(api, h, width, height) {
                 ]
             };
 
-// using .foot for limit stats
-            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
 
             var c = '';
             $.each(b, function(i, a) {
@@ -226,10 +232,11 @@ $.fn.githubfeed = function(api, h, width, height) {
                 ]
             };
 
-// using .foot for rate limit stats (temporary?)
-            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
-
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
 
             var e = '';
             $.each(d, function(i, a) {
