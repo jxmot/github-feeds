@@ -163,6 +163,8 @@
     font-weight: normal;
 }
 
+.github-feed .bod .feed-repos .result .icon .octicon,
+.github-feed .bod .feed-gists .result .icon .octicon,
 .github-feed .bod .feed-activ .result .icon .octicon {
     font-size: 30px;
     color: #d8d8d8;
