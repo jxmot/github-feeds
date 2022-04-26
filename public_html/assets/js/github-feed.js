@@ -11,7 +11,8 @@
     Author: https://github.com/jxmot
     Repository: https://github.com/jxmot/github-feeds
 */
-$.fn.githubfeed = function(api, h, width, height) {
+$.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
+
 var debug = false;
 
 	$(this).each(function(i, a) {
