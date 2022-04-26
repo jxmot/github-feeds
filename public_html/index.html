@@ -44,7 +44,14 @@
 		<script>
             $(document).ready(function(){
                 $('#ghdata').githubfeed(
-                    api    = 'https://api.github.com/users/',
+                    // The "API" call, you can use GitHub if you like. But 
+                    // the rate limitation could get in your way. 
+                    //api    = 'https://api.github.com/users/',
+                    // Here is the alternative. And there is no rate limitation 
+                    // here. That's because the data has already been collected
+                    // and is updated with CRON.
+                    api    = '/tests/ghfeed/gfapi?',
+
                     sort   = 'updated', // For repos only, can be one of created, updated, pushed, full_name.
                     width  = '100%',    // width of widget within the .ghfeed container
                     height = '400px'    // height
