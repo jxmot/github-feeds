@@ -6,250 +6,262 @@
 ***********************************************************/
 
 .github-feed {
-	font-family: Helvetica, arial, freesans, clean, sans-serif;
-	height: 100%;
-	font-weight: bold;
-	line-height: 1.3;
-	border: 1px solid #d8d8d8;
-	color: #555;
-	text-align: left
+    font-family: Helvetica, arial, freesans, clean, sans-serif;
+    height: 100%;
+    font-weight: bold;
+    line-height: 1.3;
+    border: 1px solid #d8d8d8;
+    color: #555;
+    text-align: left
 }
 
 .github-feed a {
-	color: #4183c4;
-	text-decoration: none;
-	font-weight: bold;
+    color: #4183c4;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* header */
 .github-feed .head {
-	font-size: 1em;
-	width: calc(100% - 20px);
-/* 	width: 100%; */
-	padding: 10px;
-	height: 70px;
-/* 	height: 90px; */
-	background: #f5f5f5;
-	border-bottom: 1px solid #d8d8d8;
-	display: block;
-	overflow: hidden;
+    font-size: 1em;
+    width: calc(100% - 20px);
+/*     width: 100%; */
+    padding: 10px;
+    height: 70px;
+/*     height: 90px; */
+    background: #f5f5f5;
+    border-bottom: 1px solid #d8d8d8;
+    display: block;
+    overflow: hidden;
 }
 
 .github-feed .head a {
-	display: block;
-	color: #555;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	margin-bottom: 5px;
+    display: block;
+    color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
 }
 
 .github-feed .head p {
-	margin: 0;
-	padding: 0;
-	margin-bottom: 7px;
-	font-size: 0.8em;
-	font-weight: normal;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 7px;
+    font-size: 0.8em;
+    font-weight: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .github-feed .head span.user {
-	margin-right: 15px
+    margin-right: 15px
 }
 
 .github-feed .head span.user span {
-	padding: 2px 5px;
-	font-size: 12px;
-	font-weight: 600;
-	line-height: 1;
-	color: #fff;
-	background-color: #5cb85c;
-	border-radius: 20px;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: #5cb85c;
+    border-radius: 20px;
 }
 
 .github-feed .head .left {
-	display: inline;
-	float: left;
-	width: auto;
+    display: inline;
+    float: left;
+    width: auto;
 }
 
 .github-feed .head .left img {
-	width: 60px;
-	border: 1px solid #d8d8d8;
-	padding: 0px 3px;
-	margin: 0px !important
+    width: 60px;
+    border: 1px solid #d8d8d8;
+    padding: 0px 3px;
+    margin: 0px !important
 }
 
 .github-feed .head .right {
-	display: inline-block;
-	width: 63%;
-	margin-left: 10px
+    display: inline-block;
+    width: 63%;
+    margin-left: 10px
 }
 
 /* tabs */
 .github-feed  .gftabs {
-	display: block;
-	width: 100%;
-	background: #fafafa;
+    display: block;
+    width: 100%;
+    background: #fafafa;
 }
 
 .github-feed  .gftabs .gftab {
-	font-size: 0.8em;
-	background: #fafafa;
-	color: #555;
-	display: inline-block;
-	padding: 0px;
-	width: 33.33%;
-	text-align: center;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	cursor: pointer;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+    font-size: 0.8em;
+    background: #fafafa;
+    color: #555;
+    display: inline-block;
+    padding: 0px;
+    width: 33.33%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .github-feed  .gftabs .gftab sup {
-	padding: 2px 5px;
-	font-size: 0.7em;
-	font-weight: 600;
-	line-height: 1;
-	color: #fff;
-	background-color: #666;
-	border-radius: 20px;
+    padding: 2px 5px;
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: #666;
+    border-radius: 20px;
 }
 
 .github-feed  .gftabs .aktip, .github-feed  .gftabs {
 /* .github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover { */
-	background: #9e9e9e4a;
+    background: #9e9e9e4a;
 }
 
 .gftab:hover:not(.aktip) {
-	background: #3f97544a;
+    background: #3f97544a;
 }
 
 /* body */
 .github-feed .bod {
-	font-size: 1em;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	background: #fff;
-	overflow: hidden;
-	overflow-y: auto;
+    font-size: 1em;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .github-feed .bod .result {
-	display: block;
-	padding: 10px;
-	padding-right: 0;
-	width: calc(100% - 10px);
-/* 	width: 100%; */
-	border-bottom: 1px solid #d8d8d8;
-	font-weight: normal;
+    display: block;
+    padding: 10px;
+    padding-right: 0;
+    width: calc(100% - 10px);
+/*     width: 100%; */
+    border-bottom: 1px solid #d8d8d8;
+    font-weight: normal;
 }
 
 .github-feed .bod .result .icon {
-	display: inline-block;
-	float: left;
-	width: 35px;
-	margin-right: 10px;
+    display: inline-block;
+    float: left;
+    width: 35px;
+    margin-right: 10px;
 }
 
 .github-feed .bod .result .icon .octicon {
-	font-size: 40px;
-	font-weight: normal;
+    font-size: 40px;
+    font-weight: normal;
 }
 
 .github-feed .bod .feed-activ .result .icon .octicon {
-	font-size: 30px;
-	color: #d8d8d8;
+    font-size: 30px;
+    color: #d8d8d8;
 }
 
 .github-feed .bod .feed-activ .result .gfpost {
-	display: inline-block;
-	width: calc(100% - 60px);
-	overflow: hidden;
-	text-overflow: ellipsis;
-	font-size: 0.8em;
-	color: #000;
+    display: inline-block;
+    width: calc(100% - 60px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8em;
+    color: #000;
 }
 
 .github-feed .bod .result .gfpost {
-	display: inline-block;
-	width: calc(100% - 120px);
-	overflow: hidden;
-	text-overflow: ellipsis;
+    display: inline-block;
+    width: calc(100% - 120px);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .github-feed .bod .result .contributor {
-	display: inline-block;
-	margin-left: 10px;
-	width: 50px;
-	font-size: 0.8em;
-	text-align: right;
+    display: inline-block;
+    margin-left: 10px;
+    width: 50px;
+    font-size: 0.8em;
+    text-align: right;
 }
 
 .github-feed .bod .result .contributor .octicon {
-	width: 10px;
-	margin-bottom: 5px;
-	margin-right: 5px;
+    width: 10px;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }
 
 .github-feed .bod .result .contributor a {
-	color: #555;
-	font-weight: normal;
+    color: #555;
+    font-weight: normal;
 }
 
 .github-feed .bod .result .contributor a span {
-	color: #aaa;
+    color: #aaa;
 }
 
 .github-feed .bod .result .gfpost p {
-	margin: 0;
-	padding: 0;
-	font-size: 0.8em;
-	color: #555;
-	clear: both;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    color: #555;
+    clear: both;
 }
 
 .github-feed .bod .result .gfpost p a {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 .github-feed .bod .result .gfpost p img {
-	margin-top: 5px;
-	float: left;
-	width: 30px;
-	margin-right: 5px;
+    margin-top: 5px;
+    float: left;
+    width: 30px;
+    margin-right: 5px;
 }
 
 .github-feed .bod .result .gfpost p img.letik {
-	width: 20px;
+    width: 20px;
 }
 
 .github-feed .bod .result .gfpost .date {
-	margin: 0;
-	padding: 0;
-	font-size: 0.8em;
-	color: #999;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    color: #999;
 }
 
 /* footer */
-/* .github-feed .foot { */
-.bod .foot {
-	background: #f5f5f5;
-	/* width: calc(100% - 20px); */
-	width: 100%;
-	/* padding: 5px 10px 5px 10px; */
-	border-top: 1px solid #d8d8d8;
-	font-size: 0.8em;
-    text-align: center;
+.github-feed .foot {
+    background: #f5f5f5;
+    width: 100%;
+    border-top: 1px solid #d8d8d8;
+    font-size: 0.8em;
+
+    height: 2rem;
+    position: relative;
 }
 
 .github-feed .foot a {
-	/* float: right; */ 
-	color: #999;
+    color: #999;
+
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    margin-left: 45%;
 }
+
+@media screen and (max-width: 768px){
+    .github-feed .foot a {
+        margin-left: 40%;
+    }
+}
+
