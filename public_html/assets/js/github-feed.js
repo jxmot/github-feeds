@@ -89,6 +89,7 @@ $.fn.githubfeed = function(api, h, width, height) {
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
+                $('.bod').scrollTop(0);
                 return false
             })
         });
