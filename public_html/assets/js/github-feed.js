@@ -15,30 +15,31 @@ $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author
 
 var debug = false;
 
-	$(this).each(function(i, a) {
-		var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
-			g = $(this).data('username'),
-			j = '';
-			
-		j += '<div class="github-feed" style="width: ' + width + '">';
-		j += '  <div class="head"></div>';
-		j += '  <div class="gftabs"><div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div></div>';
-		j += '  <div class="bod" style="height: ' + height + '">';
-		j += '    <div class="feed feed-repos"></div>';
-		j += '    <div class="feed feed-gists" style="display:none"></div>';
-		j += '    <div class="feed feed-activ" style="display:none"></div>';
-		j += '  </div>';
-		j += '  <div class="foot">';
-// using foot for limit stats
-//		j += '    Github Feed <a href="https://github.com/bachors/jQuery-Github-Feed" class="jgf" target="_blank">made with <i class="octicon octicon-heart" style="color:salmon"></i></a>';
-		j += '  </div>';
-		j += '</div>';
-		$(this).html(j);
+    $(this).each(function(i, a) {
+        var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
+            g = $(this).data('username'),
+            j = '';
+            
+        j += '<div class="github-feed" style="width: ' + width + '">';
+        j += '  <div class="head"></div>';
+        j += '  <div class="gftabs"><div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div></div>';
+        j += '  <div class="bod" style="height: ' + height + '">';
+        j += '    <div class="feed feed-repos"></div>';
+        j += '    <div class="feed feed-gists" style="display:none"></div>';
+        j += '    <div class="feed feed-activ" style="display:none"></div>';
+        j += '  </div>';
+        j += '  <div class="foot">';
+        if(debug === false) {
+            j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github" style=""></span>&nbsp;' + title + '</a>';
+        }
+        j += '  </div>';
+        j += '</div>';
+        $(this).html(j);
 
-		ibacor_profil(g, i, b);
-		ibacor_repos(g, i, b);
-		ibacor_gists(g, i, b);
-		ibacor_activs(g, i, b);
+        ibacor_profil(g, i, b);
+        ibacor_repos(g, i, b);
+        ibacor_gists(g, i, b);
+        ibacor_activs(g, i, b);
     });    
 
     function ibacor_profil(d, x, z) {
@@ -66,18 +67,18 @@ var debug = false;
             };
 
             var c = '<div class="left">';
-            c += '		<a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
-            c += '	</div>';
-            c += '	<div class="right">';
-            c += '		<a href="https://github.com/' + b.login + '" target="_blank">' + b.name + '</a>';
-			if(b.type != 'User'){
-				c += '		<p>' + (b.bio != null ? b.bio : '') + '</p>';
+            c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
+            c += '    </div>';
+            c += '    <div class="right">';
+            c += '        <a href="https://github.com/' + b.login + '" target="_blank">' + b.name + '</a>';
+            if(b.type != 'User'){
+                c += '        <p>' + (b.bio != null ? b.bio : '') + '</p>';
             }
-            c += '		<p><span class="octicon octicon-location"></span> ' + (b.location != null ? b.location : '') + '</p>';
-			if(b.type == 'User'){
-				c += '		<p><span class="user">Followers <span>'+ b.followers + '</span></span> <span class="user">Following <span>'+ b.following + '</span></span></p>';
+            c += '        <p><span class="octicon octicon-location"></span> ' + (b.location != null ? b.location : '') + '</p>';
+            if(b.type == 'User'){
+                c += '        <p><span class="user">Followers <span>'+ b.followers + '</span></span> <span class="user">Following <span>'+ b.following + '</span></span></p>';
             }
-			c += '	</div>';
+            c += '    </div>';
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
             if(debug === true) {
                 // using .foot for rate limit stats
@@ -139,23 +140,23 @@ var debug = false;
             var c = '';
             $.each(b, function(i, a) {
                 c += '<div class="result">';
-                c += '	<div class="icon">';
-                c += '		<span class="octicon octicon-repo"></span>';
-                c += '	</div>';
-                c += '	<div class="gfpost">';
-                c += '		<a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
-                c += '		<p>' + b[i].description + '</p>';
-                c += '		<p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
-                c += '	</div>';
-                c += '	<div class="contributor">';
+                c += '    <div class="icon">';
+                c += '        <span class="octicon octicon-repo"></span>';
+                c += '    </div>';
+                c += '    <div class="gfpost">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
+                c += '        <p>' + b[i].description + '</p>';
+                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '    </div>';
+                c += '    <div class="contributor">';
 // shields.io badges
-                c += '		<img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
-                c += '		<br>';
-                c += '		<img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
-                //c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
-                //c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
-                //c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
-                c += '	</div>';
+                c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
+                c += '        <br>';
+                c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+                //c += '        <a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
+                //c += '        <a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
+                //c += '        <a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
+                c += '    </div>';
                 c += '</div>'
             });
             $(z + ':eq(' + x + ') .' + 'feed-' + 'repos').html(c)
@@ -192,19 +193,19 @@ var debug = false;
 
             var c = '';
             $.each(b, function(i, a) {
-				var keys = Object.keys(b[i].files);
+                var keys = Object.keys(b[i].files);
                 c += '<div class="result">';
-                c += '	<div class="icon">';
-                c += '		<span class="octicon octicon-code"></span>';
-                c += '	</div>';
-                c += '	<div class="gfpost">';
-                c += '		<a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
-				c += '		<p>' + (b[i].description != null ? b[i].description : '') + '</p>';
-                c += '		<p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
-                c += '	</div>';
-                c += '	<div class="contributor">';
-                c += '		<a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
-                c += '	</div>';
+                c += '    <div class="icon">';
+                c += '        <span class="octicon octicon-code"></span>';
+                c += '    </div>';
+                c += '    <div class="gfpost">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
+                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
+                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '    </div>';
+                c += '    <div class="contributor">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
+                c += '    </div>';
                 c += '</div>'
             });
             $(z + ':eq(' + x + ') .' + 'feed-' + 'gists').html(c)
@@ -243,56 +244,56 @@ var debug = false;
             $.each(d, function(i, a) {
                 if (d[i].type == "WatchEvent") {
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-star"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-star"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += (d[i].payload.action === 'started' ? 'starred' : d[i].payload.action) + ' ';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                    e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
-                    e += '	</div>';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                    e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "ForkEvent") {
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-repo-forked"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += '		forked ';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a> to';
-                    e += '		<a href="https://github.com/' + d[i].payload.forkee.full_name + '" target="_blank">' + d[i].payload.forkee.full_name + '</a>';
-                    e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
-                    e += '	</div>';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-repo-forked"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '        forked ';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a> to';
+                    e += '        <a href="https://github.com/' + d[i].payload.forkee.full_name + '" target="_blank">' + d[i].payload.forkee.full_name + '</a>';
+                    e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "ReleaseEvent") {
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-tag"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += '		released ';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '/release/tag/' + d[i].payload.release.tag_name + '" target="_blank">' + d[i].payload.release.tag_name + '</a> at';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                    e += '		<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
-                    e += '		<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
-                    e += '	</div>';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-tag"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '        released ';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '/release/tag/' + d[i].payload.release.tag_name + '" target="_blank">' + d[i].payload.release.tag_name + '</a> at';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                    e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
+                    e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssueCommentEvent") {
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-comment-discussion"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += '		commented on issue ';
-                    e += '		<a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    e += '		<p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.comment.body + '</p>';
-                    e += '	</div>';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-comment-discussion"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '        commented on issue ';
+                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
+                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.comment.body + '</p>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssuesEvent") {
                     var b = "";
@@ -302,85 +303,85 @@ var debug = false;
                         b += "opened issue"
                     }
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-issue-' + d[i].payload.action + '"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-issue-' + d[i].payload.action + '"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';
-                    e += '		<a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    e += '		<p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
-                    e += '	</div>';
+                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
+                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "PushEvent") {
-					if (d[i].payload.ref.substring(0, 11) === 'refs/heads/') {
-						rep = d[i].payload.ref.substring(11);
-					} else {
-						rep = d[i].payload.ref;
-					}
+                    if (d[i].payload.ref.substring(0, 11) === 'refs/heads/') {
+                        rep = d[i].payload.ref.substring(11);
+                    } else {
+                        rep = d[i].payload.ref;
+                    }
                     e += '<div class="result">';
-                    e += '	<div class="icon">';
-                    e += '		<span class="octicon octicon-git-commit"></span>';
-                    e += '	</div>';
-                    e += '	<div class="gfpost">';
-                    e += '		<p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
-                    e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += '		pushed to ';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + rep + '</a> at ';
-                    e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-git-commit"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += '        pushed to ';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + rep + '</a> at ';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
                     var c = d[i].payload.commits.length;
                     if (c === 2) {
-                        e += '	<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>';
-                        e += '	<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[1].message + '</p>';
-                        e += '	<br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
+                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>';
+                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[1].message + '</p>';
+                        e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
                     } else if (c > 2) {
-                        e += '	<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>';
-                        e += '	<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[1].message + '</p>';
-                        e += '	<br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
+                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>';
+                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[1].message + '</p>';
+                        e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
                     } else {
-                        e += '	<p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>'
+                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + d[i].payload.commits[0].message + '</p>'
                     }
-                    e += '	</div>';
+                    e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "CreateEvent") {
                     if (d[i].payload.ref_type == "branch") {
                         e += '<div class="result">';
-                        e += '	<div class="icon">';
-                        e += '		<span class="octicon octicon-git-branch"></span>';
-                        e += '	</div>';
-                        e += '	<div class="gfpost">';
-                        e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                        e += '		created branch ';
-                        e += '		<a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + d[i].payload.ref + '</a> at ';
-                        e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
-                        e += '	</div>';
+                        e += '    <div class="icon">';
+                        e += '        <span class="octicon octicon-git-branch"></span>';
+                        e += '    </div>';
+                        e += '    <div class="gfpost">';
+                        e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                        e += '        created branch ';
+                        e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + d[i].payload.ref + '</a> at ';
+                        e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+                        e += '    </div>';
                         e += '</div>'
                     } else if (d[i].payload.ref_type == "repository") {
                         e += '<div class="result">';
-                        e += '	<div class="icon">';
-                        e += '		<span class="octicon octicon-plus"></span>';
-                        e += '	</div>';
-                        e += '	<div class="gfpost">';
-                        e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                        e += '		created repository ';
-                        e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
-                        e += '	</div>';
+                        e += '    <div class="icon">';
+                        e += '        <span class="octicon octicon-plus"></span>';
+                        e += '    </div>';
+                        e += '    <div class="gfpost">';
+                        e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                        e += '        created repository ';
+                        e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+                        e += '    </div>';
                         e += '</div>'
                     } else if (d[i].payload.ref_type == "tag") {
                         e += '<div class="result">';
-                        e += '	<div class="icon">';
-                        e += '		<span class="octicon octicon-tag"></span>';
-                        e += '	</div>';
-                        e += '	<div class="gfpost">';
-                        e += '		<a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                        e += '		created tag ';
-                        e += '		<a href="https://github.com/' + d[i].repo.name + '/tree/'+d[i].payload.ref+'" target="_blank">' + d[i].payload.ref + '</a> at';
-                        e += '		<a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '		<span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
-                        e += '	</div>';
+                        e += '    <div class="icon">';
+                        e += '        <span class="octicon octicon-tag"></span>';
+                        e += '    </div>';
+                        e += '    <div class="gfpost">';
+                        e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                        e += '        created tag ';
+                        e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/'+d[i].payload.ref+'" target="_blank">' + d[i].payload.ref + '</a> at';
+                        e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+                        e += '    </div>';
                         e += '</div>'
                     }
                 }
