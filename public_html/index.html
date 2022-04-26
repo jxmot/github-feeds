@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	
-		<title>Github Feeds</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+        <title>Github Feeds</title>
 
-		<!-- Include Octicons -->
-		<link rel="stylesheet" href="assets/css/octicons-3.5.0/octicons.css"/>
+        <!-- Include Octicons -->
+        <link rel="stylesheet" href="assets/css/octicons-3.5.0/octicons.css"/>
 
-		<!-- Custom Github Feed style -->
-		<link type="text/css" rel="stylesheet" href="assets/css/github-feed.css" />
-		
-		<!-- Demo -->
-		<style>
+        <!-- <link rel="stylesheet" href="assets/css/reseter.css"/> -->
+
+        <!-- Custom Github Feed style -->
+        <link type="text/css" rel="stylesheet" href="assets/css/github-feed.css" />
+        
+        <!-- Demo -->
+        <style>
             .ghfeed {
                 width: 80%;
                 margin-left: auto;
                 margin-right: auto;
-				height: auto;
+                height: auto;
             }
-			@media (max-width: 767px) {
+            @media (max-width: 767px) {
                 .ghfeed {
                     width: 95%;
                     margin-left: auto;
@@ -29,20 +31,20 @@
                     height: auto;
                 }
             }
-		</style>
-	</head>
-	<body>
-		<div class="ghfeed">
+        </style>
+    </head>
+    <body>
+        <div class="ghfeed">
             <!-- change data-username  -->
-			<div id="ghdata" data-username="jxmot"></div>
-		</div>
+            <div id="ghdata" data-username="jxmot"></div>
+        </div>
 
-		<!-- Include jQuery -->
-		<script src="assets/jq/jquery-3.6.0.min.js"></script>
+        <!-- Include jQuery -->
+        <script src="assets/jq/jquery-3.6.0.min.js"></script>
 
-		<!-- Include jQuery Github Feed-->
-		<script src="assets/js/github-feed.js"></script>
-		<script>
+        <!-- Include jQuery Github Feed-->
+        <script src="assets/js/github-feed.js"></script>
+        <script>
             $(document).ready(function(){
                 $('#ghdata').githubfeed(
                     // The "API" call, you can use GitHub if you like. But 
@@ -58,6 +60,6 @@
                     height = '400px'    // height
                 );
             });
-		</script>
-	</body>
+        </script>
+    </body>
 </html>
