@@ -9,9 +9,10 @@ if [ -z "$1" ];then
     echo "this script is ran."
     exit
 fi
-
+# GitHub repository owner
 owner=$1
-
+# Get the GitHub data and save it to 
+# JSON files.
 echo $owner"user.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner > "./"$owner"user.json" 2>/dev/null
 echo $owner"repos.json"
