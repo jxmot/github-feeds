@@ -10,13 +10,13 @@
     height: 100%;
     font-weight: bold;
     line-height: 1.3;
-    border: 1px solid #d8d8d8;
-    color: #555;
+    border: 1px solid var(--feed-border-color);
+    color: var(--feed-color);
     text-align: left
 }
 
 .github-feed a {
-    color: #4183c4;
+    color: var(--feed-link-color);
     text-decoration: none;
     font-weight: bold;
 }
@@ -29,15 +29,15 @@
     padding: 10px;
     height: 70px;
 /*     height: 90px; */
-    background: #f5f5f5;
-    border-bottom: 1px solid #d8d8d8;
+    background: var(--feed-head-bgcolor);
+    border-bottom: 1px solid var(--feed-border-color);
     display: block;
     overflow: hidden;
 }
 
 .github-feed .head a {
     display: block;
-    color: #555;
+    color: var(--feed-color);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -64,8 +64,8 @@
     font-size: 12px;
     font-weight: 600;
     line-height: 1;
-    color: #fff;
-    background-color: #5cb85c;
+    color: var(--feed-head-user-span-color);
+    background-color: var(--feed-head-user-span-bgcolor);
     border-radius: 20px;
 }
 
@@ -77,8 +77,8 @@
 
 .github-feed .head .left img {
     width: 60px;
-    border: 1px solid #d8d8d8;
-    padding: 0px 3px;
+    border: 1px solid var(--feed-head-user-img-border-color);
+    padding: 3px 3px;
     margin: 0px !important
 }
 
@@ -92,13 +92,13 @@
 .github-feed  .gftabs {
     display: block;
     width: 100%;
-    background: #fafafa;
+    background: var(--feed-tabs-bgcolor);
 }
 
-.github-feed  .gftabs .gftab {
+.github-feed .gftabs .gftab {
     font-size: 0.8em;
-    background: #fafafa;
-    color: #555;
+    background: var(--feed-tabs-bgcolor);
+    color: var(--feed-tabs-color);
     display: inline-block;
     padding: 0px;
     width: 33.33%;
@@ -106,12 +106,13 @@
     padding-top: 10px;
     padding-bottom: 10px;
     cursor: pointer;
-    overflow: hidden;
+/* get rid of the "border" under the tabs */
+    /* overflow: hidden; */
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.github-feed  .gftabs .gftab sup {
+.github-feed .gftabs .gftab sup {
     padding: 2px 5px;
     font-size: 0.7em;
     font-weight: 600;
@@ -123,11 +124,11 @@
 
 .github-feed  .gftabs .aktip, .github-feed  .gftabs {
 /* .github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover { */
-    background: #9e9e9e4a;
+    background: var(--feed-tabs-active-bgcolor);
 }
 
 .gftab:hover:not(.aktip) {
-    background: #3f97544a;
+    background: var(--feed-tabs-hover-bgcolor);
 }
 
 /* body */
@@ -136,7 +137,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    background: #fff;
+    background: var(--feed-body-bgcolor);
     overflow: hidden;
     overflow-y: auto;
 }
@@ -147,7 +148,7 @@
     padding-right: 0;
     width: calc(100% - 10px);
 /*     width: 100%; */
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid var(--feed-body-result-border-color);
     font-weight: normal;
 }
 
@@ -167,18 +168,21 @@
 .github-feed .bod .feed-gists .result .icon .octicon,
 .github-feed .bod .feed-activ .result .icon .octicon {
     font-size: 30px;
-    color: #d8d8d8;
+    color: var(--feed-body-result-icon-color);
 }
 
+/* .github-feed .bod .feed-repos .result .gfpost, */
+/* .github-feed .bod .feed-gists .result .gfpost, */
+/*
 .github-feed .bod .feed-activ .result .gfpost {
     display: inline-block;
     width: calc(100% - 60px);
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.8em;
-    color: #000;
+    color: var(--feed-body-result-post-color);
 }
-
+*/
 .github-feed .bod .result .gfpost {
     display: inline-block;
     width: calc(100% - 120px);
@@ -201,19 +205,19 @@
 }
 
 .github-feed .bod .result .contributor a {
-    color: #555;
+    color: var(--feed-body-result-link-color);
     font-weight: normal;
 }
 
 .github-feed .bod .result .contributor a span {
-    color: #aaa;
+    color: var(--feed-body-result-link-span-color);
 }
 
 .github-feed .bod .result .gfpost p {
     margin: 0;
     padding: 0;
     font-size: 0.8em;
-    color: #555;
+    color: var(--feed-color);
     clear: both;
 }
 
@@ -236,14 +240,14 @@
     margin: 0;
     padding: 0;
     font-size: 0.8em;
-    color: #999;
+    color: var(--feed-body-result-post-date-color);
 }
 
 /* footer */
 .github-feed .foot {
-    background: #f5f5f5;
+    background: var(--feed-foot-bgcolor);
     width: 100%;
-    border-top: 1px solid #d8d8d8;
+    border-top: 1px solid var(--feed-foot-border-color);
     font-size: 0.8em;
 
     height: 2rem;
@@ -251,7 +255,7 @@
 }
 
 .github-feed .foot a {
-    color: #999;
+    color: var(--feed-foot-link-color);
 
     position: absolute;
     top: 50%;
