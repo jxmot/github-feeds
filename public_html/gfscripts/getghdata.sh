@@ -21,4 +21,4 @@ curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"
 echo $owner"gists.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/gists" > "./"$owner"gists.json" 2>/dev/null
 echo "Rate Limit After:"
-curl -I https://api.github.com/users/$owner 2>/dev/null | grep "x-ratelimit"
+curl -I https://api.github.com/users/$owner 2>/dev/null | grep --ignore-case "^x-ratelimit"
