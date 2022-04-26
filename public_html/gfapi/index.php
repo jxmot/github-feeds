@@ -34,6 +34,9 @@ if(!defined('_DEBUG') || _DEBUG === false) {
 
         $datafile = '../gfdata/' . current(array_keys($queries)) . '.json';
         if(file_exists($datafile)) {
+            // if the file is being updated its length
+            // will be 0. What until the update is done.
+            while(filesize($datafile) === 0) sleep(3);
             $fileid = fopen($datafile,'r');
             $result = fread($fileid,filesize($datafile));
         } else {
