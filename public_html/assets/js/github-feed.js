@@ -159,7 +159,7 @@ var debug = false;
                 c += '    </div>';
                 c += '</div>'
             });
-            $(z + ':eq(' + x + ') .' + 'feed-' + 'repos').html(c)
+            $(z + ':eq(' + x + ') .feed-repos').html(c)
         })
     }
 
@@ -208,7 +208,7 @@ var debug = false;
                 c += '    </div>';
                 c += '</div>'
             });
-            $(z + ':eq(' + x + ') .' + 'feed-' + 'gists').html(c)
+            $(z + ':eq(' + x + ') .feed-gists').html(c)
         });
     }
 
@@ -386,7 +386,7 @@ var debug = false;
                     }
                 }
             });
-            $(z + ':eq(' + x + ') .' + 'feed-' + 'activ').html(e)
+            $(z + ':eq(' + x + ') .feed-activ').html(e)
         })
     }
 
