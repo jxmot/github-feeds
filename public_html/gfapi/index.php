@@ -12,9 +12,18 @@ define('QRYSTR', ((isset($_SERVER['QUERY_STRING']) === true) ? $_SERVER['QUERY_S
 
 // check for debug/test mode
 if(!defined('_DEBUG') || _DEBUG === false) {
-    // MUST be done like this for PHP files that are 'linked'
     $queries = array();
     if(QRYSTR !== null) {
+        /*
+            Possible incoming query strings could be:
+
+                githubuser
+                githubuser/repos?type=sources&sort=updated&per_page=100
+                githubuser/events
+                githubuser/gists
+
+            Where "githubuser" is the GitHub user, as in //github.com/githubuser
+        */
         $qstr = str_replace('?','&',QRYSTR);
         if(strstr($qstr, '/') !== false) {
             $qstr = str_replace('/','',$qstr);
@@ -44,10 +53,12 @@ header('HTTP/1.0 200 OK');
 header('Content-Type: application/json; charset=utf-8');
 header('Content-Encoding: text');
 
+// just to make it look like we're the real API,
+// the client might use this data.
 header('x-ratelimit-limit: 99');
 header('x-ratelimit-remaining: 99');
 header('x-ratelimit-used: 0');
-header('x-ratelimit-reset: ' . (time() + 86400));
+header('x-ratelimit-reset: ' . time());
 
 echo $result;
 exit;
