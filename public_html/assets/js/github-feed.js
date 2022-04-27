@@ -486,11 +486,11 @@ var topontab = true;
 // When the user clicks on the to-top button, 
 // scroll to the top of the container. This 
 // function must be global and take the argument 
-// as the username and create a selector from it.
+// as the username, it creates a selector from it.
 //
-function jumpToTop(ufeed) {
+function jumpToTop(uname) {
     // only scroll the specified container
-    $('#' + ufeed + '>#ghfeed_body').stop(true).animate({
+    $('#' + uname + '>#ghfeed_body').stop(true).animate({
         scrollTop: 0
     },450);
 };
