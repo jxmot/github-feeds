@@ -14,6 +14,8 @@
 $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
 
 var debug = false;
+// the gists tab is optional
+var showgists = false;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -22,7 +24,15 @@ var debug = false;
             
         j += '<div class="github-feed" style="width: ' + width + '">';
         j += '  <div class="head"></div>';
-        j += '  <div class="gftabs"><div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div></div>';
+        j += '  <div class="gftabs">';
+        if(showgists === true) {
+            setTabWidth('33.33%');
+            j += '    <div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div>';
+        } else {
+            setTabWidth('50%');
+            j += '    <div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div>';
+        }
+        j += '  </div>';
         j += '  <div class="bod" style="height: ' + height + '">';
         j += '    <div class="feed feed-repos"></div>';
         j += '    <div class="feed feed-gists" style="display:none"></div>';
@@ -38,9 +48,16 @@ var debug = false;
 
         ibacor_profil(g, i, b);
         ibacor_repos(g, i, b);
-        ibacor_gists(g, i, b);
+        if(showgists === true) {
+            ibacor_gists(g, i, b);
+        }
         ibacor_activs(g, i, b);
     });    
+
+    function setTabWidth(w) {
+        var r = document.querySelector(':root');
+        r.style.setProperty('--gftab-width', w);
+    };
 
     function ibacor_profil(d, x, z) {
 // need a variable for access to ajax functions
@@ -66,7 +83,7 @@ var debug = false;
                 ]
             };
 
-            var c = '<div class="left">';
+            var c = '    <div class="left">';
             c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
             c += '    </div>';
             c += '    <div class="right">';
@@ -86,7 +103,9 @@ var debug = false;
                 $(z + ':eq(' + x + ') .github-feed .foot').html(s);
             }
             $(z + ':eq(' + x + ') .github-feed sup.repc').html(b.public_repos);
-            $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
+            if(showgists === true) {
+                $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
+            }
             $(z + ':eq(' + x + ') .github-feed .gftab').click(function() {
                 $(z + ':eq(' + x + ') .github-feed .gftab').removeClass('aktip');
                 $(z + ':eq(' + x + ') .github-feed .feed').css('display', 'none');

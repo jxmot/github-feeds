@@ -95,13 +95,17 @@
     background: var(--feed-tabs-bgcolor);
 }
 
+:root {
+    --gftab-width: 33.33%;
+}
+
 .github-feed .gftabs .gftab {
     font-size: 0.8em;
     background: var(--feed-tabs-bgcolor);
     color: var(--feed-tabs-color);
     display: inline-block;
     padding: 0px;
-    width: 33.33%;
+    width: var(--gftab-width);
     text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
