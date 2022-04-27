@@ -23,8 +23,9 @@ var totop = true;
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
             g = $(this).data('username'),
             j = '';
-            
-        j += '<div class="github-feed" style="width: ' + width + '">';
+        
+        // the 'username' will make this container unique on a page
+        j += '<div id="' + g + '" class="github-feed" style="width: ' + width + '">';
         j += '  <div class="head"></div>';
         j += '  <div class="gftabs">';
         if(showgists === true) {
