@@ -13,6 +13,8 @@
     --feed-tabs-color: var(--feed-color);
     --feed-tabs-active-bgcolor: #9e9e9e4a;
     --feed-tabs-hover-bgcolor: #3f97544a;
+    --feed-tabs-count-color: #fff;
+    --feed-tabs-count-bgcolor: #666;
 
     --feed-body-result-border-color: var(--feed-border-color);
     --feed-body-result-icon-color: #d8d8d8;

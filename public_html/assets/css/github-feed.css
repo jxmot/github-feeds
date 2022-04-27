@@ -117,8 +117,8 @@
     font-size: 0.7em;
     font-weight: 600;
     line-height: 1;
-    color: #fff;
-    background-color: #666;
+    color: var(--feed-tabs-count-color);
+    background-color: var(--feed-tabs-count-bgcolor);
     border-radius: 20px;
 }
 
