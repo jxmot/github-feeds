@@ -16,6 +16,8 @@ $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author
 var debug = false;
 // the gists tab is optional
 var showgists = false;
+// the "to top" button is optional
+var totop = true;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -42,9 +44,16 @@ var showgists = false;
         if(debug === false) {
             j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github" style=""></span>&nbsp;' + title + '</a>';
         }
+        if(totop === true) {
+            j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop()" title="Go to top">';
+            j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
+            j += '    </button>';
+        }
         j += '  </div>';
         j += '</div>';
         $(this).html(j);
+
+        if(totop === true) enableToTop('#ghfeed_body');
 
         ibacor_profil(g, i, b);
         ibacor_repos(g, i, b);
@@ -112,7 +121,7 @@ var showgists = false;
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
-                $('.bod').scrollTop(0);
+                jumpToTop();
                 return false
             })
         });
@@ -467,4 +476,13 @@ var showgists = false;
         }
         return b
     }
-}
+
+};
+
+// When the user clicks on the to-top button, 
+// scroll to the top of the container
+function jumpToTop() {
+    $('#ghfeed_body').stop(true).animate({
+        scrollTop: 0
+    },450);
+};
