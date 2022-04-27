@@ -12,6 +12,10 @@ define('QRYSTR', ((isset($_SERVER['QUERY_STRING']) === true) ? $_SERVER['QUERY_S
 
 // check for debug/test mode
 if(!defined('_DEBUG') || _DEBUG === false) {
+// only change this if getghdata-cron.sh has 
+// a modified `gfdata`
+    $datapath = '../gfdata/';
+
     $queries = array();
     if(QRYSTR !== null) {
         /*
@@ -32,7 +36,7 @@ if(!defined('_DEBUG') || _DEBUG === false) {
         }
         parse_str($qstr, $queries);
 
-        $datafile = '../gfdata/' . current(array_keys($queries)) . '.json';
+        $datafile = $datapath . current(array_keys($queries)) . '.json';
         if(file_exists($datafile)) {
             // if the file is being updated its length
             // will be 0. What until the update is done.
