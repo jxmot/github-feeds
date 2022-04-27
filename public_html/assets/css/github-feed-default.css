@@ -1,5 +1,7 @@
 
 :root{
+    --htmlbody-bgcolor: white;
+
     --feed-border-color: #d8d8d8;
     --feed-color: #555;
     --feed-link-color: #4183c4;
@@ -16,7 +18,9 @@
     --feed-tabs-count-color: #fff;
     --feed-tabs-count-bgcolor: #666;
 
+    --feed-body-bgcolor: var(--feed-head-bgcolor);
     --feed-body-result-border-color: var(--feed-border-color);
+    --feed-body-result-bgcolor: var(--feed-head-bgcolor);
     --feed-body-result-icon-color: #d8d8d8;
     --feed-body-result-post-color: #000;
     --feed-body-result-link-color: #555;
