@@ -19,12 +19,13 @@
     --trans-black: rgba(0, 0, 0, 0.6);
     --transparent: rgba(0, 0, 0, 0);
     --trans-green: rgba(10, 120, 10, 0.7);
-    --trans-red: rgba(120, 10, 10, 0.7);
+    --trans-red: rgba(170, 10, 10, 0.7);
 
-    --totop-inact-bgcolor: var(--bright-red);
-    --totop-act-bgcolor: var(--green);
+
+    --totop-inact-bgcolor: var(--trans-red);
+    --totop-act-bgcolor: var(--trans-green);
     --totop-content-color: var(--white);
-    --totop-border-color: var(--white);
+    --totop-border-color: var(--dark-grey);
 }
 
 .gototop-page {
