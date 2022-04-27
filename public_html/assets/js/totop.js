@@ -21,19 +21,19 @@
 const scroll_travel = 0.1;
 // keeps redundant execution to a minimum
 var isToTop = false;
-
+// we will save the element that gets the button
+var topElemQ = null;
 var topElem = null;
 
 function enableToTop(elem) {
-    if(elem.charAt(0) === '#') elem = elem.substring(1);
-    topElem = document.getElementById(elem);
+    topElemQ = elem;
+    topElem = document.querySelector(elem);
     topElem.onscroll = onElementScroll;
 };
 
 function disableToTop(elem) {
-    if(elem.charAt(0) === '#') elem = elem.substring(1);
-    document.getElementById(elem).onscroll = nullFunc;
-    document.getElementById('gototop_button').style.display = 'none';
+    document.querySelector(elem).onscroll = nullFunc;
+    document.querySelector(topElemQ + ' ~ .foot > #gototop_button').style.display = 'none';
 };
 
 function nullFunc() {};
@@ -42,13 +42,13 @@ function onElementScroll() {
     if(showToTop()) {
         // has the button been enabled yet?
         if(isToTop === false) {
-            document.getElementById('gototop_button').style.display = 'block';
+            document.querySelector(topElemQ + ' ~ .foot > #gototop_button').style.display = 'block';
             isToTop = true;
         }
     } else {
         // has the button been disabled yet?
         if(isToTop === true) {
-            document.getElementById('gototop_button').style.display = 'none';
+            document.querySelector(topElemQ + ' ~ .foot > #gototop_button').style.display = 'none';
             isToTop = false;
         }
     }

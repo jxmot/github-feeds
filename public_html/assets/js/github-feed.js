@@ -47,6 +47,7 @@ var totop = true;
         }
         if(totop === true) {
         //if((totop === true) && (typeof enableToTop === 'function')) {
+            j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop(\'' + g + '\')" title="Go to top">';
             j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
             j += '    </button>';
         }
@@ -54,7 +55,10 @@ var totop = true;
         j += '</div>';
         $(this).html(j);
 
-        if(totop === true) enableToTop('#ghfeed_body');
+        // the 'username' will be used a part of the selector, that 
+        // way multiple "feeds" can be created and have their own 
+        // to top button.
+        if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
 
         ibacor_profil(g, i, b);
         ibacor_repos(g, i, b);
@@ -478,9 +482,13 @@ var totop = true;
 };
 
 // When the user clicks on the to-top button, 
-// scroll to the top of the container
-function jumpToTop() {
-    $('#ghfeed_body').stop(true).animate({
+// scroll to the top of the container. This 
+// function must be global and take the argument 
+// as the username and create a selector from it.
+//
+function jumpToTop(ufeed) {
+    // only scroll the specified container
+    $('#' + ufeed + '>#ghfeed_body').stop(true).animate({
         scrollTop: 0
     },450);
 };

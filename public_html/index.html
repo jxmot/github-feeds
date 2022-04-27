@@ -38,19 +38,24 @@
     </head>
     <body>
         <div class="ghfeed">
-            <!-- change data-username  -->
-            <div id="ghdata" data-username="jxmot"></div>
+            <!-- change id AND the data-username  -->
+            <div id="jxmot" data-username="jxmot"></div>
+        </div>
+
+        <div class="ghfeed">
+            <!-- change id AND the data-username  -->
+            <div id="dkmitt" data-username="dkmitt"></div>
         </div>
 
         <!-- Include jQuery -->
         <script src="assets/jq/jquery-3.6.0.min.js"></script>
-
+        <!-- the "to top" button for the feed -->
+        <script src="assets/js/totop.js"></script>
         <!-- Include Github Feed-->
         <script src="assets/js/github-feed.js"></script>
-        <script src="assets/js/totop.js"></script>
         <script>
             $(document).ready(function(){
-                $('#ghdata').githubfeed(
+                $('#jxmot').githubfeed(
                     // The "API" call, you can use GitHub if you like. But 
                     // the rate limitation could get in your way. 
                     //api    = 'https://api.github.com/users/',
@@ -59,6 +64,13 @@
                     // and is updated with CRON.
                     api    = 'gfapi?',
 
+                    sort   = 'updated', // For repos only, can be one of created, updated, pushed, full_name.
+                    width  = '100%',    // width of widget within the .ghfeed container
+                    height = '400px'    // height
+                );
+
+                $('#dkmitt').githubfeed(
+                    api    = 'gfapi?',
                     sort   = 'updated', // For repos only, can be one of created, updated, pushed, full_name.
                     width  = '100%',    // width of widget within the .ghfeed container
                     height = '400px'    // height
