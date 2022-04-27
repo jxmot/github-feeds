@@ -27,6 +27,8 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Can specify other API URLs for the data (*part of anti-rate limiting*)
   * Using [Shields.io](<https://shields.io/>) to display star and fork counts
   * The Gists tab is optional, it is disabled by default
+  * Added an optional "scroll to top" button that appears in the footer, it is enabled by default
+  * Can have more than one feed, just add a new GitHub user name (*at this time the "to top" button must be disabled*)
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the next section.
 
@@ -68,24 +70,26 @@ If you're well versed in all things "server" you probably won't need any detaile
 
 ### Server Preparation
 
-1) Get access to your web server for:
-  a) Copying files to it
-  b) Command line, to run a shell script
+1) Get access to your web server for copying files to it, and the command line to run a shell script.
 
 2) Find your *document root*, you will need the path to it later
 
 ### Edit Files
 
-**`public_html/index.html`**
-Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name you want to use. **- required**
+**`public_html/index.html`:** Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name you want to use. **- required**
+
+**`public_html/gfscripts/mkfolders.sh`**
+* Edit `docroot=...`, this should be the path to your server's *document root* folder.
+* Edit `ghfeeds="$docroot/...`, 
+* Edit `gfdata="$ghfeeds/...`,
 
 **`public_html/gfscripts/getghdata-cron.sh`**
 * Edit `owner="...`, use the GitHub user name from the previous edit. **- required**
 * Edit `docroot=...`, this should be the path to your server's *document root* folder.
 * Optionally edit: *This is not required, the paths can be left as-is*
-  * `ghfeeds=$docroot/ghfeeds` - Change `ghfeeds` if necessary
   * `gfdata=$docroot/ghfeeds/gfdata` - Change `ghfeeds` and `gfdata` if necessary
-  * `public_html/gfapi/index.php` - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit.
+
+**`public_html/gfapi/index.php`** - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit in `getghdata-cron.sh`.
 
 **`public_html/assets/js/github-feed.js`**
 The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
