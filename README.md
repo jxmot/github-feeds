@@ -32,7 +32,7 @@ The other *major* modification that is made here is when and how the GitHub API 
 
 ## Anti Rate Limiting
 
-The GitHub API is *rate limited*. This means that you can only issue up to 60 *requests* in one hour, after than you will not be able to obtain data. And the API calls will fail.
+The GitHub API is *rate limited*. This means that you can only issue up to 60 *requests* in one hour, after than you will not be able to obtain data and the API calls will fail.
 
 The rate limiting may not be an issue for you if the page containing the feeds doesn't have a lot of visitors. However, there are no guarantees. It's generally better to design for "high traffic" scenarios.
 
@@ -40,77 +40,11 @@ The rate limiting may not be an issue for you if the page containing the feeds d
 
 The solution is simple... get the data *in the background* and limit the number of API hits. The data is saved and when a visitor arrives to view it the saved data is used and *not* the API.
 
-To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 5 to 30 minutes*) and execute a script:
+To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 6 to 30 minutes*) and execute the script `gfscripts/getghdata-cron.sh`
 
-**gfscripts/getghdata-cron.sh:**
-```bash
-#!/bin/bash
-# This is the CRON version of this file.
-# An interval of 5 to ?? minutes is 
-# recommended, adjust as needed.
-#
-# GitHub repository owner
-owner="jxmot"
-# This is here just in case this script 
-# is ran before uploading the project 
-# to your server. Edit as needed.
-ghfeeds=$HOME/public_html/ghfeeds
-if [[ ! -d $ghfeeds ]];then
-    mkdir $ghfeeds
-fi
-cd $ghfeeds
-# The data will be written here, so 
-# create the folder if needed. 
-# Edit as needed.
-gfdata=$HOME/public_html/ghfeeds/gfdata
-if [[ ! -d $gfdata ]];then
-    mkdir $gfdata
-fi
-cd $gfdata
-# Get the GitHub data and save it to 
-# JSON files.
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner > "./"$owner"user.json" 2>/dev/null
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/events" > "./"$owner"events.json" 2>/dev/null
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/gists" > "./"$owner"gists.json" 2>/dev/null
-# This is for checking the rate limits, 
-# look at its contents periodocally to 
-# verify all is well for the chosen CRON 
-# interval.
-curl -H "Accept: application/vnd.github.v3+json" -I "https://api.github.com/users/"$owner 2>/dev/null | grep --ignore-case "^x-ratelimit" > ./x-ratelimit.log
-```
-**NOTE:** You may need to modify the script file to work in your environment. Before you run it double-check the paths in `ghfeeds` and `gfdata`.
+**NOTE:** You may need to modify the script file to work in your environment. Before you run it double-check the paths in variables `ghfeeds` and `gfdata`.
 
-Run this next script from the command line, do not run it in a CRON job:
-
-**gfscripts/getghdata.sh:**
-```bash
-#!/bin/bash
-# This is the command line version of this file. Do not
-# run it from CRON.
-if [ -z "$1" ];then
-    echo "Missing repository owner ID!"
-    echo "Usage: getghdata.sh GitHubUser"
-    echo "Where: GitHubUser is your github user name."
-    echo "Files will be created in the location where"
-    echo "this script is ran."
-    exit
-fi
-# GitHub repository owner
-owner=$1
-# Get the GitHub data and save it to 
-# JSON files.
-echo $owner"user.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner > "./"$owner"user.json" 2>/dev/null
-echo $owner"repos.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
-echo $owner"events.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/events" > "./"$owner"events.json" 2>/dev/null
-echo $owner"gists.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/"$owner"/gists" > "./"$owner"gists.json" 2>/dev/null
-echo "Rate Limit After:"
-curl -H "Accept: application/vnd.github.v3+json" -I "https://api.github.com/users/"$owner 2>/dev/null | grep --ignore-case "^x-ratelimit"
-```
+Another script `gfscripts/getghdata.sh`, is intended to be ran from the command line. Don't run in a CRON job.
 
 # Usage
 
@@ -131,8 +65,9 @@ If you're well versed in all things "server" you probably won't need any detaile
 ### Server Preparation
 
 1) Get access to your web server for:
-  * Copying files to it
-  * Command line, to run a shell script
+  - Copying files to it
+  - Command line, to run a shell script
+
 2) Find your *document root*, you will need the path to it later
 
 ### Edit Files
