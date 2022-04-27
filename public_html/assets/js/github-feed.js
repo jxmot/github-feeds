@@ -72,7 +72,7 @@ var totop = true;
     function ibacor_profil(d, x, z) {
 // need a variable for access to ajax functions
         var ajx = $.ajax({
-            url: api + d,
+            url: api + d.toLowerCase(),
             crossDomain: true,
             dataType: 'json'
         });
@@ -136,7 +136,7 @@ var totop = true;
 // of repos back. FYI- there is no "pagination" here.
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#pagination
 // https://jesse.sh/async-api-calls-with-pagination/#getting-the-next-page
-            url: api + d + '/repos?type=sources&sort=' + h + '&per_page=100',
+            url: api + d.toLowerCase() + '/repos?type=sources&sort=' + h + '&per_page=100',
             crossDomain: true,
             dataType: 'json'
         });
@@ -194,7 +194,7 @@ var totop = true;
 
     function ibacor_gists(d, x, z) {
         var ajx = $.ajax({
-            url: api + d + '/gists',
+            url: api + d.toLowerCase() + '/gists',
             crossDomain: true,
             dataType: 'json'
         });
@@ -243,7 +243,7 @@ var totop = true;
 
     function ibacor_activs(f, x, z) {
         var ajx = $.ajax({
-            url: api + f + '/events',
+            url: api + f.toLowerCase() + '/events',
             crossDomain: true,
             dataType: 'json'
         });
