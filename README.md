@@ -25,6 +25,8 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Modified CSS, fixed some classes and added a few
   * Improved code readability, added comments
   * Can specify other API URLs for the data (*part of anti-rate limiting*)
+  * Using [Shields.io](<https://shields.io/>) to display star and fork counts
+  * The Gists tab is optional, it is disabled by default
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the next section.
 
@@ -38,7 +40,7 @@ The rate limiting may not be an issue for you if the page containing the feeds d
 
 The solution is simple... get the data *in the background* and limit the number of API hits. The data is saved and when a visitor arrives to view it the saved data is used and *not* the API.
 
-To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 15 to 5 to 30 minutes*) and execute a script:
+To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 5 to 30 minutes*) and execute a script:
 
 **gfscripts/getghdata-cron.sh:**
 ```bash
@@ -112,7 +114,7 @@ curl -H "Accept: application/vnd.github.v3+json" -I "https://api.github.com/user
 
 # Usage
 
-The following will guide you through setting up the CRON jobs and getting the files ready on your server.
+The following will guide you through getting the files ready and setting up the CRON job on your server. 
 
 ## Set Up
 
@@ -122,13 +124,16 @@ The following will guide you through setting up the CRON jobs and getting the fi
 * A means to copy files to your server, and command-line access
 * Knowledge of where your *document root* is located
 
+### For Experts Only
+
+If you're well versed in all things "server" you probably won't need any detailed instructions. Just look over the following sections and note what needs to be edited.
+
 ### Server Preparation
 
 1) Get access to your web server for:
   * Copying files to it
-  * Command line
-2) Find your *document root* and 
-
+  * Command line, to run a shell script
+2) Find your *document root*, you will need the path to it later
 
 ### Edit Files
 
@@ -137,20 +142,31 @@ Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name
 
 **`public_html/gfscripts/getghdata-cron.sh`**
 * Edit `owner="...`, use the GitHub user name from the previous edit.
-* 
+* Edit `docroot=...`, this should be the path to your server's *document root* folder.
+* Optionally edit: *This is not required, the paths can be left as-is*
+  * `ghfeeds=$docroot/ghfeeds` - Change `ghfeeds` if necessary
+  * `gfdata=$docroot/ghfeeds/gfdata` - Change `ghfeeds` and `gfdata` if necessary
+    * `public_html/gfapi/index.php` - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit.
+
+**`public_html/assets/js/github-feed.js`**
+The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
 
 ### Copy Files to the Server
+
+
+
+#### Get the JSON Data
+
+Now you should have four JSON files(*using the scripts as found*):
+
+*
+
 
 ### Set Up CRON
 
 ## Run 
 
-### Get JSON Data Ready
-
-Now you should have four JSON files(*using the scripts as found*):
-
-* 
-
-
 ### Go!
+
+# Mock GitHub API
 
