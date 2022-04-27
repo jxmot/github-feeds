@@ -24,7 +24,7 @@ var topontab = true;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
-            g = $(this).data('username'),
+            g = $(this).data('username').toLowerCase(),
             j = '';
         
         // the 'username' will make this container unique on a page
@@ -48,8 +48,7 @@ var topontab = true;
         if(debug === false) {
             j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github" style=""></span>&nbsp;' + title + '</a>';
         }
-        if(totop === true) {
-        //if((totop === true) && (typeof enableToTop === 'function')) {
+        if((totop === true) && (typeof enableToTop === 'function')) {
             j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop(\'' + g + '\')" title="Go to top">';
             j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
             j += '    </button>';
