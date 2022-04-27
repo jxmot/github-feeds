@@ -46,7 +46,7 @@ var totop = true;
             j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github" style=""></span>&nbsp;' + title + '</a>';
         }
         if(totop === true) {
-            j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop()" title="Go to top">';
+        //if((totop === true) && (typeof enableToTop === 'function')) {
             j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
             j += '    </button>';
         }
@@ -178,13 +178,10 @@ var totop = true;
                 c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '    </div>';
                 c += '    <div class="contributor">';
-// shields.io badges
+                // shields.io badges
                 c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
                 c += '        <br>';
                 c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
-                //c += '        <a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
-                //c += '        <a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
-                //c += '        <a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
                 c += '    </div>';
                 c += '</div>'
             });

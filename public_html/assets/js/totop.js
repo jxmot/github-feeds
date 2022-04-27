@@ -14,11 +14,8 @@
     Repository: https://github.com/jxmot/website_template-no_bootstrap
 */
 // call our function when the window contents are scrolled
-//window.onscroll = function() {onWindowScroll()};
 
-// https://linuxhint.com/disable-scrolling-javascript/
-
-// A percentage of document size, if scrolled past this
+// A percentage of element size, if scrolled past this
 // point the 'to top' button will be displayed. Adjust 
 // as needed.
 const scroll_travel = 0.1;
@@ -42,8 +39,6 @@ function disableToTop(elem) {
 function nullFunc() {};
 
 function onElementScroll() {
-    // for debugging
-    //dump();
     if(showToTop()) {
         // has the button been enabled yet?
         if(isToTop === false) {
