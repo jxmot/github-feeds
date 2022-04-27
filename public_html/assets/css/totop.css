@@ -1,0 +1,72 @@
+/*
+    totop.css - this file is part of the "to top" feature.
+
+    Author: https://github.com/jxmot
+*/
+:root {
+/* containing this colors here for now, may move elsewhere */
+    --white: #f9f9f9;
+    --light-grey: #c3c4c5;
+    --grey: #85888C;
+    --dark-grey: #36383F;
+    --black: #000000;
+    --yellowish: #dbcc29;
+    --bright-yellow: #fbff12;
+    --green: green;
+    --bright-green: #27ff0f;
+    --bright-red: #ff0505;
+    --gold: gold;
+    --trans-black: rgba(0, 0, 0, 0.6);
+    --transparent: rgba(0, 0, 0, 0);
+    --trans-green: rgba(10, 120, 10, 0.7);
+    --trans-red: rgba(120, 10, 10, 0.7);
+
+    --totop-inact-bgcolor: var(--bright-red);
+    --totop-act-bgcolor: var(--green);
+    --totop-content-color: var(--white);
+    --totop-border-color: var(--white);
+}
+
+.gototop-page {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+
+.gototop-footer {
+    /* location on page, within its container */
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+}
+
+.gototop {
+    display: none;    
+    /* placement and colors */
+    z-index: 99;  
+    border: 1px solid var(--totop-border-color);
+    background-color: var(--totop-inact-bgcolor);
+    color: var(--totop-content-color);
+    cursor: pointer;
+
+    /* size & shape */
+    height: 2em;
+    width: 2em;
+    padding: 0;
+
+    /* circle 
+    border-radius: 50%;
+    */
+    /* box, rounted corners */
+    border-radius: 20%;
+}
+
+.gototop:hover {
+    background-color: var(--totop-act-bgcolor);
+    color: var(--totop-content-color);
+}
+
+.gototop-span {
+    font-size: 1em;
+}
