@@ -129,6 +129,7 @@
 .github-feed  .gftabs .aktip, .github-feed  .gftabs {
 /* .github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover { */
     background: var(--feed-tabs-active-bgcolor);
+    cursor: auto;
 }
 
 .gftab:hover:not(.aktip) {
@@ -153,6 +154,7 @@
     width: calc(100% - 10px);
 /*     width: 100%; */
     border-bottom: 1px solid var(--feed-body-result-border-color);
+    background-color: var(--feed-body-result-bgcolor);
     font-weight: normal;
 }
 
