@@ -30,6 +30,10 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the next section.
 
+## Live Demo
+
+You can view the demo [here](<https://webexperiment.info/portfolio/ghfeeds/>).
+
 ## Anti Rate Limiting
 
 The GitHub API is *rate limited*. This means that you can only issue up to 60 *requests* in one hour, after than you will not be able to obtain data and the API calls will fail.
@@ -65,23 +69,23 @@ If you're well versed in all things "server" you probably won't need any detaile
 ### Server Preparation
 
 1) Get access to your web server for:
-  - Copying files to it
-  - Command line, to run a shell script
+  a) Copying files to it
+  b) Command line, to run a shell script
 
 2) Find your *document root*, you will need the path to it later
 
 ### Edit Files
 
 **`public_html/index.html`**
-Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name you want to use.
+Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name you want to use. **- required**
 
 **`public_html/gfscripts/getghdata-cron.sh`**
-* Edit `owner="...`, use the GitHub user name from the previous edit.
+* Edit `owner="...`, use the GitHub user name from the previous edit. **- required**
 * Edit `docroot=...`, this should be the path to your server's *document root* folder.
 * Optionally edit: *This is not required, the paths can be left as-is*
   * `ghfeeds=$docroot/ghfeeds` - Change `ghfeeds` if necessary
   * `gfdata=$docroot/ghfeeds/gfdata` - Change `ghfeeds` and `gfdata` if necessary
-    * `public_html/gfapi/index.php` - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit.
+  * `public_html/gfapi/index.php` - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit.
 
 **`public_html/assets/js/github-feed.js`**
 The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
@@ -104,4 +108,6 @@ Now you should have four JSON files(*using the scripts as found*):
 ### Go!
 
 # Mock GitHub API
+
+# Changing Appearance
 
