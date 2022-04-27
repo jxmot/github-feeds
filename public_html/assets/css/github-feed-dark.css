@@ -1,0 +1,34 @@
+
+:root{
+    --htmlbody-bgcolor: #0d1117;
+
+    --feed-border-color: #2d333a;
+    --feed-color: white;
+    --feed-link-color: #4183c4;
+
+    --feed-head-bgcolor: #21262d;
+    --feed-head-user-span-color: white;
+    --feed-head-user-span-bgcolor: #226d22;
+    --feed-head-user-img-border-color: #d8d8d8;
+
+    --feed-tabs-bgcolor: #8f8f8f;
+    --feed-tabs-color: var(--feed-color);
+    --feed-tabs-active-bgcolor: #9e9e9e4a;
+    --feed-tabs-hover-bgcolor: #3f97544a;
+    --feed-tabs-count-color: black;
+    --feed-tabs-count-bgcolor: white;
+
+    --feed-body-bgcolor: var(--feed-head-bgcolor);
+    --feed-body-result-border-color: var(--feed-border-color);
+    --feed-body-result-bgcolor: var(--htmlbody-bgcolor);
+    --feed-body-result-icon-color: #d8d8d8;
+    --feed-body-result-post-color: #000;
+    --feed-body-result-link-color: #555;
+    --feed-body-result-link-span-color: #aaa;
+    --feed-body-result-post-date-color: #999;
+
+    --feed-foot-bgcolor: var(--feed-head-bgcolor);
+    --feed-foot-border-color: var(--feed-border-color);
+    --feed-foot-link-color: #999;
+}
+
