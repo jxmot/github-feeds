@@ -33,7 +33,7 @@ var showgists = false;
             j += '    <div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div>';
         }
         j += '  </div>';
-        j += '  <div class="bod" style="height: ' + height + '">';
+        j += '  <div id="ghfeed_body" class="bod" style="height: ' + height + '">';
         j += '    <div class="feed feed-repos"></div>';
         j += '    <div class="feed feed-gists" style="display:none"></div>';
         j += '    <div class="feed feed-activ" style="display:none"></div>';
