@@ -18,6 +18,9 @@ var debug = false;
 var showgists = false;
 // the "to top" button is optional
 var totop = true;
+// scroll to top when a tab is switched to,
+// otherwise leave the scroll where it was.
+var topontab = true;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -126,7 +129,7 @@ var totop = true;
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
-                jumpToTop();
+                if(topontab === true) jumpToTop(d.toLowerCase());
                 return false
             })
         });
