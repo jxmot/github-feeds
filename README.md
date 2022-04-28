@@ -1,6 +1,6 @@
 # github-feeds
 
-This repository contains a "GitHub Feed" browser plug-in. On the backend there is a *mock* API that can replace GitHub's.  
+This repository contains a "GitHub Feed" browser plug-in. On the back-end there is a *mock* API that can replace GitHub's.  
 
 # History
 
@@ -185,3 +185,5 @@ This particular implementation of a "to top" scroll button can be applied to an 
 * `public_html/assets/js/totop.js` - enable or disable the button, and manage its appearance in the parent element
 * `public_html/assets/js/github-feed.js` - contains `jumpToTop()`, a global function called when the button is clicked
 
+---
+<img src="http://webexperiment.info/extcounter/mdcount.php?id=github-feeds">
