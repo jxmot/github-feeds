@@ -21,6 +21,8 @@ var totop = true;
 // scroll to top when a tab is switched to,
 // otherwise leave the scroll where it was.
 var topontab = true;
+// enable/disable theme switch
+var lightdarksw = true;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -112,6 +114,16 @@ var topontab = true;
                 c += '        <p><span class="user">Followers <span>'+ b.followers + '</span></span> <span class="user">Following <span>'+ b.following + '</span></span></p>';
             }
             c += '    </div>';
+            if(lightdarksw === true) {
+                c += '    <div class="lightdarksw">';
+                c += '        <span class="">&#127774;</span>';
+                c += '        <label class="switch">';
+                c += '            <input type="checkbox" onclick="swLightDark()">';
+                c += '            <span class="slider round"></span>';
+                c += '        </label>';
+                c += '        <span class="">&#127772;</span>';
+                c += '    </div>';
+            }
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
             if(debug === true) {
                 // using .foot for rate limit stats
