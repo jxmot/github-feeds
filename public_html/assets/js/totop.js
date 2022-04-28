@@ -11,7 +11,7 @@
         https://www.w3schools.com/howto/howto_js_scroll_to_top.asp
 
     Author: https://github.com/jxmot
-    Repository: https://github.com/jxmot/website_template-no_bootstrap
+    Repository: https://github.com/jxmot/github-feeds
 */
 // call our function when the window contents are scrolled
 

@@ -21,7 +21,7 @@
     --trans-green: rgba(10, 120, 10, 0.7);
     --trans-red: rgba(170, 10, 10, 0.7);
 
-
+/* leave these here */
     --totop-inact-bgcolor: var(--trans-red);
     --totop-act-bgcolor: var(--trans-green);
     --totop-content-color: var(--white);

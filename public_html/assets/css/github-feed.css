@@ -1,10 +1,17 @@
+/* 
+    GitHub Feeds CSS
+
+    Extensively Modified By: https://github.com/jxmot
+    Repository: https://github.com/jxmot/github-feeds
+
+    Original Author: see below
+*/
 /***********************************************************
 * #### jQuery-Github-Feed v3.0 ####
 * Coded by Ican Bachors 2014.
 * https://github.com/bachors/jQuery-Github-Feed
 * Updates will be posted to this site.
 ***********************************************************/
-
 .github-feed {
     font-family: Helvetica, arial, freesans, clean, sans-serif;
     height: 100%;
