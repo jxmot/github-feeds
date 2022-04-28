@@ -28,8 +28,8 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Using [Shields.io](<https://shields.io/>) to display star and fork counts
   * The Gists tab is optional, it is disabled by default
   * Added an optional "scroll to top" button that appears in the footer, it is enabled by default
-  * Can have more than one feed, just add a new GitHub user name (*at this time the "to top" button must be disabled*)
-  * Can optionally switch between light and dark themes. 
+  * Can have more than one feed, just add a new GitHub user name **(*at this time the "to top" button must be disabled when more than one feed is used*)**
+  * Can optionally switch between light and dark themes. The switching is enabled by default.
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the [Anti Rate Limiting](#anti-rate-limiting) section.
 
@@ -104,7 +104,10 @@ If you're well versed in all things "server" you probably won't need any detaile
 **`public_html/gfapi/index.php`** - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit in `getghdata-cron.sh`.
 
 **`public_html/assets/js/github-feed.js`**
-The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
+* The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
+* The "to top" button is optional, it is enabled by default. To change it find `var totop = true;` and change it to `false`.
+  * There is a "top on tab switch" feature, , it is enabled by default. This will change the behavior of how the scroll bar is "homed" when a tab is switched *to*. When `true` switching tabs will immediately cause the feeds container to scroll to the top. When false it will use the same scrolling animation as the "to top" button. To change it find `var topontab = true;` and change it to `false`.
+* The light/dark theme switch is optional, it is enabled by default. I needed a way to switch themes quickly so I could see differences and make adjustments as needed. It worked so well that I added come style to it and kept it. To disable the switch find `var lightdarksw = true;` and change it to `false`.
 
 ### Copy Files to the Server
 
