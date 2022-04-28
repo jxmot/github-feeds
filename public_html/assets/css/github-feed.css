@@ -84,8 +84,8 @@
 
 .github-feed .head .right {
     display: inline-block;
-    width: 63%;
-    margin-left: 10px
+    /* width: 63%; */
+    margin-left: 1rem;
 }
 
 /* tabs */
