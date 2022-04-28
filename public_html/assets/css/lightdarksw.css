@@ -1,0 +1,90 @@
+/* 
+    Light/Dark Theme Switch
+
+    Author: https://github.com/jxmot
+    Repository: https://github.com/jxmot/github-feeds
+*/
+:root {
+    --ldswitch-slider-bgcolor: #ccc;
+    --ldswitch-slider-round-bgcolor: gold;
+    --ldswitch-slider-bgcolor-before: darkgrey;
+    --ldswitch-slider-input-checked: #2196F3;
+    --ldswitch-slider-border: black;
+}
+
+.github-feed .head .lightdarksw {
+    display: inline-block;
+    margin-left: 3rem;
+    margin-bottom: 4rem;
+    vertical-align: middle;
+}
+
+/* The switch - the box around the slider */
+.lightdarksw .switch {
+    position: relative;
+    display: inline-block;
+    width: 2.7rem;
+    height: 1rem;
+}
+
+/* Hide default HTML checkbox */
+.lightdarksw .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.lightdarksw .switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--ldswitch-slider-bgcolor);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.lightdarksw .switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 0.85rem;
+    width: 0.85rem;
+    background-color: var(--ldswitch-slider-bgcolor-before);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.lightdarksw .switch .slider {
+    /* background-color: yellow; */
+}
+
+.lightdarksw .switch input:checked + .slider {
+    background-color: var(--ldswitch-slider-input-checked);
+}
+
+.lightdarksw .switch input:focus + .slider {
+    box-shadow: 0 0 1px var(--ldswitch-slider-input-checked);
+}
+
+.lightdarksw .switch input:checked + .slider:before {
+    -webkit-transform: translateX(1.7rem);
+    -ms-transform: translateX(1.7rem);
+    transform: translateX(1.7rem);
+}
+
+/* Rounded sliders */
+.lightdarksw .switch .slider.round {
+    border-radius: 1rem;
+    border: 1px solid var(--ldswitch-slider-border);
+}
+
+.lightdarksw .switch .slider.round {
+    background-color: var(--ldswitch-slider-round-bgcolor);
+} 
+
+.lightdarksw .switch .slider.round:before {
+    border-radius: 50%;
+} 
