@@ -128,7 +128,7 @@ var topontab = true;
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
-                if(topontab === true) jumpToTop(d.toLowerCase());
+                if(topontab === true) jumpToTop(d.toLowerCase(), true);
                 return false
             })
         });
@@ -488,9 +488,12 @@ var topontab = true;
 // function must be global and take the argument 
 // as the username, it creates a selector from it.
 //
-function jumpToTop(uname) {
-    // only scroll the specified container
-    $('#' + uname + '>#ghfeed_body').stop(true).animate({
-        scrollTop: 0
-    },450);
+function jumpToTop(uname, snap = false) {
+    // only scroll the specified container, and 
+    // snap the scroll if desired
+    if(snap) {
+        $('#' + uname + '>#ghfeed_body').scrollTop(0);
+    } else {
+        $('#' + uname + '>#ghfeed_body').stop(true).animate({scrollTop: 0},450);
+    }
 };
