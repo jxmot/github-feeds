@@ -88,45 +88,74 @@ If you're well versed in all things "server" you probably won't need any detaile
 
 ### Edit Files
 
-**`public_html/index.html`:** Find `<div id="ghdata"...` and edit `data-username="...` to the GitHub user name you want to use. **- required**
-
-**`public_html/gfscripts/mkfolders.sh`**
-* Edit `docroot=...`, this should be the path to your server's *document root* folder.
-* Edit `ghfeeds="$docroot/...`, 
-* Edit `gfdata="$ghfeeds/...`,
+**`public_html/index.html`:** Find `<div id="...` and edit `data-username="...` to the GitHub user name you want to use. **- required**
 
 **`public_html/gfscripts/getghdata-cron.sh`**
+* If the Gists feed is desired then find `# GIST: ...` and uncomment the `#curl -H "Accept:...` line.
 * Edit `owner="...`, use the GitHub user name from the previous edit. **- required**
 * Edit `docroot=...`, this should be the path to your server's *document root* folder.
 * Optionally edit: *This is not required, the paths can be left as-is*
   * `gfdata=$docroot/ghfeeds/gfdata` - Change `ghfeeds` and `gfdata` if necessary
 
+**`public_html/gfscripts/getghdata.sh`**
+* If the Gists feed is desired then find `# GIST: ...` and uncomment the `#echo $owner...` and the `#curl -H "Accept:...` lines.
+
 **`public_html/gfapi/index.php`** - Find the line `$datapath = '../gfdata/';` and change `gfdata` to match the previous edit in `getghdata-cron.sh`.
 
 **`public_html/assets/js/github-feed.js`**
-* The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`.
+* The "Gists" tab is *optional*, and it is disabled by default. To enable it find `var showgists = false;` and change it to `true`. **NOTE:** If you enable Gists then editing `getghdata-cron.sh` and `getghdata.sh` is necessary.
 * The "to top" button is optional, it is enabled by default. To change it find `var totop = true;` and change it to `false`.
   * There is a "top on tab switch" feature, , it is enabled by default. This will change the behavior of how the scroll bar is "homed" when a tab is switched *to*. When `true` switching tabs will immediately cause the feeds container to scroll to the top. When false it will use the same scrolling animation as the "to top" button. To change it find `var topontab = true;` and change it to `false`.
 * The light/dark theme switch is optional, it is enabled by default. I needed a way to switch themes quickly so I could see differences and make adjustments as needed. It worked so well that I added come style to it and kept it. To disable the switch find `var lightdarksw = true;` and change it to `false`.
 
 ### Copy Files to the Server
 
-
+Copy the **contents** of `public_html` (*including all subfolders and files*) to a suitable location on your server. Since this is a demonstation I recommend that you create a folder specifically for this demo.
 
 #### Get the JSON Data
 
-Now you should have four JSON files(*using the scripts as found*):
+Before running the demo you will need some JSON data files. These files will contain the GitHub data you see in the feeds. To get the GitHub data follow these steps:
 
-*
+*You will need the command line interface(CLI) on your server.*
 
+1) Change the current folder to the `gfscripts` folder. 
+2) Run this command to make the scripts *executable* - `chmod +x *.sh`
+3) Change the current folder to the **`gfdata`** folder.
+4) Run this command to get the GitHub data - `../gfscripts/getghdata.sh [USER]`, where **`[USER]`** is the GitHub user who you want the data from.
+
+You should now have three(*four, depending if Gists are enabled*) JSON files(*using the scripts as found*):
+
+* `[USER]user.json` - user profile data
+* `[USER]repos.json` - list of repositories, **NOTE:** This quantity is limited to a maximum of 100 repositories
+* `[USER]events.json` - list of the user's GitHub events
+* `[USER]gists.json` - optional Gist data, it may not be present
+
+The last file is `x-ratelimit.log`, it is a capture of HTTP headers that GitHub returns after an API request. 
 
 ### Set Up CRON
 
+This depends on your server. Some that have cPanel have a nice interface for managing CRON jobs. And with others you may only have a command line to use for creating CRON jobs.
+
+Basically, you want the `gfscripts/getghdata-cron.sh` file to run every 5 minutes. Don't use less time because you will overrun the GitHub rate limitation and the script will fail.
+
+A sample CRON job:
+```
+*/5 * * * * /path-to-docroot/path-to/gfscripts/getghdata-cron.sh
+```
+
+It would be a good idea to keep an eye on the `gfdata` folder and look for *new* files to appear there, and then wait a while and see that they get updated.
+
 ## Run 
 
-### Go!
+Everything should be ready to go... take your browser and navigate to the folder you created when [you copied the files to the server](#copy-files-to-the-server).
 
-# Mock GitHub API
+You should see something very similar to the [screen shots](#live-demo) above.
 
-# Changing Appearance
+# *Some* Design Details
+
+## Mock GitHub API
+
+## Changing Appearance
+
+## To Top
 
