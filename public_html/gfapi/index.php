@@ -37,10 +37,15 @@ if(!defined('_DEBUG') || _DEBUG === false) {
         parse_str($qstr, $queries);
 
         $datafile = $datapath . current(array_keys($queries)) . '.json';
+        clearstatcache();
         if(file_exists($datafile)) {
             // if the file is being updated its length
             // will be 0. What until the update is done.
-            while(filesize($datafile) === 0) sleep(3);
+            while(filesize($datafile) === 0) {
+                sleep(3);
+                clearstatcache();
+                error_log('github-feeds: waiting for non-zero :'.$datafile,0);
+            }
             $fileid = fopen($datafile,'r');
             $result = fread($fileid,filesize($datafile));
         } else {
