@@ -62,7 +62,21 @@
                     // Here is the alternative. And there is no rate limitation 
                     // here. That's because the data has already been collected
                     // and is updated with CRON.
-                    api    = 'gfapi?',
+//                    api    = 'gfapi?',
+// NOTE: This is really strange, when on an actual server
+// the line above does NOT work as expected. It seems that
+// the PHP file AND the JSON files are getting cached. This 
+// was seen with many, multiple requests that started here.
+// Even if the PHP file was edited on the server and should 
+// have caused errors in the client. The client kept receiving
+// JSON data as if nothing had changed. An attempt was made
+// to fix the problem by adding a JSON "expires" to htaccess.
+// That did not work either. Btw htaccess is set to expire 
+// PHP file with "now". The only thing that fixes and gets 
+// around this odd cache is to specify the PHP file in the URL.
+// One other REALLY odd thing... I even removed index.php 
+// from the server and it continued to serve it from the cache!!!
+                    api    = 'gfapi/index.php?',
 
                     sort   = 'updated', // For repos only, can be one of created, updated, pushed, full_name.
                     width  = '100%',    // width of widget within the .ghfeed container
