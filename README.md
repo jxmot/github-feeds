@@ -155,7 +155,33 @@ You should see something very similar to the [screen shots](#live-demo) above.
 
 ## Mock GitHub API
 
+This was *fun*, seriously. It really was! Even though one of my requirements was to not cause any *major* changes to `github-feed.js` where it originally used the GItHub API.
+
+First I moved the API string *out of* `github-feed.js`. This was done by adding an `api` argument and having the feeds client supply the API URL.
+
+Next I created a PHP script that mimics the GitHub API. It had to parse the queries that are used in `github-feed.js` and  return the correct JSON file.
+
+The possible incoming query strings could be:
+
+```
+githubuser
+githubuser/repos?type=sources&sort=updated&per_page=100
+githubuser/events
+githubuser/gists
+```
+
+Where "githubuser" is the GitHub user, as in `https://github.com/`**`githubuser`**. See `public_html/gfapi/index.php` for more details about parsing the queries.
+
 ## Changing Appearance
 
+This is accomplished with *loading* and *unloading* CSS files, and the dark/light slide switch. Other than enabling or disabling the switch everything is contained in:
+* `public_html/assets/css/lightdarksw.css` - CSS just for the switch itself
+* `public_html/assets/js/swlightdark.js` - CSS load/unload functions, switch handler function
+
 ## To Top
+
+This particular implementation of a "to top" scroll button can be applied to an *element*. And has an adjustable threshold for determining when the button appears. The files involved are:
+* `public_html/assets/css/totop.css` - button styling and relative location
+* `public_html/assets/js/totop.js` - enable or disable the button, and manage its appearance in the parent element
+* `public_html/assets/js/github-feed.js` - contains `jumpToTop()`, a global function called when the button is clicked
 
