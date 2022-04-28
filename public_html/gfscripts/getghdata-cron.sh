@@ -1,5 +1,9 @@
 #!/bin/bash
 # This is the CRON version of this file.
+#
+# For info on CRON see - 
+#   https://crontab.guru/
+#
 # An interval of 5 to ?? minutes is 
 # recommended, adjust as needed.
 #
@@ -14,7 +18,10 @@ gfdata="$docroot/ghfeeds/gfdata"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner" > $gfdata/$owner"user.json" 2>/dev/null
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?type=sources&sort=updated&per_page=100" > $gfdata/$owner"repos.json" 2>/dev/null
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events" > $gfdata/$owner"events.json" 2>/dev/null
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/gists" > $gfdata/$owner"gists.json" 2>/dev/null
+# GIST: The use of this file is optional, uncomment 
+# the next line if you've enabled Gists in 
+# github-feed.js
+# curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/gists" > $gfdata/$owner"gists.json" 2>/dev/null
 # This is for checking the rate limits, 
 # look at its contents periodocally to 
 # verify all is well for the chosen CRON 

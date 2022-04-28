@@ -21,7 +21,10 @@ echo $owner"repos.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
 echo $owner"events.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events" > "./"$owner"events.json" 2>/dev/null
-echo $owner"gists.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/gists" > "./"$owner"gists.json" 2>/dev/null
+# GIST: The use of this file is optional, uncomment 
+# the next 2 lines if you've enabled Gists in 
+# github-feed.js
+#echo $owner"gists.json"
+#curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/gists" > "./"$owner"gists.json" 2>/dev/null
 echo "Rate Limit After:"
 curl -H "Accept: application/vnd.github.v3+json" -I "https://api.github.com/users/$owner" 2>/dev/null | grep --ignore-case "^x-ratelimit"
