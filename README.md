@@ -29,12 +29,24 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * The Gists tab is optional, it is disabled by default
   * Added an optional "scroll to top" button that appears in the footer, it is enabled by default
   * Can have more than one feed, just add a new GitHub user name (*at this time the "to top" button must be disabled*)
+  * Can optionally switch between light and dark themes. 
 
-The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the next section.
+The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the [Anti Rate Limiting](#anti-rate-limiting) section.
 
 ## Live Demo
 
 You can view the demo [here](<https://webexperiment.info/portfolio/ghfeeds/>).
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/light.png" style="width:35%;border: 2px solid black;margin-right: 1rem;"; alt="Screen Shot Chrome on Android 12" txt="Screen Shot Chrome on Android 12"/>
+        <img src="./mdimg/dark.png" style="width:35%;border: 2px solid black;margin-left: 1rem;"; alt="Screen Shot Firefox on Android 12" txt="Screen Shot Firefox on Android 12"/>
+        <br>
+        <figcaption><strong>Light and Dark Themes.</strong></figcaption>
+    </figure>
+</div>
+<br>
 
 ## Anti Rate Limiting
 
