@@ -66,6 +66,11 @@ header('HTTP/1.0 200 OK');
 header('Content-Type: application/json; charset=utf-8');
 header('Content-Encoding: text');
 
+// NOTE: The JSON data can get caught up in caching
+// on the server and in the browser. This will affect 
+// the browser, and there's an htaccess file in this
+// folder that also has an effect. The goal is to 
+// keep this data from ever being cached.
 header('Cache-Control: no-cache, no-store');
 
 // just to make it look like we're the real API,
