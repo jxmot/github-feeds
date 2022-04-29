@@ -66,6 +66,8 @@ header('HTTP/1.0 200 OK');
 header('Content-Type: application/json; charset=utf-8');
 header('Content-Encoding: text');
 
+header('Cache-Control: no-cache, no-store');
+
 // just to make it look like we're the real API,
 // the client might use this data.
 header('x-ratelimit-limit: 99');
