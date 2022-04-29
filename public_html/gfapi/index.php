@@ -50,6 +50,7 @@ if(!defined('_DEBUG') || _DEBUG === false) {
             $result = fread($fileid,filesize($datafile));
         } else {
             $result = '{"error":"Data file was not found - '. $datafile .'","qry":"'.QRYSTR.'"}';
+            error_log('github-feeds: Data file was not found :'.$datafile,0);
         }
     }
 } else {
