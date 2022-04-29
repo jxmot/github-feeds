@@ -24,6 +24,8 @@
     display: grid; 
     grid-template-rows: 1fr;
     grid-template-columns: .1fr .1fr .1fr;
+
+    margin-left: 3rem;
 }
 
 /* The switch - the box around the slider */
@@ -55,13 +57,13 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .github-feed .head .lightdarksw {
         grid-template-rows: .5fr .5fr .5fr;
         grid-template-columns: .5fr;
 
         margin-top: -.5rem;
-        margin-left: 3rem;
+        margin-left: 1rem;
     }
     .lightdarksw .light-icon {
         grid-row-start: 1;
