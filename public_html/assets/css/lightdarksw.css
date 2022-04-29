@@ -20,10 +20,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    display: grid; 
+    grid-template-rows: 1fr;
+    grid-template-columns: .1fr .1fr .1fr;
 }
 
 /* The switch - the box around the slider */
+.lightdarksw .light-icon {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 2;
+    grid-column-end: 2;
+}
+
+.lightdarksw .dark-icon {
+    grid-row-start: 1;
+    grid-column-start: 3;
+    grid-row-end: 2;
+    grid-column-end: 4;
+}
+
 .lightdarksw .switch {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    grid-row-end: 2;
+    grid-column-end: 3;
+
+
     position: relative;
     display: inline-block;
     width: 2.7rem;
@@ -32,12 +56,42 @@
 
 
 @media (max-width: 768px) {
+    .github-feed .head .lightdarksw {
+        grid-template-rows: .5fr .5fr .5fr;
+        grid-template-columns: .5fr;
+
+        margin-top: -.5rem;
+        margin-left: 3rem;
+    }
+    .lightdarksw .light-icon {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 2;
+        grid-column-end: 2;
+
+        margin-bottom: 0.7rem;
+    }
+    .lightdarksw .dark-icon {
+        grid-row-start: 3;
+        grid-column-start: 1;
+        grid-row-end: 4;
+        grid-column-end: 2;
+
+        margin-top: 1rem;
+    }
+
     .lightdarksw .switch {
-        transform: rotate(-90deg);
-        -webkit-transform: rotate(-90deg);
-        -moz-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-        -o-transform: rotate(-90deg);
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+
+        grid-row-start: 2;
+        grid-column-start: 1;
+
+        grid-row-end: 3;
+        grid-column-end: 2;
     }
 }
 
