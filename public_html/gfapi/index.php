@@ -27,11 +27,17 @@ if(!defined('_DEBUG') || _DEBUG === false) {
                 githubuser/gists
 
             Where "githubuser" is the GitHub user, as in //github.com/githubuser
+
+            NOTE: When the client is jQuery ajax AND "cache: false" it 
+            will cause "&_=[timestamp]" to be appended to the URL. This 
+            becomes a problem when our query is only just "githubuser".
         */
         $qstr = str_replace('?','&',QRYSTR);
         if(strstr($qstr, '/') !== false) {
             $qstr = str_replace('/','',$qstr);
         } else {
+            // this will remove the "&_=[timestamp]" portion
+            $qstr = (($temp = strstr($qstr, '&_=', true)) === false ? $qstr : $temp);
             $qstr = $qstr . 'user';
         }
         parse_str($qstr, $queries);
