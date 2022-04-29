@@ -76,24 +76,55 @@
     border-radius: 20px;
 }
 
-.github-feed .head .left {
+.github-feed .head .avatar-img {
     display: inline;
     float: left;
     width: auto;
 }
 
-.github-feed .head .left img {
+.github-feed .head .avatar-img img {
     width: 60px;
     border: 1px solid var(--feed-head-user-img-border-color);
     padding: 3px 3px;
     margin: 0px !important
 }
 
-.github-feed .head .right {
+.github-feed .head .user-bio {
     display: inline-block;
     /* width: 63%; */
     margin-left: 1rem;
 }
+
+.github-feed .col-3x {
+    display: grid; 
+    grid-template-rows: 1fr;
+    grid-template-columns: .1fr .3fr .1fr;
+}
+
+.github-feed .col-3x .col-1-of-3 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    
+    grid-row-end: 2;
+    grid-column-end: 2;
+}
+
+.github-feed .col-3x .col-2-of-3 {
+   grid-row-start: 1;
+   grid-column-start: 2;
+
+   grid-row-end: 2;
+   grid-column-end: 3;
+}
+
+.github-feed .col-3x .col-3-of-3 {
+   grid-row-start: 1;
+   grid-column-start: 3;
+
+   grid-row-end: 2;
+   grid-column-end: 4;
+}
+
 
 /* tabs */
 .github-feed  .gftabs {

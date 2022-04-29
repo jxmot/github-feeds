@@ -31,7 +31,8 @@ var lightdarksw = true;
         
         // the 'username' will make this container unique on a page
         j += '<div id="' + g + '" class="github-feed" style="width: ' + width + '">';
-        j += '  <div class="head"></div>';
+        //j += '  <div class="head"></div>';
+        j += '  <div class="col-3x head"></div>';
         j += '  <div class="gftabs">';
         if(showgists === true) {
             setTabWidth('33.33%');
@@ -102,10 +103,11 @@ var lightdarksw = true;
                 ]
             };
 
-            var c = '    <div class="left">';
+            //var c = '    <div class="left">';
+            var c = '    <div class="col-1-of-3 avatar-img">';
             c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
             c += '    </div>';
-            c += '    <div class="right">';
+            c += '    <div class="col-2-of-3 user-bio">';
             c += '        <a href="https://github.com/' + b.login + '" target="_blank">' + b.name + '</a>';
             if(b.type != 'User'){
                 c += '        <p>' + (b.bio != null ? b.bio : '') + '</p>';
@@ -116,7 +118,7 @@ var lightdarksw = true;
             }
             c += '    </div>';
             if(lightdarksw === true) {
-                c += '    <div class="lightdarksw">';
+                c += '    <div class="col-3-of-3 lightdarksw">';
                 c += '        <span class="">&#127774;</span>';
                 c += '        <label class="switch">';
                 c += '            <input type="checkbox" onclick="swLightDark()">';
