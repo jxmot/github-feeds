@@ -119,12 +119,12 @@ var lightdarksw = true;
             c += '    </div>';
             if(lightdarksw === true) {
                 c += '    <div class="col-3-of-3 lightdarksw">';
-                c += '        <span class="">&#127774;</span>';
+                c += '        <span class="light-icon">&#127774;</span>';
                 c += '        <label class="switch">';
                 c += '            <input type="checkbox" onclick="swLightDark()">';
                 c += '            <span class="slider round"></span>';
                 c += '        </label>';
-                c += '        <span class="">&#127772;</span>';
+                c += '        <span class="dark-icon">&#127772;</span>';
                 c += '    </div>';
             }
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
