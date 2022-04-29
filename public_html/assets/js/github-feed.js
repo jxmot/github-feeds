@@ -31,7 +31,6 @@ var lightdarksw = true;
         
         // the 'username' will make this container unique on a page
         j += '<div id="' + g + '" class="github-feed" style="width: ' + width + '">';
-        //j += '  <div class="head"></div>';
         j += '  <div class="col-3x head"></div>';
         j += '  <div class="gftabs">';
         if(showgists === true) {
@@ -49,7 +48,7 @@ var lightdarksw = true;
         j += '  </div>';
         j += '  <div class="foot">';
         if(debug === false) {
-            j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github" style=""></span>&nbsp;' + title + '</a>';
+            j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span>&nbsp;' + title + '</a>';
         }
         if((totop === true) && (typeof enableToTop === 'function')) {
             j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop(\'' + g + '\')" title="Go to top">';
@@ -103,7 +102,6 @@ var lightdarksw = true;
                 ]
             };
 
-            //var c = '    <div class="left">';
             var c = '    <div class="col-1-of-3 avatar-img">';
             c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
             c += '    </div>';
