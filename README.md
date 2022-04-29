@@ -22,7 +22,7 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * jQuery - updated to 3.6.0, local file in `assets/jq`
   * Octicons - updated to 3.5.0, local files in `assets/css/octicons-3.5.0`
 * Changed:
-  * Modified CSS, fixed some classes and added a few
+  * Modified CSS, fixed some classes and added a few. Also using CSS grid
   * Improved code readability, added comments
   * Can specify other API URLs for the data (*part of anti-rate limiting*)
   * Using [Shields.io](<https://shields.io/>) to display star and fork counts
