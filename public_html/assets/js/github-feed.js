@@ -82,7 +82,8 @@ var lightdarksw = true;
         var ajx = $.ajax({
             url: api + d.toLowerCase(),
             crossDomain: true,
-            dataType: 'json'
+            dataType: 'json',
+            cache: false
         });
 // added all .fail() functions
         ajx.fail(function(jqXHR, textStatus) {
@@ -156,7 +157,8 @@ var lightdarksw = true;
 // https://jesse.sh/async-api-calls-with-pagination/#getting-the-next-page
             url: api + d.toLowerCase() + '/repos?type=sources&sort=' + h + '&per_page=100',
             crossDomain: true,
-            dataType: 'json'
+            dataType: 'json',
+            cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
             console.log('Request failed: ' + textStatus);
@@ -211,7 +213,8 @@ var lightdarksw = true;
         var ajx = $.ajax({
             url: api + d.toLowerCase() + '/gists',
             crossDomain: true,
-            dataType: 'json'
+            dataType: 'json',
+            cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
             console.log('Request failed: ' + textStatus);
@@ -260,7 +263,8 @@ var lightdarksw = true;
         var ajx = $.ajax({
             url: api + f.toLowerCase() + '/events',
             crossDomain: true,
-            dataType: 'json'
+            dataType: 'json',
+            cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
             console.log('Request failed: ' + textStatus);
