@@ -21,8 +21,10 @@ var totop = true;
 // scroll to top when a tab is switched to,
 // otherwise leave the scroll where it was.
 var topontab = true;
-// enable/disable theme switch
+// enable/disable theme switch and icon/emoji control
 var lightdarksw = true;
+// true = single color icons, false = multi color emoji
+var lightdarkicon = false;
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -61,7 +63,7 @@ var lightdarksw = true;
 
         // the 'username' will be used a part of the selector, that 
         // way multiple "feeds" can be created and have their own 
-        // to top button.
+        // to top button. See issue #1
         if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
 
         ibacor_profil(g, i, b);
@@ -117,12 +119,14 @@ var lightdarksw = true;
             c += '    </div>';
             if(lightdarksw === true) {
                 c += '    <div class="col-3-of-3 lightdarksw">';
-                c += '        <span class="light-icon">&#127774;</span>';
+                if(lightdarkicon === true) c += '        <span class="light-icon light-icon-size">&#9788;&nbsp;</span>';
+                else c += '        <span class="light-icon">&#127774;</span>';
                 c += '        <label class="switch">';
                 c += '            <input type="checkbox" onclick="swLightDark()">';
                 c += '            <span class="slider round"></span>';
                 c += '        </label>';
-                c += '        <span class="dark-icon">&#127772;</span>';
+                if(lightdarkicon === true) c += '        <span class="dark-icon dark-icon-size">&nbsp;&#9789;</span>';
+                else c += '        <span class="dark-icon">&#127772;</span>';
                 c += '    </div>';
             }
             $(z + ':eq(' + x + ') .github-feed .head').html(c);
