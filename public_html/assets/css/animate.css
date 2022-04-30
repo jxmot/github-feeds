@@ -12,31 +12,19 @@
 }
 
 @-webkit-keyframes icon-spinY {
-  0% {
-    transform: rotateY(90deg);
+  from {
+    transform: rotateY(0deg);
   }
-  25% {
-    transform: rotateY(180deg);
-  }
-  50% {
-    transform: rotateY(270deg);
-  }
-  100% {
+  to {
     transform: rotateY(360deg);
   }
 }
 
 @keyframes icon-spinY {
-  0% {
-    transform: rotateY(90deg);
+  from {
+    transform: rotateY(0deg);
   }
-  25% {
-    transform: rotateY(180deg);
-  }
-  50% {
-    transform: rotateY(270deg);
-  }
-  100% {
+  to {
     transform: rotateY(360deg);
   }
 }
