@@ -176,7 +176,7 @@ if(waitforit === true) {
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
                 if(topontab === true) jumpToTop(d.toLowerCase(), true);
                 return false
-            })
+            });
         });
     }
 
@@ -246,56 +246,8 @@ if(waitforit === true) {
                 c += '</div>'
             });
             $(z + ':eq(' + x + ') .feed-repos').html(c)
-        })
-    }
 
-    function ibacor_gists(d, x, z) {
-        var ajx = $.ajax({
-            url: api + d.toLowerCase() + '/gists',
-            crossDomain: true,
-            dataType: 'json',
-            cache: false
-        });
-        ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
-        });
-        ajx.done(function(b) {
-// keep track of rate limit
-// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
-            var stats = {
-                limit: ajx.getResponseHeader('x-ratelimit-limit'),
-                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
-                used: ajx.getResponseHeader('x-ratelimit-used'),
-                reset: [ 
-                    ajx.getResponseHeader('x-ratelimit-reset'),
-                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
-                ]
-            };
-
-            if(debug === true) {
-                // using .foot for rate limit stats
-                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
-            }
-
-            var c = '';
-            $.each(b, function(i, a) {
-                var keys = Object.keys(b[i].files);
-                c += '<div class="result">';
-                c += '    <div class="icon">';
-                c += '        <span class="octicon octicon-code"></span>';
-                c += '    </div>';
-                c += '    <div class="gfpost">';
-                c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
-                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
-                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
-                c += '    </div>';
-                c += '    <div class="contributor">';
-                c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
-                c += '    </div>';
-                c += '</div>'
-            });
-            $(z + ':eq(' + x + ') .feed-gists').html(c)
+            loadDone(_REPO, z, x);
         });
     }
 
@@ -475,8 +427,62 @@ if(waitforit === true) {
                 }
             });
             $(z + ':eq(' + x + ') .feed-activ').html(e)
-        })
+
+            loadDone(_ACTV, z, x);
+        });
     }
+
+    function ibacor_gists(d, x, z) {
+        var ajx = $.ajax({
+            url: api + d.toLowerCase() + '/gists',
+            crossDomain: true,
+            dataType: 'json',
+            cache: false
+        });
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(b) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ]
+            };
+
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
+
+            var c = '';
+            $.each(b, function(i, a) {
+                var keys = Object.keys(b[i].files);
+                c += '<div class="result">';
+                c += '    <div class="icon">';
+                c += '        <span class="octicon octicon-code"></span>';
+                c += '    </div>';
+                c += '    <div class="gfpost">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
+                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
+                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '    </div>';
+                c += '    <div class="contributor">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
+                c += '    </div>';
+                c += '</div>'
+            });
+            $(z + ':eq(' + x + ') .feed-gists').html(c)
+
+            loadDone(_GIST, z, x);
+        });
+    };
 
     function relative_time(a) {
         if (!a) {
@@ -518,7 +524,7 @@ if(waitforit === true) {
             }
         }
         return r
-    }
+    };
 
     function addCommas(a) {
         var b = parseInt(a, 10);
@@ -535,7 +541,7 @@ if(waitforit === true) {
             return (b / 1000).toFixed(1).replace(/\.0$/, "") + "K"
         }
         return b
-    }
+    };
 
 };
 
