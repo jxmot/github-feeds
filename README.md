@@ -32,6 +32,7 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Can optionally switch between light and dark themes. The switching is enabled by default.
   * Can optionally display a "wait" message while data is loading. Sometimes it could take longer than expected to retrieve all of the data. This feature will display a "standby" message until all of the data has been downloaded and rendered. Occasionally you might see it flash for a moment before the data is seen.
   * Can render *markdown* nearly as well as GitHub. This can be seen in issue comments that have had text bounded by back-ticks (`).
+  * Improved content, added optional content to the activities entries. Added activity events.
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the [Anti Rate Limiting](#anti-rate-limiting) section.
 
