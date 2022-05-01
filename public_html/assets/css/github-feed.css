@@ -83,7 +83,7 @@
 }
 
 .github-feed .head .avatar-img img {
-    width: 60px;
+    width: 3.75rem;
     border: 1px solid var(--feed-head-user-img-border-color);
     padding: 3px 3px;
     margin: 0px !important
@@ -288,14 +288,14 @@
 }
 
 .github-feed .bod .result .gfpost p img {
-    margin-top: 5px;
     float: left;
-    width: 15px;
-    margin-right: 5px;
+    width: 1rem;
+    margin-bottom: 0.33rem;
+    margin-right: 0.33rem;
 }
 
 .github-feed .bod .result .gfpost p img.letik {
-    width: 15px;
+    width: 1rem;
 }
 
 .github-feed .bod .result .gfpost .date {
