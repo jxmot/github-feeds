@@ -28,6 +28,7 @@ function isEven(num) {
 
 // render markdown flavored text as HTML
 function renderMD(input) {
+    if(input === null) return '';
     var step = 0;
     var loc = 0;
     var output = input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\r/g, '').replace(/\n/g, '<br>').replace(/ & /g, ' &amp; ');
