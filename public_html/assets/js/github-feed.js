@@ -19,7 +19,7 @@ var debug = false;
 var issuebody = true;
 var releasebody = true;
 // show badges from shields.io
-usebadges = false;
+usebadges = true;
 // the gists tab is optional
 var showgists = false;
 // the "to top" button is optional
