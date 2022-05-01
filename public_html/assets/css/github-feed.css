@@ -83,7 +83,7 @@
 }
 
 .github-feed .head .avatar-img img {
-    width: 60px;
+    width: 3.75rem;
     border: 1px solid var(--feed-head-user-img-border-color);
     padding: 3px 3px;
     margin: 0px !important
@@ -234,6 +234,11 @@
     text-overflow: ellipsis;
 }
 
+.github-feed .bod .result .gfpost .release-body {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 .github-feed .bod .result .contributor {
     display: inline-block;
     margin-left: 10px;
@@ -265,19 +270,32 @@
     clear: both;
 }
 
+.github-feed .bod .result .gfpost code {
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-family: 'Courier New', monospace;
+    color: var(--feed-color);
+    clear: both;
+    font-weight: 900;
+
+    background-color: var(--color-neutral-muted); 
+    border-radius: 6px;
+}
+
 .github-feed .bod .result .gfpost p a {
     font-weight: normal;
 }
 
 .github-feed .bod .result .gfpost p img {
-    margin-top: 5px;
     float: left;
-    width: 30px;
-    margin-right: 5px;
+    width: 1rem;
+    margin-bottom: 0.33rem;
+    margin-right: 0.33rem;
 }
 
 .github-feed .bod .result .gfpost p img.letik {
-    width: 20px;
+    width: 1rem;
 }
 
 .github-feed .bod .result .gfpost .date {
