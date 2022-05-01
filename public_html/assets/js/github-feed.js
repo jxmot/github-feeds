@@ -435,9 +435,25 @@ if(waitforit === true) {
                     }
                 } else if (d[i].type == "PullRequestEvent") {
                     // https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types#pullrequestevent
-
-                    // action opened
-                    // action closed
+                    var b = "";
+                    if (d[i].payload.action == "closed") {
+                        b += "closed PR"
+                    } else if (d[i].payload.action == "opened") {
+                        b += "opened PR"
+                    }
+                    e += '<div class="result">';
+                    e += '    <div class="icon">';
+                    e += '        <span class="octicon octicon-git-pull-request"></span>';
+                    e += '    </div>';
+                    e += '    <div class="gfpost">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
+                    e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
+                    e += b + ' ';
+                    e += '        <a href="' + d[i].payload.pull_request.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.pull_request.number + '</a>';
+                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.pull_request.title + '</p>';
+                    e += '        <p>' + renderMD(d[i].payload.pull_request.body) + '</p>';
+                    e += '    </div>';
+                    e += '</div>'
                 }
             });
             $(z + ':eq(' + x + ') .feed-activ').html(e)
