@@ -15,6 +15,7 @@ $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author
 
 var debug = false;
 
+// extra content, issues and releases
 var issuebody = true;
 var releasebody = true;
 // show badges from shields.io
