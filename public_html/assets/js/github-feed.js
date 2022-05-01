@@ -14,6 +14,8 @@
 $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
 
 var debug = false;
+// show badges from shields.io
+usebadges = false;
 // the gists tab is optional
 var showgists = false;
 // the "to top" button is optional
@@ -229,10 +231,17 @@ if(waitforit === true) {
                 c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '    </div>';
                 c += '    <div class="contributor">';
-                // shields.io badges
-                c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
-                c += '        <br>';
-                c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+
+                if(usebadges === true) {
+                    // shields.io badges
+                    c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
+                    c += '        <br>';
+                    c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+                } else {
+                    c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
+                    c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
+                    c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
+                }
                 c += '    </div>';
                 c += '</div>'
             });
