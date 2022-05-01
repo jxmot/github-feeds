@@ -30,7 +30,7 @@ function isEven(num) {
 function renderMD(input) {
     var step = 0;
     var loc = 0;
-    var output = input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>').replace(/ & /g, ' &amp; ');
+    var output = input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\r/g, '').replace(/\n/g, '<br>').replace(/ & /g, ' &amp; ');
     while((loc = output.lastIndexOf('`')) !== -1) {
         output = replaceAt(output, loc, '<');
         if(isEven(step)) {
