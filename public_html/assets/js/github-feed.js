@@ -11,9 +11,20 @@
     Author: https://github.com/jxmot
     Repository: https://github.com/jxmot/github-feeds
 */
-$.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
 
-var debug = false;
+// When the user clicks on the to-top button, 
+// scroll to the top of the container. This 
+// function must be global and take the argument 
+// as the username, it creates a selector from it.
+function jumpToTop(uname, snap = false) {
+    // only scroll the specified container, and 
+    // snap the scroll if desired
+    if(snap) {
+        $('#' + uname + '>#ghfeed_body').scrollTop(0);
+    } else {
+        $('#' + uname + '>#ghfeed_body').stop(true).animate({scrollTop: 0},450);
+    }
+};
 
 // extra content, issues and releases
 var issuebody = true;
@@ -574,19 +585,4 @@ if(waitforit === true) {
         return b
     };
 
-};
-
-// When the user clicks on the to-top button, 
-// scroll to the top of the container. This 
-// function must be global and take the argument 
-// as the username, it creates a selector from it.
-//
-function jumpToTop(uname, snap = false) {
-    // only scroll the specified container, and 
-    // snap the scroll if desired
-    if(snap) {
-        $('#' + uname + '>#ghfeed_body').scrollTop(0);
-    } else {
-        $('#' + uname + '>#ghfeed_body').stop(true).animate({scrollTop: 0},450);
-    }
 };
