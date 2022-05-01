@@ -25,7 +25,6 @@
 
     --feed-body-bgcolor: var(--feed-head-bgcolor);
     --feed-body-result-border-color: var(--feed-border-color);
-    --feed-body-result-bgcolor: var(--htmlbody-bgcolor);
     --feed-body-result-bgcolor: var(--feed-head-bgcolor);
     --feed-body-result-icon-color: #d8d8d8;
     --feed-body-result-post-color: #000;
