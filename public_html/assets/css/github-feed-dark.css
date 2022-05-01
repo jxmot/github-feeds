@@ -28,8 +28,8 @@
     --feed-body-result-bgcolor: var(--htmlbody-bgcolor);
     --feed-body-result-icon-color: #d8d8d8;
     --feed-body-result-post-color: #000;
-    --feed-body-result-link-color: #555;
-    --feed-body-result-link-span-color: #aaa;
+    --feed-body-result-link-color: white;
+    --feed-body-result-link-span-color: white;
     --feed-body-result-post-date-color: #999;
 
     --feed-foot-bgcolor: var(--feed-head-bgcolor);

@@ -14,6 +14,8 @@
 $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
 
 var debug = false;
+// show badges from shields.io
+usebadges = false;
 // the gists tab is optional
 var showgists = false;
 // the "to top" button is optional
@@ -25,6 +27,14 @@ var topontab = true;
 var lightdarksw = true;
 // true = single color icons, false = multi color emoji
 var lightdarkicon = false;
+// initial busy spinner control
+var waitforit = true;
+var loaded;
+const _REPO = 0, _ACTV = 1, _GIST = 2;
+if(waitforit === true) {
+    loaded = new Array((showgists === true ? 3 : 2));
+    loaded.forEach(function(v, i, a) {a[i] = false;});
+}
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -44,8 +54,16 @@ var lightdarkicon = false;
         }
         j += '  </div>';
         j += '  <div id="ghfeed_body" class="bod" style="height: ' + height + '">';
-        j += '    <div class="feed feed-repos"></div>';
-        j += '    <div class="feed feed-gists" style="display:none"></div>';
+
+        if(waitforit === true) {
+            j += '    <div class="feed busy-spin"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span><br><span>Please Stand By...</span></div>';
+            j += '    <div class="feed feed-repos" style="display:none"></div>';
+        } else {
+            j += '    <div class="feed feed-repos"></div>';
+        }
+        if(showgists === true) {
+            j += '    <div class="feed feed-gists" style="display:none"></div>';
+        }
         j += '    <div class="feed feed-activ" style="display:none"></div>';
         j += '  </div>';
         j += '  <div class="foot">';
@@ -73,6 +91,17 @@ var lightdarkicon = false;
         }
         ibacor_activs(g, i, b);
     });    
+
+    function loadDone(ix, z, x) {
+        if(waitforit === true) {
+            loaded[ix] = true;
+            if(loaded.every(Boolean)) {
+                $('.busy-spin span').addClass('icon-animate-stop');
+                $('.busy-spin').css('display', 'none');
+                $(z + ':eq(' + x + ') .feed-repos').css('display', 'block');
+            }
+        }
+    };
 
     function setTabWidth(w) {
         var r = document.querySelector(':root');
@@ -147,7 +176,7 @@ var lightdarkicon = false;
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
                 if(topontab === true) jumpToTop(d.toLowerCase(), true);
                 return false
-            })
+            });
         });
     }
 
@@ -202,64 +231,23 @@ var lightdarkicon = false;
                 c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '    </div>';
                 c += '    <div class="contributor">';
-                // shields.io badges
-                c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
-                c += '        <br>';
-                c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+
+                if(usebadges === true) {
+                    // shields.io badges
+                    c += '        <img class="" src="https://img.shields.io/github/stars/'+ d + '/' + b[i].name + '">';
+                    c += '        <br>';
+                    c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
+                } else {
+                    c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
+                    c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
+                    c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
+                }
                 c += '    </div>';
                 c += '</div>'
             });
             $(z + ':eq(' + x + ') .feed-repos').html(c)
-        })
-    }
 
-    function ibacor_gists(d, x, z) {
-        var ajx = $.ajax({
-            url: api + d.toLowerCase() + '/gists',
-            crossDomain: true,
-            dataType: 'json',
-            cache: false
-        });
-        ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
-        });
-        ajx.done(function(b) {
-// keep track of rate limit
-// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
-            var stats = {
-                limit: ajx.getResponseHeader('x-ratelimit-limit'),
-                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
-                used: ajx.getResponseHeader('x-ratelimit-used'),
-                reset: [ 
-                    ajx.getResponseHeader('x-ratelimit-reset'),
-                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
-                ]
-            };
-
-            if(debug === true) {
-                // using .foot for rate limit stats
-                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
-            }
-
-            var c = '';
-            $.each(b, function(i, a) {
-                var keys = Object.keys(b[i].files);
-                c += '<div class="result">';
-                c += '    <div class="icon">';
-                c += '        <span class="octicon octicon-code"></span>';
-                c += '    </div>';
-                c += '    <div class="gfpost">';
-                c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
-                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
-                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
-                c += '    </div>';
-                c += '    <div class="contributor">';
-                c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
-                c += '    </div>';
-                c += '</div>'
-            });
-            $(z + ':eq(' + x + ') .feed-gists').html(c)
+            loadDone(_REPO, z, x);
         });
     }
 
@@ -439,8 +427,62 @@ var lightdarkicon = false;
                 }
             });
             $(z + ':eq(' + x + ') .feed-activ').html(e)
-        })
+
+            loadDone(_ACTV, z, x);
+        });
     }
+
+    function ibacor_gists(d, x, z) {
+        var ajx = $.ajax({
+            url: api + d.toLowerCase() + '/gists',
+            crossDomain: true,
+            dataType: 'json',
+            cache: false
+        });
+        ajx.fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+        });
+        ajx.done(function(b) {
+// keep track of rate limit
+// https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+            var stats = {
+                limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                used: ajx.getResponseHeader('x-ratelimit-used'),
+                reset: [ 
+                    ajx.getResponseHeader('x-ratelimit-reset'),
+                    Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                ]
+            };
+
+            if(debug === true) {
+                // using .foot for rate limit stats
+                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+            }
+
+            var c = '';
+            $.each(b, function(i, a) {
+                var keys = Object.keys(b[i].files);
+                c += '<div class="result">';
+                c += '    <div class="icon">';
+                c += '        <span class="octicon octicon-code"></span>';
+                c += '    </div>';
+                c += '    <div class="gfpost">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
+                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
+                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '    </div>';
+                c += '    <div class="contributor">';
+                c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
+                c += '    </div>';
+                c += '</div>'
+            });
+            $(z + ':eq(' + x + ') .feed-gists').html(c)
+
+            loadDone(_GIST, z, x);
+        });
+    };
 
     function relative_time(a) {
         if (!a) {
@@ -482,7 +524,7 @@ var lightdarkicon = false;
             }
         }
         return r
-    }
+    };
 
     function addCommas(a) {
         var b = parseInt(a, 10);
@@ -499,7 +541,7 @@ var lightdarkicon = false;
             return (b / 1000).toFixed(1).replace(/\.0$/, "") + "K"
         }
         return b
-    }
+    };
 
 };
 

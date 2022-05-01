@@ -11,6 +11,11 @@
             animation-iteration-count: infinite;
 }
 
+.icon-animate-stop {
+    -webkit-animation-play-state: paused;
+            animation-play-state: paused;
+}
+
 @-webkit-keyframes icon-spinY {
   from {
     transform: rotateY(0deg);
@@ -27,4 +32,20 @@
   to {
     transform: rotateY(360deg);
   }
+}
+
+.busy-spin {
+    color: var(--feed-color);
+    text-align: center;
+    margin-top: 10rem;
+}
+.busy-spin span {
+    vertical-align: center;
+    font-size: 5rem;
+}
+.busy-spin span:nth-child(3) {
+    vertical-align: center;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    font-style: italic;
 }
