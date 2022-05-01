@@ -5,8 +5,8 @@
 * Updates will be posted to this site.
 ***********************************************************/
 /*
-    This code has been modified. Please see the README in 
-    the repository that contins this file.
+    This code has been extensively modified. Please see the 
+    README in the repository that contins this file.
 
     Author: https://github.com/jxmot
     Repository: https://github.com/jxmot/github-feeds
@@ -293,7 +293,7 @@ waitforit = true
 
     function ibacor_activs(f, x, z) {
         var ajx = $.ajax({
-            url: api + f.toLowerCase() + '/events',
+            url: api + f.toLowerCase() + '/events',  // + '&per_page=100',
             crossDomain: true,
             dataType: 'json',
             cache: false
