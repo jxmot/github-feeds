@@ -25,6 +25,14 @@ var topontab = true;
 var lightdarksw = true;
 // true = single color icons, false = multi color emoji
 var lightdarkicon = false;
+// initial busy spinner control
+var waitforit = true;
+var loaded;
+const _REPO = 0, _ACTV = 1, _GIST = 2;
+if(waitforit === true) {
+    loaded = new Array((showgists === true ? 3 : 2));
+    loaded.forEach(function(v, i, a) {a[i] = false;});
+}
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -44,8 +52,16 @@ var lightdarkicon = false;
         }
         j += '  </div>';
         j += '  <div id="ghfeed_body" class="bod" style="height: ' + height + '">';
-        j += '    <div class="feed feed-repos"></div>';
-        j += '    <div class="feed feed-gists" style="display:none"></div>';
+
+        if(waitforit === true) {
+            j += '    <div class="feed busy-spin"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span><br><span>Please Stand By...</span></div>';
+            j += '    <div class="feed feed-repos" style="display:none"></div>';
+        } else {
+            j += '    <div class="feed feed-repos"></div>';
+        }
+        if(showgists === true) {
+            j += '    <div class="feed feed-gists" style="display:none"></div>';
+        }
         j += '    <div class="feed feed-activ" style="display:none"></div>';
         j += '  </div>';
         j += '  <div class="foot">';
@@ -73,6 +89,17 @@ var lightdarkicon = false;
         }
         ibacor_activs(g, i, b);
     });    
+
+    function loadDone(ix, z, x) {
+        if(waitforit === true) {
+            loaded[ix] = true;
+            if(loaded.every(Boolean)) {
+                $('.busy-spin span').addClass('icon-animate-stop');
+                $('.busy-spin').css('display', 'none');
+                $(z + ':eq(' + x + ') .feed-repos').css('display', 'block');
+            }
+        }
+    };
 
     function setTabWidth(w) {
         var r = document.querySelector(':root');
