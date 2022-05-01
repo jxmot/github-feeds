@@ -265,6 +265,18 @@
     clear: both;
 }
 
+.github-feed .bod .result .gfpost code {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--feed-color);
+    clear: both;
+    font-weight: 900;
+
+    background-color: var(--color-neutral-muted); 
+    border-radius: 6px;
+}
+
 .github-feed .bod .result .gfpost p a {
     font-weight: normal;
 }
@@ -272,12 +284,12 @@
 .github-feed .bod .result .gfpost p img {
     margin-top: 5px;
     float: left;
-    width: 30px;
+    width: 15px;
     margin-right: 5px;
 }
 
 .github-feed .bod .result .gfpost p img.letik {
-    width: 20px;
+    width: 15px;
 }
 
 .github-feed .bod .result .gfpost .date {

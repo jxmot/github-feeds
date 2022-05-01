@@ -31,6 +31,7 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Can have more than one feed, just add a new GitHub user name **(*at this time the "to top" button must be disabled when more than one feed is used*)**
   * Can optionally switch between light and dark themes. The switching is enabled by default.
   * Can optionally display a "wait" message while data is loading. Sometimes it could take longer than expected to retrieve all of the data. This feature will display a "standby" message until all of the data has been downloaded and rendered. Occasionally you might see it flash for a moment before the data is seen.
+  * Can render *markdown* nearly as well as GitHub. This can be seen in issue comments that have had text bounded by back-ticks (`).
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the [Anti Rate Limiting](#anti-rate-limiting) section.
 

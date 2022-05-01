@@ -332,7 +332,7 @@ if(waitforit === true) {
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        commented on issue ';
                     e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.comment.body + '</p>';
+                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + renderMD(d[i].payload.comment.body) + '</p>';
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssuesEvent") {
@@ -352,6 +352,7 @@ if(waitforit === true) {
                     e += b + ' ';
                     e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
                     e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
+// add d[i].payload.issue.body
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "PushEvent") {
