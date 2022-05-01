@@ -140,15 +140,15 @@ waitforit = true
         // to top button. See issue #1
         if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
 
-        ibacor_profil(g, i, b);
-        ibacor_repos(g, i, b);
+        profile(g, i, b);
+        repos(g, i, b);
+        events(g, i, b);
         if(showgists === true) {
-            ibacor_gists(g, i, b);
+            gists(g, i, b);
         }
-        ibacor_activs(g, i, b);
     });    
 
-    function ibacor_profil(d, x, z) {
+    function profile(d, x, z) {
 // need a variable for access to ajax functions
         var ajx = $.ajax({
             url: api + d.toLowerCase(),
@@ -220,7 +220,7 @@ waitforit = true
         });
     }
 
-    function ibacor_repos(d, x, z) {
+    function repos(d, x, z) {
         var ajx = $.ajax({
 // try to remove unwanted repos, and not have any 
 // "repo not found" errors in the shields.io badges.
@@ -291,7 +291,7 @@ waitforit = true
         });
     }
 
-    function ibacor_activs(f, x, z) {
+    function events(f, x, z) {
         var ajx = $.ajax({
             url: api + f.toLowerCase() + '/events',  // + '&per_page=100',
             crossDomain: true,
@@ -499,7 +499,7 @@ waitforit = true
         });
     }
 
-    function ibacor_gists(d, x, z) {
+    function gists(d, x, z) {
         var ajx = $.ajax({
             url: api + d.toLowerCase() + '/gists',
             crossDomain: true,
