@@ -26,30 +26,71 @@ function jumpToTop(uname, snap = false) {
     }
 };
 
+$.fn.githubfeed = function({
+// default "base" address of the API we will use. 
+api = 'https://api.github.com/users/', 
+// sort repositories by...
+sort = 'updated', 
+// width of widget within the .ghfeed container
+width = '100%', 
+// height of the content space
+height = '400px', 
+// .foot title
+title = 'github-feeds', 
+// .foot link href
+author = 'https://github.com/jxmot/github-feeds',
+// if true show last x-ratelimit-* values in the .foot
+debug = false,
 // extra content, issues and releases
-var issuebody = true;
-var releasebody = true;
+issuebody = true,
+releasebody = true,
 // show badges from shields.io
-usebadges = true;
+usebadges = true,
 // the gists tab is optional
-var showgists = false;
+showgists = false,
 // the "to top" button is optional
-var totop = true;
+totop = true,
 // scroll to top when a tab is switched to,
 // otherwise leave the scroll where it was.
-var topontab = true;
+topontab = true,
 // enable/disable theme switch and icon/emoji control
-var lightdarksw = true;
+lightdarksw = true,
 // true = single color icons, false = multi color emoji
-var lightdarkicon = false;
+lightdarkicon = false,
 // initial busy spinner control
-var waitforit = true;
-var loaded;
-const _REPO = 0, _ACTV = 1, _GIST = 2;
-if(waitforit === true) {
-    loaded = new Array((showgists === true ? 3 : 2));
-    loaded.forEach(function(v, i, a) {a[i] = false;});
-}
+waitforit = true
+} = {}) {
+
+    // This is how the "Please Standby..." message gets 
+    // hidden. 
+    var loaded;
+    const _REPO = 0, _ACTV = 1, _GIST = 2;
+    if(waitforit === true) {
+        loaded = new Array((showgists === true ? 3 : 2));
+        loaded.forEach(function(v, i, a) {a[i] = false;});
+    }
+    // this gets called after data has been downloaded and 
+    // rendered. 
+    function loadDone(ix, z, x) {
+        if(waitforit === true) {
+            // set the "loaded" indicator for a specific section
+            loaded[ix] = true;
+            // check every element in the array, if all are true 
+            // then hide the standby message.
+            if(loaded.every(Boolean)) {
+                $('.busy-spin span').addClass('icon-animate-stop');
+                $('.busy-spin').css('display', 'none');
+                $(z + ':eq(' + x + ') .feed-repos').css('display', 'block');
+            }
+        }
+    };
+
+    // set the width of the tabs(repos, activity, gists?) depending on 
+    // how many there are.
+    function setTabWidth(w) {
+        var r = document.querySelector(':root');
+        r.style.setProperty('--gftab-width', w);
+    };
 
     $(this).each(function(i, a) {
         var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
@@ -106,22 +147,6 @@ if(waitforit === true) {
         }
         ibacor_activs(g, i, b);
     });    
-
-    function loadDone(ix, z, x) {
-        if(waitforit === true) {
-            loaded[ix] = true;
-            if(loaded.every(Boolean)) {
-                $('.busy-spin span').addClass('icon-animate-stop');
-                $('.busy-spin').css('display', 'none');
-                $(z + ':eq(' + x + ') .feed-repos').css('display', 'block');
-            }
-        }
-    };
-
-    function setTabWidth(w) {
-        var r = document.querySelector(':root');
-        r.style.setProperty('--gftab-width', w);
-    };
 
     function ibacor_profil(d, x, z) {
 // need a variable for access to ajax functions
@@ -203,7 +228,7 @@ if(waitforit === true) {
 // of repos back. FYI- there is no "pagination" here.
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#pagination
 // https://jesse.sh/async-api-calls-with-pagination/#getting-the-next-page
-            url: api + d.toLowerCase() + '/repos?type=sources&sort=' + h + '&per_page=100',
+            url: api + d.toLowerCase() + '/repos?type=sources&sort=' + sort + '&per_page=100',
             crossDomain: true,
             dataType: 'json',
             cache: false
