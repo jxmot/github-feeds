@@ -433,6 +433,11 @@ if(waitforit === true) {
                         e += '    </div>';
                         e += '</div>'
                     }
+                } else if (d[i].type == "PullRequestEvent") {
+                    // https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types#pullrequestevent
+
+                    // action opened
+                    // action closed
                 }
             });
             $(z + ':eq(' + x + ') .feed-activ').html(e)
