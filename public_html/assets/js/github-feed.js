@@ -14,6 +14,9 @@
 $.fn.githubfeed = function(api, h, width, height, title = 'github-feeds', author = 'https://github.com/jxmot/github-feeds') {
 
 var debug = false;
+
+var issuebody = true;
+var releasebody = true;
 // show badges from shields.io
 usebadges = false;
 // the gists tab is optional
@@ -318,6 +321,9 @@ if(waitforit === true) {
                     e += '        released ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '/release/tag/' + d[i].payload.release.tag_name + '" target="_blank">' + d[i].payload.release.tag_name + '</a> at';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
+                    if(releasebody === true) {
+                        e += '        <p class="release-body">' + renderMD(d[i].payload.release.body) + '</p>';
+                    }
                     e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
                     e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
                     e += '    </div>';
@@ -352,7 +358,9 @@ if(waitforit === true) {
                     e += b + ' ';
                     e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
                     e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
-// add d[i].payload.issue.body
+                    if(issuebody === true) {
+                        e += '        <p>' + renderMD(d[i].payload.issue.body) + '</p>';
+                    }
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "PushEvent") {

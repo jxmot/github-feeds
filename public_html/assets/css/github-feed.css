@@ -234,6 +234,11 @@
     text-overflow: ellipsis;
 }
 
+.github-feed .bod .result .gfpost .release-body {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 .github-feed .bod .result .contributor {
     display: inline-block;
     margin-left: 10px;
