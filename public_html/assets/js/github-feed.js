@@ -227,7 +227,7 @@ if(waitforit === true) {
                 c += '    </div>';
                 c += '    <div class="gfpost">';
                 c += '        <a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
-                c += '        <p>' + b[i].description + '</p>';
+                c += '        <p>' + (b[i].description === null ? '<i>No Description Provided</i>' : b[i].description) + '</p>';
                 c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '    </div>';
                 c += '    <div class="contributor">';
