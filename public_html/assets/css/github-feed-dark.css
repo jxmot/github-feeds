@@ -35,5 +35,7 @@
     --feed-foot-bgcolor: var(--feed-head-bgcolor);
     --feed-foot-border-color: var(--feed-border-color);
     --feed-foot-link-color: #999;
+
+    --color-neutral-muted: #455263;
 }
 
