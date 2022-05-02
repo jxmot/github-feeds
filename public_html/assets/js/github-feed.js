@@ -327,7 +327,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-star"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += (d[i].payload.action === 'started' ? 'starred' : d[i].payload.action) + ' ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
@@ -339,7 +339,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-repo-forked"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        forked ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a> to';
@@ -352,7 +352,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-tag"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        released ';
@@ -370,7 +370,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-comment-discussion"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        commented on issue ';
@@ -389,7 +389,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-issue-' + d[i].payload.action + '"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';
@@ -410,7 +410,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-git-commit"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        pushed to ';
@@ -436,7 +436,7 @@ waitforit = true
                         e += '    <div class="icon">';
                         e += '        <span class="octicon octicon-git-branch"></span>';
                         e += '    </div>';
-                        e += '    <div class="gfpost">';
+                        e += '    <div class="gfpost event-post">';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created branch ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + d[i].payload.ref + '</a> at ';
@@ -449,7 +449,7 @@ waitforit = true
                         e += '    <div class="icon">';
                         e += '        <span class="octicon octicon-plus"></span>';
                         e += '    </div>';
-                        e += '    <div class="gfpost">';
+                        e += '    <div class="gfpost event-post">';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created repository ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
@@ -461,7 +461,7 @@ waitforit = true
                         e += '    <div class="icon">';
                         e += '        <span class="octicon octicon-tag"></span>';
                         e += '    </div>';
-                        e += '    <div class="gfpost">';
+                        e += '    <div class="gfpost event-post">';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created tag ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/'+d[i].payload.ref+'" target="_blank">' + d[i].payload.ref + '</a> at';
@@ -482,7 +482,7 @@ waitforit = true
                     e += '    <div class="icon">';
                     e += '        <span class="octicon octicon-git-pull-request"></span>';
                     e += '    </div>';
-                    e += '    <div class="gfpost">';
+                    e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';

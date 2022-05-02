@@ -234,6 +234,10 @@
     text-overflow: ellipsis;
 }
 
+.github-feed .bod .result .event-post {
+    width: calc(100% - 60px);
+}
+
 .github-feed .bod .result .gfpost .release-body {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
