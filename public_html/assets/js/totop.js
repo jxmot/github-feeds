@@ -13,7 +13,7 @@
     Author: https://github.com/jxmot
     Repository: https://github.com/jxmot/github-feeds
 */
-// call our function when the window contents are scrolled
+// call our function when the element contents are scrolled
 
 // A percentage of element size, if scrolled past this
 // point the 'to top' button will be displayed. Adjust 
