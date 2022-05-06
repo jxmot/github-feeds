@@ -31,10 +31,10 @@
 /* header */
 .github-feed .head {
     font-size: 1em;
-    width: calc(100% - 20px);
-/*     width: 100%; */
+    /* width: calc(100% - 20px); */
+    width: 100%;
     padding: 10px;
-    height: 70px;
+    /* height: 70px; */
 /*     height: 90px; */
     background: var(--feed-head-bgcolor);
     border-bottom: 1px solid var(--feed-border-color);
