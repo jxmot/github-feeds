@@ -184,7 +184,7 @@ In some situations there can be large number of public repositories for the spec
 
 And it may be possible that not all of them are desired in the rendered repository list.
 
-Before the requested repository data is returned to the client it will be passed through `gfapi/filter.php:filterRepos()`. That function will look for a file named `gfapi/filter.json`, if it is found it contents will be used to determine which reposotories are desired.
+Before the requested repository data is returned to the client it will be passed through `gfapi/filter.php:filterRepos()`. That function will look for a file named `gfapi/filter.json`, if it is found it contents will be used to determine which repositories are desired.
 
 `gfapi/example_filter.json`:
 
@@ -216,7 +216,79 @@ Here is how filtering works:
 
 ## Repository Events
 
-This new feature adds *repository event* data to each of the repositories that are rendered in the list. Unfortunately obtaining the repository event data requires a GitHub API call. 
+This new feature adds *repository event* data to each of the repositories that are rendered in the list. Unfortunately obtaining the repository event data requires a GitHub API call.
+
+### Output Example
+
+Shown side-by-side is a repository without any event data, and one with event data (inside of the red box):
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/repoev_1.png" style="width:35%;border: 2px solid black;margin-right: 1rem;"; alt="Example #1" title="Example #1, no event data"/>
+        <img src="./mdimg/repoev_2.png" style="width:35%;border: 2px solid black;margin-left: 1rem;"; alt="Example #2" title="Example #2, has event data"/>
+        <br>
+        <figcaption><strong>Without and With Repository Event Data</strong></figcaption>
+    </figure>
+</div>
+<br>
+
+### Repository Event Retrieval
+
+There are 4 distinct parts to repository event retrieval:
+
+* Queuing the repository data used for event retrieval 
+* Setting up event listeners for when the output element becomes visible
+* Reacting when the event target element becomes visible and triggering GitHub repository event API calls
+* Rendering the repository event data 
+
+#### Queuing the Repository Data
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/repoflow_1.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Queuing the Repository Data" title="Queuing the Repository Data"/>
+        <br>
+        <figcaption><strong>Repository Filtering</strong></figcaption>
+    </figure>
+</div>
+<br>
+
+#### Setting Up Event Listeners
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/repoflow_2.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Setting Up Event Listeners" title="Setting Up Event Listeners"/>
+        <br>
+        <figcaption><strong>Repository Filtering</strong></figcaption>
+    </figure>
+</div>
+<br>
+
+#### Reacting to Element Visibility
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/repoflow_3.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Reacting to Element Visibility" title="Reacting to Element Visibility"/>
+        <br>
+        <figcaption><strong>Repository Filtering</strong></figcaption>
+    </figure>
+</div>
+<br>
+
+#### Rendering Event Data
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/repoflow_4.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Rendering Event Data" title="Rendering Event Data"/>
+        <br>
+        <figcaption><strong>Repository Filtering</strong></figcaption>
+    </figure>
+</div>
+<br>
 
 ## Changing Appearance
 
