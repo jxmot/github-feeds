@@ -1,0 +1,9 @@
+{
+    "_comment00":"all entries MUST be lowercase!!!",
+    "_comment01":"repos that a named here, and render = true then that repo will be in the resulting data",
+    "some-repo":{"render":true},
+    "another-repo":{"render":true},
+    "yet-another-repo":{"render":true},
+    "_comment02":"repos can be filtered and not seen",
+    "somewhere-repo":{"render":false}
+}

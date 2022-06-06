@@ -3,6 +3,11 @@
     GitHub Feeds - a mock API endpoint that emulates what 
     GitHub would return.
 
+    With the exception of "filtering", when this endpoint is 
+    used for getting the repo data the data can be "filtered".
+
+    If the "filter.json" file is present then filtering will occur.
+
     This relies on JSON files existing in the `../gfdata` 
     folder. They are created with the scripts in `../gfscripts`.
 */
@@ -10,11 +15,14 @@
 define('_DEBUG', false);
 define('QRYSTR', ((isset($_SERVER['QUERY_STRING']) === true) ? $_SERVER['QUERY_STRING']    : null));
 
+$result = '';
+
 // check for debug/test mode
 if(!defined('_DEBUG') || _DEBUG === false) {
 // only change this if getghdata-cron.sh has 
 // a modified `gfdata`
     $datapath = '../gfdata/';
+    require_once('./filter.php');
 
     $queries = array();
     if(QRYSTR !== null) {
@@ -53,7 +61,15 @@ if(!defined('_DEBUG') || _DEBUG === false) {
                 error_log('github-feeds: waiting for non-zero :'.$datafile,0);
             }
             $fileid = fopen($datafile,'r');
-            $result = fread($fileid,filesize($datafile));
+
+            if(strpos($datafile, 'repos') === false) {
+                $result = fread($fileid,filesize($datafile));
+            } else {
+                // NOTE: this is optional, if the filter.json file does 
+                // not exist then raw data is returned.
+                $result = filterRepos(fread($fileid,filesize($datafile)));
+            }
+            fclose($fileid);
         } else {
             $result = '{"error":"Data file was not found - '. $datafile .'","qry":"'.QRYSTR.'"}';
             error_log('github-feeds: Data file was not found :'.$datafile.'  query:'.QRYSTR,0);
