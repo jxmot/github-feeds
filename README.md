@@ -22,18 +22,20 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * jQuery - updated to 3.6.0, local file in `assets/jq`
   * Octicons - updated to 3.5.0, local files in `assets/css/octicons-3.5.0`
 * Changed:
-  * Modified CSS, fixed some classes and added a few. Also using CSS grid
-  * Improved code readability, added comments
+  * Modified CSS, fixed some classes and added a few. Also using CSS grid.
+  * Improved code readability, added comments.
   * Can specify other API URLs for the data (*part of anti-rate limiting*)
-  * Using [Shields.io](<https://shields.io/>) to display star and fork counts
-  * The Gists tab is optional, it is disabled by default
-  * Added an optional "scroll to top" button that appears in the footer, it is enabled by default
-  * Can have more than one feed, just add a new GitHub user name **(*at this time the "to top" button must be disabled when more than one feed is used*)**
+  * Using [Shields.io](<https://shields.io/>) to display star and fork counts.
+  * The Gists tab is optional, it is disabled by default.
+  * Added an optional "scroll to top" button that appears in the footer, it is enabled by default.
+  * Can have more than one feed, just add a new GitHub user name to an additional container.
   * Can optionally switch between light and dark themes. The switching is enabled by default.
   * Can optionally display a "wait" message while data is loading. Sometimes it could take longer than expected to retrieve all of the data. This feature will display a "standby" message until all of the data has been downloaded and rendered. Occasionally you might see it flash for a moment as the page is loading and before the data is seen.
   * Can render *markdown* nearly as well as GitHub. This can be seen in issue comments that have had text bounded by back-ticks (`).
   * Improved content, added optional content to the activities entries. Added activity events.
   * Added GitHub "PullRequestEvent" data to the "Activities" tab.
+  * Added an optional repository filter. This filter will limit the repositories seen by matching them to repository names in a filter JSON file.
+  * Repository events, the original seemed incomplete to me. The repositories tab would show *updated* repositories but no other information was provided. I have changed this by using the GitHub API *directly* to obtain **repository events** from GitHub for *each repository that is rendered*. 
 
 The other *major* modification that is made here is when and how the GitHub API data is retrieved and *saved*. There is more about this in the [Anti Rate Limiting](#anti-rate-limiting) section.
 
@@ -130,7 +132,7 @@ Before running the demo you will need some JSON data files. These files will con
 You should now have three(*four, depending if Gists are enabled*) JSON files(*using the scripts as found*):
 
 * `[USER]user.json` - user profile data
-* `[USER]repos.json` - list of repositories, **NOTE:** This quantity is limited to a maximum of 100 repositories
+* `[USER]repos.json` - list of repositories, **NOTE:** This quantity is limited to a maximum of 100 repositories. The files `gfapi/filter.json` and `gfapi/filter.php` can be used to only allow specific repositories *by name*.
 * `[USER]events.json` - list of the user's GitHub events
 * `[USER]gists.json` - optional Gist data, it may not be present
 
@@ -176,6 +178,46 @@ githubuser/gists
 
 Where "githubuser" is the GitHub user, as in `https://github.com/`**`githubuser`**. See `public_html/gfapi/index.php` for more details about parsing the queries.
 
+### Optional Repository Filter
+
+In some situations there can be large number of public repositories for the specified GitHub user. The maximum number is 100 since the current version of "GitHub Feeds" does not do any pagination when retrieving the repository data. 
+
+And it may be possible that not all of them are desired in the rendered repository list.
+
+Before the requested repository data is returned to the client it will be passed through `gfapi/filter.php:filterRepos()`. That function will look for a file named `gfapi/filter.json`, if it is found it contents will be used to determine which reposotories are desired.
+
+`gfapi/example_filter.json`:
+
+```
+{
+    "_comment00":"all entries MUST be lowercase!!!",
+    "_comment01":"repos that are named here, and render = true then that repo will be in the resulting data",
+    "some-repo":{"render":true},
+    "another-repo":{"render":true},
+    "yet-another-repo":{"render":true},
+    "_comment02":"repos can be filtered and not seen",
+    "somewhere-repo":{"render":false}
+}
+```
+
+Here is how filtering works:
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/filter.png" style="width:35%;border: 2px solid black;margin-left: 1rem;"; alt="Repository Filtering Flow Chart" title="Repository Filtering Flow Chart"/>
+        <br>
+        <figcaption><strong>Repository Filtering</strong></figcaption>
+    </figure>
+</div>
+<br>
+
+**NOTE:** Filtering is only possible when using the `gfapi` endpoint.
+
+## Repository Events
+
+This new feature adds *repository event* data to each of the repositories that are rendered in the list. Unfortunately obtaining the repository event data requires a GitHub API call. 
+
 ## Changing Appearance
 
 This is accomplished with *loading* and *unloading* CSS files, and the dark/light slide switch. Other than enabling or disabling the switch everything is contained in:
@@ -188,6 +230,13 @@ This particular implementation of a "to top" scroll button can be applied to an 
 * `public_html/assets/css/totop.css` - button styling and relative location
 * `public_html/assets/js/totop.js` - enable or disable the button, and manage its appearance in the parent element
 * `public_html/assets/js/github-feed.js` - contains `jumpToTop()`, a global function called when the button is clicked
+
+# GitHub API Issues
+
+The GitHub API is not perfect, it has bugs and some confusing documentation. I will try to clear up a few things here:
+
+* Repository `"WatchEvent"` - This was an odd one. I found out that a "star" event type is not what you would expect. Such as "starred". Instead the data contains "started". GitHub support told me - "*Having the action as "started" is intentional. This is also referenced in our documentation:*". There's only a brief mention with no explanation as to "why", it can be found [here](<https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types#watchevent>).
+* Where oh where is the watchers count? This is another confusing GitHub API anomaly. You may have noticed that the repository list shown in the plug-on has star counts, fork counts, and issue counts. But no watcher counts. Even though the API documentation seems to indicate it should be available in the field `"subscribers_count"`. what is **not made clear** is that `"subscribers_count"` will only be available when retrieving data for a specific repository. That means that none of the “search” endpoints will return that field, period.
 
 ---
 <img src="http://webexperiment.info/extcounter/mdcount.php?id=github-feeds">
