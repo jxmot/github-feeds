@@ -249,7 +249,7 @@ There are 4 distinct parts to repository event retrieval:
 <!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
         <img src="./mdimg/repoflow_1.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Queuing the Repository Data" title="Queuing the Repository Data"/>
         <br>
-        <figcaption><strong>Repository Filtering</strong></figcaption>
+        <figcaption><strong>Queuing the Repository Data</strong></figcaption>
     </figure>
 </div>
 <br>
@@ -261,7 +261,7 @@ There are 4 distinct parts to repository event retrieval:
 <!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
         <img src="./mdimg/repoflow_2.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Setting Up Event Listeners" title="Setting Up Event Listeners"/>
         <br>
-        <figcaption><strong>Repository Filtering</strong></figcaption>
+        <figcaption><strong>Setting Up Event Listeners</strong></figcaption>
     </figure>
 </div>
 <br>
@@ -273,7 +273,7 @@ There are 4 distinct parts to repository event retrieval:
 <!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
         <img src="./mdimg/repoflow_3.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Reacting to Element Visibility" title="Reacting to Element Visibility"/>
         <br>
-        <figcaption><strong>Repository Filtering</strong></figcaption>
+        <figcaption><strong>Reacting to Element Visibility</strong></figcaption>
     </figure>
 </div>
 <br>
@@ -285,7 +285,7 @@ There are 4 distinct parts to repository event retrieval:
 <!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
         <img src="./mdimg/repoflow_4.png" style="border: 2px solid black;margin-left: 1rem;"; alt="Rendering Event Data" title="Rendering Event Data"/>
         <br>
-        <figcaption><strong>Repository Filtering</strong></figcaption>
+        <figcaption><strong>Rendering Event Data</strong></figcaption>
     </figure>
 </div>
 <br>
@@ -300,15 +300,14 @@ This is accomplished with *loading* and *unloading* CSS files, and the dark/ligh
 
 This particular implementation of a "to top" scroll button can be applied to an *element*. And has an adjustable threshold for determining when the button appears. The files involved are:
 * `public_html/assets/css/totop.css` - button styling and relative location
-* `public_html/assets/js/totop.js` - enable or disable the button, and manage its appearance in the parent element
-* `public_html/assets/js/github-feed.js` - contains `jumpToTop()`, a global function called when the button is clicked
+* `public_html/assets/js/github-feed.js` - contains `gfJumpToTop()`, a local function called when the button is clicked
 
-# GitHub API Issues
+# Known GitHub API Issues
 
 The GitHub API is not perfect, it has bugs and some confusing documentation. I will try to clear up a few things here:
 
 * Repository `"WatchEvent"` - This was an odd one. I found out that a "star" event type is not what you would expect. Such as "starred". Instead the data contains "started". GitHub support told me - "*Having the action as "started" is intentional. This is also referenced in our documentation:*". There's only a brief mention with no explanation as to "why", it can be found [here](<https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types#watchevent>).
-* Where oh where is the watchers count? This is another confusing GitHub API anomaly. You may have noticed that the repository list shown in the plug-on has star counts, fork counts, and issue counts. But no watcher counts. Even though the API documentation seems to indicate it should be available in the field `"subscribers_count"`. what is **not made clear** is that `"subscribers_count"` will only be available when retrieving data for a specific repository. That means that none of the “search” endpoints will return that field, period.
+* Where oh where is the watchers count? This is another confusing GitHub API anomaly. You may have noticed that the repository list shown in the plug-on has star counts, fork counts, and issue counts. But no watcher counts. Even though the API documentation seems to indicate it should be available in the field `"subscribers_count"`. What is **not made clear** is that `"subscribers_count"` will only be available when retrieving data for a specific repository. That means that none of the “search” endpoints will return that field, period.
 
 ---
 <img src="http://webexperiment.info/extcounter/mdcount.php?id=github-feeds">
