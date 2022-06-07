@@ -29,6 +29,48 @@ function saveGHFData(ix, data) {
 };
 */
 
+function relative_time(a) {
+    if (!a) {
+        return
+    }
+    a = $.trim(a);
+    a = a.replace(/\.\d\d\d+/, "");
+    a = a.replace(/-/, "/").replace(/-/, "/");
+    a = a.replace(/T/, " ").replace(/Z/, " UTC");
+    a = a.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2");
+    var b = new Date(a);
+    var c = (arguments.length > 1) ? arguments[1] : new Date();
+    var d = parseInt((c.getTime() - b) / 1000);
+    d = (d < 2) ? 2 : d;
+    var r = '';
+    if (d < 60) {
+        r = 'just now'
+    } else if (d < 120) {
+        r = 'a min'
+    } else if (d < (45 * 60)) {
+        r = (parseInt(d / 60, 10)).toString() + ' mins'
+    } else if (d < (2 * 60 * 60)) {
+        r = 'an hr'
+    } else if (d < (24 * 60 * 60)) {
+        r = (parseInt(d / 3600, 10)).toString() + ' hrs'
+    } else if (d < (48 * 60 * 60)) {
+        r = 'a day'
+    } else {
+        dd = (parseInt(d / 86400, 10)).toString();
+        if (dd <= 30) {
+            r = dd + ' days'
+        } else {
+            mm = (parseInt(dd / 30, 10)).toString();
+            if (mm <= 12) {
+                r = mm + ' mon'
+            } else {
+                r = (parseInt(mm / 12, 10)).toString() + ' yrs'
+            }
+        }
+    }
+    return r
+};
+
 // When the user clicks on the to-top button, 
 // scroll to the top of the container. This 
 // function must be global and take the argument 
@@ -576,48 +618,6 @@ waitforit = true
 
             loadDone(_GIST, z, x);
         });
-    };
-
-    function relative_time(a) {
-        if (!a) {
-            return
-        }
-        a = $.trim(a);
-        a = a.replace(/\.\d\d\d+/, "");
-        a = a.replace(/-/, "/").replace(/-/, "/");
-        a = a.replace(/T/, " ").replace(/Z/, " UTC");
-        a = a.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2");
-        var b = new Date(a);
-        var c = (arguments.length > 1) ? arguments[1] : new Date();
-        var d = parseInt((c.getTime() - b) / 1000);
-        d = (d < 2) ? 2 : d;
-        var r = '';
-        if (d < 60) {
-            r = 'just now'
-        } else if (d < 120) {
-            r = 'a min'
-        } else if (d < (45 * 60)) {
-            r = (parseInt(d / 60, 10)).toString() + ' mins'
-        } else if (d < (2 * 60 * 60)) {
-            r = 'an hr'
-        } else if (d < (24 * 60 * 60)) {
-            r = (parseInt(d / 3600, 10)).toString() + ' hrs'
-        } else if (d < (48 * 60 * 60)) {
-            r = 'a day'
-        } else {
-            dd = (parseInt(d / 86400, 10)).toString();
-            if (dd <= 30) {
-                r = dd + ' days'
-            } else {
-                mm = (parseInt(dd / 30, 10)).toString();
-                if (mm <= 12) {
-                    r = mm + ' mon'
-                } else {
-                    r = (parseInt(mm / 12, 10)).toString() + ' yrs'
-                }
-            }
-        }
-        return r
     };
 
     function addCommas(a) {
