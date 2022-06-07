@@ -11,6 +11,23 @@
     Author: https://github.com/jxmot
     Repository: https://github.com/jxmot/github-feeds
 */
+/*
+// global data, all of it...
+var ghdata = [
+    {empty:true},
+    {empty:true},
+    {empty:true},
+    {empty:true},
+    {empty:true}
+];
+// indices...
+// NOTE: _GHRFEVENTS is for a future implementation of "release events"
+const _GHFUSER = 0, _GHFREPOS = 1, _GHFGISTS = 2, _GHFEVENTS = 3, _GHRFEVENTS = 4;
+// save a distinct copy of the data, no references!
+function saveGHFData(ix, data) {
+    ghdata[ix] = JSON.parse(JSON.stringify(data));
+};
+*/
 
 // When the user clicks on the to-top button, 
 // scroll to the top of the container. This 
@@ -160,6 +177,9 @@ waitforit = true
             console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
+            // make the data globally available for other uses
+            // saveGHFData(_GHFUSER, b);
+
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -236,6 +256,8 @@ waitforit = true
             console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
+            // make the data globally available for other uses
+            // saveGHFData(_GHFREPOS, b);
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -301,6 +323,9 @@ waitforit = true
             console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(d) {
+            // make the data globally available for other uses
+            // saveGHFData(_GHFEVENTS, d);
+
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -509,6 +534,9 @@ waitforit = true
             console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
+            // make the data globally available for other uses
+            // saveGHFData(_GHFGISTS, b);
+
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
