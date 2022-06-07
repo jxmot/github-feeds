@@ -31,11 +31,8 @@
 /* header */
 .github-feed .head {
     font-size: 1em;
-    /* width: calc(100% - 20px); */
     width: 100%;
     padding: 10px;
-    /* height: 70px; */
-/*     height: 90px; */
     background: var(--feed-head-bgcolor);
     border-bottom: 1px solid var(--feed-border-color);
     display: block;
@@ -91,7 +88,6 @@
 
 .github-feed .head .user-bio {
     display: inline-block;
-    /* width: 63%; */
     margin-left: 1rem;
 }
 
@@ -165,7 +161,6 @@
 }
 
 .github-feed  .gftabs .aktip, .github-feed  .gftabs {
-/* .github-feed  .gftabs .aktip, .github-feed  .gftabs .gftab:hover { */
     background: var(--feed-tabs-active-bgcolor);
     cursor: auto;
 }
@@ -186,19 +181,12 @@
 }
 
 .github-feed .bod .result {
-   display: grid; 
+    display: grid; 
+    grid-template-rows: auto;
+    grid-template-columns: auto 3fr auto;
+    grid-template-areas: 'icon_g gfpost_g contrib_g';
 
-   grid-template-rows: auto;
-   grid-template-columns: auto 3fr auto;
-   
-   grid-template-areas: 'icon_g gfpost_g contrib_g';
-
-
-
-    /* display: block; */
     padding: 0.625rem;
-    /* padding-right: 0; */
-    /* width: calc(100% - 0.625rem); */
     width: 100%;
     border-bottom: 2px solid var(--feed-body-result-border-color);
     background-color: var(--feed-body-result-bgcolor);
@@ -206,10 +194,8 @@
 }
 
 .github-feed .bod .result .icon {
-
     grid-area: icon_g;
 
-    /* display: inline-block; */
     float: left;
     width: 35px;
     margin-right: 10px;
@@ -227,23 +213,9 @@
     color: var(--feed-body-result-icon-color);
 }
 
-/* .github-feed .bod .feed-repos .result .gfpost, */
-/* .github-feed .bod .feed-gists .result .gfpost, */
-/*
-.github-feed .bod .feed-activ .result .gfpost {
-    display: inline-block;
-    width: calc(100% - 60px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.8em;
-    color: var(--feed-body-result-post-color);
-}
-*/
 .github-feed .bod .result .gfpost {
     grid-area: gfpost_g;
 
-    /* display: inline-block; */
-    /* width: calc(100% - 120px); */
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -258,11 +230,8 @@
 }
 
 .github-feed .bod .result .contributor {
-
     grid-area: contrib_g;
 
-
-    /* display: inline-block; */
     margin-left: 10px;
     width: 50px;
     font-size: 0.8em;
