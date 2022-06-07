@@ -58,7 +58,7 @@
     <script src="assets/jq/jquery-3.6.0.min.js"></script>
     <!-- <script src="assets/jq/jquery-3.6.0.js"></script> -->
     <!-- the "to top" button for the feed -->
-    <script src="assets/js/totop.js"></script>
+    <!-- <script src="assets/js/totop.js"></script> -->
     <!-- various utility functions -->
     <script src="assets/js/utils.js"></script>
     <!-- light/dark theme switch -->
@@ -74,7 +74,11 @@
                 // Here is the alternative. And there is no rate limitation 
                 // here. That's because the data has already been collected
                 // and is updated with CRON.
-                {api: 'gfapi?', height: '25rem'}
+                {
+                    api: 'gfapi?', 
+                    height: '25rem',
+                    usebadges: false,
+                }
             );
         });
     </script>

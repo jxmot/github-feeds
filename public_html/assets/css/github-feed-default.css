@@ -26,11 +26,11 @@
     --feed-body-bgcolor: var(--feed-head-bgcolor);
     --feed-body-result-border-color: var(--feed-border-color);
     --feed-body-result-bgcolor: var(--feed-head-bgcolor);
-    --feed-body-result-icon-color: #d8d8d8;
+    --feed-body-result-icon-color: #303030;
     --feed-body-result-post-color: #000;
     --feed-body-result-link-color: #555;
-    --feed-body-result-link-span-color: #aaa;
-    --feed-body-result-post-date-color: #999;
+    --feed-body-result-link-span-color: #303030;
+    --feed-body-result-post-date-color: #303030;
 
     --feed-foot-bgcolor: #f5f5f5;
     --feed-foot-border-color: var(--feed-border-color);
