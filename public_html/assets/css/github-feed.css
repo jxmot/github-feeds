@@ -253,12 +253,19 @@
     color: var(--feed-body-result-link-span-color);
 }
 
+.github-feed .bod .result .gfpost ul,
 .github-feed .bod .result .gfpost p {
     margin: 0;
     padding: 0;
     font-size: 0.8rem;
     color: var(--feed-color);
-    clear: both;
+    /* clear: both; */
+}
+
+.github-feed .bod .result .gfpost li {
+    list-style: disc;
+    list-style-position: inside;
+    color: var(--feed-color);
 }
 
 .github-feed .bod .result .gfpost code {
@@ -267,7 +274,7 @@
     font-size: 0.75rem;
     font-family: 'Courier New', monospace;
     color: var(--feed-color);
-    clear: both;
+    /* clear: both; */
     font-weight: 900;
 
     background-color: var(--color-neutral-muted); 
