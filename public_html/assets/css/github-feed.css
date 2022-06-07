@@ -337,3 +337,24 @@
     }
 }
 
+.gf-gototop {
+    border: 1px solid var(--feed-totop-border-color);
+    background-color: var(--feed-totop-inact-bgcolor);
+    color: var(--feed-totop-content-color);
+}
+
+.gf-gototop:hover {
+    background-color: var(--feed-totop-act-bgcolor);
+    color: var(--feed-totop-content-color);
+}
+
+.ghfeed {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+

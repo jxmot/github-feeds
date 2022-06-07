@@ -16,7 +16,7 @@
 // scroll to the top of the container. This 
 // function must be global and take the argument 
 // as the username, it creates a selector from it.
-function jumpToTop(uname, snap = false) {
+function gfJumpToTop(uname, snap = false) {
     // only scroll the specified container, and 
     // snap the scroll if desired
     if(snap) {
@@ -41,6 +41,8 @@ title = 'github-feeds',
 author = 'https://github.com/jxmot/github-feeds',
 // if true show last x-ratelimit-* values in the .foot
 debug = false,
+// shows the heading if true
+showhead = true,
 // extra content, issues and releases
 issuebody = true,
 releasebody = true,
@@ -92,61 +94,58 @@ waitforit = true
         r.style.setProperty('--gftab-width', w);
     };
 
-    $(this).each(function(i, a) {
-        var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
-            g = $(this).data('username').toLowerCase(),
-            j = '';
-        
-        // the 'username' will make this container unique on a page
-        j += '<div id="' + g + '" class="github-feed" style="width: ' + width + '">';
-        j += '  <div class="col-3x head"></div>';
-        j += '  <div class="gftabs">';
-        if(showgists === true) {
-            setTabWidth('33.33%');
-            j += '    <div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div><div class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div>';
+    /*
+        "To Top" Button Management
+
+
+    */
+    // A percentage of element size, if scrolled past this
+    // point the 'to top' button will be displayed. Adjust 
+    // as needed.
+    const element_scroll_travel = 0.1;
+    // keeps redundant execution to a minimum
+    var element_isToTop = false;
+    // we will save the element that gets the button
+    var topElemQ = null;
+    var topElem = null;
+
+    function enableToTop(elem) {
+        topElemQ = elem;
+        topElem = document.querySelector(elem);
+        topElem.onscroll = onElementScroll;
+    };
+
+    function disableToTop(elem) {
+        document.querySelector(elem).onscroll = nullFunc;
+        document.querySelector(topElemQ + ' ~ .foot > #elemtop_button').style.display = 'none';
+    };
+
+    function nullFunc() {};
+
+    function onElementScroll() {
+        if(showElementToTop()) {
+            // has the button been enabled yet?
+            if(element_isToTop === false) {
+                document.querySelector(topElemQ + ' ~ .foot > #elemtop_button').style.display = 'block';
+                element_isToTop = true;
+            }
         } else {
-            setTabWidth('50%');
-            j += '    <div class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div class="gftab" data-dip="activ">Activity</div>';
+            // has the button been disabled yet?
+            if(element_isToTop === true) {
+                document.querySelector(topElemQ + ' ~ .foot > #elemtop_button').style.display = 'none';
+                element_isToTop = false;
+            }
         }
-        j += '  </div>';
-        j += '  <div id="ghfeed_body" class="bod" style="height: ' + height + '">';
+    };
 
-        if(waitforit === true) {
-            j += '    <div class="feed busy-spin"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span><br><span>Please Stand By...</span></div>';
-            j += '    <div class="feed feed-repos" style="display:none"></div>';
-        } else {
-            j += '    <div class="feed feed-repos"></div>';
-        }
-        if(showgists === true) {
-            j += '    <div class="feed feed-gists" style="display:none"></div>';
-        }
-        j += '    <div class="feed feed-activ" style="display:none"></div>';
-        j += '  </div>';
-        j += '  <div class="foot">';
-        if(debug === false) {
-            j += '    <a href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span>&nbsp;' + title + '</a>';
-        }
-        if((totop === true) && (typeof enableToTop === 'function')) {
-            j += '    <button id="gototop_button" class="gototop gototop-footer" onclick="jumpToTop(\'' + g + '\')" title="Go to top">';
-            j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
-            j += '    </button>';
-        }
-        j += '  </div>';
-        j += '</div>';
-        $(this).html(j);
-
-        // the 'username' will be used a part of the selector, that 
-        // way multiple "feeds" can be created and have their own 
-        // to top button. See issue #1
-        if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
-
-        profile(g, i, b);
-        repos(g, i, b);
-        events(g, i, b);
-        if(showgists === true) {
-            gists(g, i, b);
-        }
-    });    
+    // returns true if the 'to top' button should be made visible
+    function showElementToTop() {
+        // the point where the the button appears is based on the 
+        // percentage of the height of the document and NOT the window.
+        if(topElem === null) return false;
+        if(Math.round((topElem.scrollHeight * element_scroll_travel)) < topElem.scrollTop) return true;
+        else return false;
+    };
 
     function profile(d, x, z) {
 // need a variable for access to ajax functions
