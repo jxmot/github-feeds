@@ -318,7 +318,7 @@ waitforit = true
         });
 // added all .fail() functions
         ajx.fail(function(jqXHR, textStatus) {
-            consolelog('Request failed: ' + textStatus);
+            console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
@@ -400,7 +400,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            consolelog('Request failed: ' + textStatus);
+            console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
@@ -475,7 +475,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            consolelog('Request failed: ' + textStatus);
+            console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(d) {
 // keep track of rate limit
@@ -538,8 +538,11 @@ waitforit = true
                     if(releasebody === true) {
                         e += '        <p class="release-body">' + renderMD(d[i].payload.release.body) + '</p>';
                     }
-                    e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
-                    e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
+                    //e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
+                    //e += '        <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
+                    e += '        <p><span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.tarball_url + '" target="_blank">Download Source Code (tar)</a></p>';
+                    e += '        <p><span class="octicon octicon-cloud-download"></span> <a href="' + d[i].payload.release.zipball_url + '" target="_blank">Download Source Code (zip)</a></p>';
+
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssueCommentEvent") {
@@ -552,7 +555,8 @@ waitforit = true
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        commented on issue ';
                     e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + renderMD(d[i].payload.comment.body) + '</p>';
+                    //e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + renderMD(d[i].payload.comment.body) + '</p>';
+                    e += '        <p>' + renderMD(d[i].payload.comment.body) + '</p>';
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssuesEvent") {
@@ -571,7 +575,8 @@ waitforit = true
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';
                     e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
+                    //e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
+                    e += '        <p>' + d[i].payload.issue.title + '</p>';
                     if(issuebody === true) {
                         e += '        <p>' + renderMD(d[i].payload.issue.body) + '</p>';
                     }
@@ -594,17 +599,31 @@ waitforit = true
                     e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + rep + '</a> at ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
                     var c = d[i].payload.commits.length;
+
                     if (c === 2) {
-                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
-                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
                     } else if (c > 2) {
-                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
-                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
                     } else {
-                        e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>'
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>'
                     }
+
+                    //if (c === 2) {
+                    //    e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
+                    //    e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                    //    e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
+                    //} else if (c > 2) {
+                    //    e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
+                    //    e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                    //    e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
+                    //} else {
+                    //    e += '    <p><img class="letik" src="' + d[i].actor.avatar_url + '"/> <a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>'
+                    //}
+
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "CreateEvent") {
@@ -664,7 +683,8 @@ waitforit = true
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';
                     e += '        <a href="' + d[i].payload.pull_request.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.pull_request.number + '</a>';
-                    e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.pull_request.title + '</p>';
+                    //e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.pull_request.title + '</p>';
+                    e += '        <p>' + d[i].payload.pull_request.title + '</p>';
                     e += '        <p>' + renderMD(d[i].payload.pull_request.body) + '</p>';
                     e += '    </div>';
                     e += '</div>'
@@ -684,7 +704,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            consolelog('Request failed: ' + textStatus);
+            console.log('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
