@@ -553,18 +553,19 @@ waitforit = true
                     e += '    <div class="gfpost event-post">';
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
-                    e += '        commented on issue ';
-                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
+                    e += '        commented on issue in ';
+                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + ' - ' + d[i].payload.issue.title + ' #' + d[i].payload.issue.number + '</a>';
                     //e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + renderMD(d[i].payload.comment.body) + '</p>';
-                    e += '        <p>' + renderMD(d[i].payload.comment.body) + '</p>';
+                    //e += '        <p>' + renderMD(d[i].payload.comment.body, true) + '</p>';
+                    e += '        ' + renderMD(d[i].payload.comment.body);
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "IssuesEvent") {
                     var b = "";
                     if (d[i].payload.action == "closed") {
-                        b += "closed issue"
+                        b += "closed issue in"
                     } else if (d[i].payload.action == "opened") {
-                        b += "opened issue"
+                        b += "opened issue in"
                     }
                     e += '<div class="result">';
                     e += '    <div class="icon">';
@@ -574,11 +575,9 @@ waitforit = true
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += b + ' ';
-                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + '#' + d[i].payload.issue.number + '</a>';
-                    //e += '        <p><img src="' + d[i].actor.avatar_url + '"/> ' + d[i].payload.issue.title + '</p>';
-                    e += '        <p>' + d[i].payload.issue.title + '</p>';
+                    e += '        <a href="' + d[i].payload.issue.html_url + '" target="_blank">' + d[i].repo.name + ' - ' + d[i].payload.issue.title + ' #' + d[i].payload.issue.number + '</a>';
                     if(issuebody === true) {
-                        e += '        <p>' + renderMD(d[i].payload.issue.body) + '</p>';
+                        e += renderMD(d[i].payload.issue.body);
                     }
                     e += '    </div>';
                     e += '</div>'
@@ -596,20 +595,20 @@ waitforit = true
                     e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += '        pushed to ';
-                    e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + rep + '</a> at ';
+                    e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + rep + '</a> in ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
                     var c = d[i].payload.commits.length;
 
                     if (c === 2) {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
                     } else if (c > 2) {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>';
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[1].message) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
                     } else {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> ' + renderMD(d[i].payload.commits[0].message) + '</p>'
+                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                     }
 
                     //if (c === 2) {
