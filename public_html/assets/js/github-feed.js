@@ -412,9 +412,9 @@ waitforit = true
                 var a = $(this).data('dip');
                 $(this).addClass('aktip');
                 $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
-                if(topontab === true) jumpToTop(d.toLowerCase(), true);
-                return false
-            });
+            if(topontab === true) gfJumpToTop(d.toLowerCase(), true);
+            return false
+        });
         });
     }
 
@@ -781,4 +781,13 @@ waitforit = true
         return b
     };
 
+        if((totop === true) && (typeof enableToTop === 'function')) {
+            j += '    <button id="elemtop_button" class="gototop gf-gototop gototop-footer" onclick="gfJumpToTop(\'' + g + '\')" title="Go to top">';
+            j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
+            j += '    </button>';
+        }
+        // the 'username' will be used a part of the selector, that 
+        // way multiple "feeds" can be created and have their own 
+        // to top button. See issue #1
+        if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
 };
