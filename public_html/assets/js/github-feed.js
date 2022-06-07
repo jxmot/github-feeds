@@ -353,7 +353,7 @@ waitforit = true
         });
 // added all .fail() functions
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
             // make the data globally available for other uses
@@ -371,54 +371,60 @@ waitforit = true
                 ]
             };
 
-            var c = '    <div class="col-1-of-3 avatar-img">';
-            c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
-            c += '    </div>';
-            c += '    <div class="col-2-of-3 user-bio">';
-            c += '        <a href="https://github.com/' + b.login + '" target="_blank">' + b.name + '</a>';
-            if(b.type != 'User'){
-                c += '        <p>' + (b.bio != null ? b.bio : '') + '</p>';
-            }
-            c += '        <p><span class="octicon octicon-location"></span> ' + (b.location != null ? b.location : '') + '</p>';
-            if(b.type == 'User'){
-                c += '        <p><span class="user">Followers <span>'+ b.followers + '</span></span> <span class="user">Following <span>'+ b.following + '</span></span></p>';
-            }
-            c += '    </div>';
-            if(lightdarksw === true) {
-                c += '    <div class="col-3-of-3 lightdarksw">';
-                if(lightdarkicon === true) c += '        <span class="light-icon light-icon-size">&#9788;&nbsp;</span>';
-                else c += '        <span class="light-icon">&#127774;</span>';
-                c += '        <label class="switch">';
-                c += '            <input type="checkbox" onclick="swLightDark()">';
-                c += '            <span class="slider round"></span>';
-                c += '        </label>';
-                if(lightdarkicon === true) c += '        <span class="dark-icon dark-icon-size">&nbsp;&#9789;</span>';
-                else c += '        <span class="dark-icon">&#127772;</span>';
+            if(showhead === true) {
+                var c = '    <div class="col-1-of-3 avatar-img">';
+                c += '        <a href="https://github.com/' + b.login + '" target="_blank"><img src="' + b.avatar_url + '"></a>';
                 c += '    </div>';
+                c += '    <div class="col-2-of-3 user-bio">';
+                c += '        <a href="https://github.com/' + b.login + '" target="_blank">' + b.name + '</a>';
+                if(b.type != 'User'){
+                    c += '        <p>' + (b.bio != null ? b.bio : '') + '</p>';
+                }
+                c += '        <p><span class="octicon octicon-location"></span> ' + (b.location != null ? b.location : '') + '</p>';
+                if(b.type == 'User'){
+                    c += '        <p><span class="user">Followers <span>'+ b.followers + '</span></span> <span class="user">Following <span>'+ b.following + '</span></span></p>';
+                }
+                c += '    </div>';
+                if(lightdarksw === true) {
+                    c += '    <div class="col-3-of-3 lightdarksw">';
+                    if(lightdarkicon === true) c += '        <span class="light-icon light-icon-size">&#9788;&nbsp;</span>';
+                    else c += '        <span class="light-icon">&#127774;</span>';
+                    c += '        <label class="switch">';
+                    c += '            <input type="checkbox" onclick="swLightDark()">';
+                    c += '            <span class="slider round"></span>';
+                    c += '        </label>';
+                    if(lightdarkicon === true) c += '        <span class="dark-icon dark-icon-size">&nbsp;&#9789;</span>';
+                    else c += '        <span class="dark-icon">&#127772;</span>';
+                    c += '    </div>';
+                }
+                $(z + ':eq(' + x + ') .github-feed .head').html(c);
             }
-            $(z + ':eq(' + x + ') .github-feed .head').html(c);
-            if(debug === true) {
-                // using .foot for rate limit stats
-                s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
-                $(z + ':eq(' + x + ') .github-feed .foot').html(s);
-            }
-            $(z + ':eq(' + x + ') .github-feed sup.repc').html(b.public_repos);
-            if(showgists === true) {
-                $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
-            }
-            $(z + ':eq(' + x + ') .github-feed .gftab').click(function() {
-                $(z + ':eq(' + x + ') .github-feed .gftab').removeClass('aktip');
-                $(z + ':eq(' + x + ') .github-feed .feed').css('display', 'none');
-                var a = $(this).data('dip');
-                $(this).addClass('aktip');
-                $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
+            tabs(d, x, z, b);
+        });
+    };
+
+    function tabs(d, x, z, b) {
+        if(debug === true) {
+            // using .foot for rate limit stats
+            s = 'Limit: ' + stats.limit + '&nbsp;&nbsp;&nbsp;' + 'Remaining: ' + stats.remain + '&nbsp;&nbsp;&nbsp;' + 'Reset: ' + stats.reset[1];
+            $(z + ':eq(' + x + ') .github-feed .foot').html(s);
+        }
+        if(showgists === true) {
+            $(z + ':eq(' + x + ') .github-feed sup.gisc').html(b.public_gists);
+        }
+        $(z + ':eq(' + x + ') .github-feed .gftab').click(function() {
+            $(z + ':eq(' + x + ') .github-feed .gftab').removeClass('aktip');
+            $(z + ':eq(' + x + ') .github-feed .feed').css('display', 'none');
+            var a = $(this).data('dip');
+            $(this).addClass('aktip');
+            $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
             if(topontab === true) gfJumpToTop(d.toLowerCase(), true);
             return false
         });
-        });
-    }
+    };
 
     function repos(d, x, z) {
+        var owner = d;
         var ajx = $.ajax({
 // try to remove unwanted repos, and not have any 
 // "repo not found" errors in the shields.io badges.
@@ -432,7 +438,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
             // make the data globally available for other uses
@@ -468,7 +474,7 @@ waitforit = true
                 c += '    <div class="gfpost">';
                 c += '        <a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
                 c += '        <p>' + (b[i].description === null ? '<i>No Description Provided</i>' : b[i].description.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; ')) + '</p>';
-                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '        <p class="date">created ' + relative_time(b[i].created_at) + ' ago - updated ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '        <p id="repo_event-' +  b[i].name + '" class="repoevent"></p>';
                 // queue the repo event request
                 queueRepoEvReqs('repo_event-' +  b[i].name, b[i].name, b[i].events_url);
@@ -481,9 +487,12 @@ waitforit = true
                     c += '        <br>';
                     c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
                 } else {
-                    c += '		<a href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
-                    c += '		<a href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
-                    c += '		<a href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
+// NOTE: It would be nice to have the "subscribers_count" 
+// field. BUT it's not here, you will only see if getting 
+// a specific repo.
+                    c += '        <a title="Open in new tab" href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
+                    c += '        <a title="Open in new tab" href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
+                    c += '        <a title="Open in new tab" href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
                 }
                 c += '    </div>';
                 c += '</div>'
@@ -496,7 +505,7 @@ waitforit = true
             // wait a short time before getting them
             setTimeout(getRepoEvents, 1000);
         });
-    }
+    };
 
     function events(f, x, z) {
         var ajx = $.ajax({
@@ -506,7 +515,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(d) {
             // make the data globally available for other uses
@@ -538,10 +547,11 @@ waitforit = true
                     e += '        <span class="octicon octicon-star"></span>';
                     e += '    </div>';
                     e += '    <div class="gfpost event-post">';
+                    e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                     e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                     e += (d[i].payload.action === 'started' ? 'starred' : d[i].payload.action) + ' ';
                     e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                    e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+//                    e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
                     e += '    </div>';
                     e += '</div>'
                 } else if (d[i].type == "ForkEvent") {
@@ -707,7 +717,7 @@ waitforit = true
 
             loadDone(_ACTV, z, x);
         });
-    }
+    };
 
     function gists(d, x, z) {
         var ajx = $.ajax({
@@ -717,7 +727,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
             // make the data globally available for other uses
@@ -750,8 +760,8 @@ waitforit = true
                 c += '    </div>';
                 c += '    <div class="gfpost">';
                 c += '        <a href="' + b[i].html_url + '" target="_blank">' + keys[0] + '</a>';
-                c += '        <p>' + (b[i].description != null ? b[i].description : '') + '</p>';
-                c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '        <p>' + (b[i].description != null ? b[i].description.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; ') : '') + '</p>';
+                c += '        <p class="date">created ' + relative_time(b[i].created_at) + ' ago - updated ' + relative_time(b[i].updated_at) + ' ago</p>';
                 c += '    </div>';
                 c += '    <div class="contributor">';
                 c += '        <a href="' + b[i].html_url + '" target="_blank"><span>' + addCommas(b[i].comments) + '</span> <i class="octicon octicon-comment"></i></a>';
@@ -781,13 +791,59 @@ waitforit = true
         return b
     };
 
+    $(this).each(function(i, a) {
+        var b = ($(this).attr('id') != null ? '#' + $(this).attr('id') : '.' + $(this).attr('class')),
+            g = $(this).data('username').toLowerCase(),
+            j = '';
+        
+        // the 'username' will make this container unique on a page
+        j += '<div id="' + g + '" class="github-feed" style="width: ' + width + '">';
+        if(showhead === true) j += '  <div class="col-3x head"></div>';
+        j += '  <div class="gftabs">';
+        j += '    <div title="Click to see Repositories" class="gftab aktip" data-dip="repos">Repositories <sup class="repc"></sup></div><div title="Click to see Current Activity" class="gftab" data-dip="activ">Activity</div>';
+        if(showgists === true) {
+            setTabWidth('33.33%');
+            j += '<div title="Click to see Gists" class="gftab" data-dip="gists">Gists <sup class="gisc"></sup></div>';
+        } else {
+            setTabWidth('50%');
+        }
+        j += '  </div>';
+        j += '  <div id="ghfeed_body" class="bod" style="height: ' + height + '">';
+
+        if(waitforit === true) {
+            j += '    <div class="feed busy-spin"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span><br><span>Please Stand By...</span></div>';
+            j += '    <div class="feed feed-repos" style="display:none"></div>';
+        } else {
+            j += '    <div class="feed feed-repos"></div>';
+        }
+        if(showgists === true) {
+            j += '    <div class="feed feed-gists" style="display:none"></div>';
+        }
+        j += '    <div class="feed feed-activ" style="display:none"></div>';
+        j += '  </div>';
+        j += '  <div class="foot">';
+        if(debug === false) {
+            j += '    <a title="See this on GitHub" href="' + author + '" class="" target="_blank"><span class="octicon octicon-mark-github icon-animate-spiny" style=""></span>&nbsp;' + title + '</a>';
+        }
         if((totop === true) && (typeof enableToTop === 'function')) {
             j += '    <button id="elemtop_button" class="gototop gf-gototop gototop-footer" onclick="gfJumpToTop(\'' + g + '\')" title="Go to top">';
             j += '        <span id="gototop_span" class="gototop-span">&#9650;</span>';
             j += '    </button>';
         }
+        j += '  </div>';
+        j += '</div>';
+        $(this).html(j);
+
         // the 'username' will be used a part of the selector, that 
         // way multiple "feeds" can be created and have their own 
         // to top button. See issue #1
         if((totop === true) && (typeof enableToTop === 'function')) enableToTop('#' + g + '>' + '#ghfeed_body');
+
+        profile(g, i, b);
+        repos(g, i, b);
+        events(g, i, b);
+        if(showgists === true) {
+            gists(g, i, b);
+        }
+    });
 };
