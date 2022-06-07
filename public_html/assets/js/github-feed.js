@@ -28,6 +28,143 @@ function saveGHFData(ix, data) {
     ghdata[ix] = JSON.parse(JSON.stringify(data));
 };
 */
+/*
+    Obtain the most recent event for all repositories 
+    that have been rendered.
+*/
+var reporeqs = [];
+
+// https://codeutility.org/event-listener-for-when-element-becomes-visible/
+function respondToVisibility(element, idx, callback) {
+    new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.intersectionRatio > 0) {
+                callback(element, idx);
+                observer.disconnect();
+            }
+        });
+    }).observe(element);
+};
+
+function queueRepoEvReqs(target, reponame, url, depth = 1) {
+    //               0        1       2     3
+    reporeqs.push([target, reponame, url, depth]);
+};
+
+const TARG = 0;
+const REPN = 1;
+const URL  = 2;
+const DPTH = 3;
+
+function getRepoEvents() {
+    while(reporeqs.length > 0) {
+        repo = reporeqs.shift();
+        var element = document.getElementById(repo[TARG]);
+        respondToVisibility(element, repo, function(e, r) {
+            //console.log(`target = ${r[TARG]}\n`);
+            var evurl = r[URL] + '?per_page=' + r[DPTH];
+            var ajx = $.ajax({
+                url: evurl,
+                crossDomain: true,
+                dataType: 'json'
+            });
+            ajx.fail(function(jqXHR, textStatus) {
+                console.log('getRepoEvents() - Request failed: ' + textStatus);
+            });
+            ajx.done(function(evdata) {
+                //var stats = {
+                //    limit: ajx.getResponseHeader('x-ratelimit-limit'),
+                //    remain: ajx.getResponseHeader('x-ratelimit-remaining'),
+                //    used: ajx.getResponseHeader('x-ratelimit-used'),
+                //    reset: [ 
+                //        ajx.getResponseHeader('x-ratelimit-reset'),
+                //        Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
+                //    ]
+                //};
+                //s = 'Limit: ' + stats.limit + '   Remaining: ' + stats.remain + '   Reset: ' + stats.reset[1];
+                //console.log('#'+r[TARG] + '  ' + s);
+
+                if(evdata.length > 0) {
+                    //console.log('getRepoEvents() - for ' + r[TARG]);
+                    //console.log('getRepoEvents(A) - type  = ' + evdata[0].type);
+                    //console.log('getRepoEvents(A) - actor = ' + evdata[0].actor.login);
+
+                    var action = '';
+                    var actor  = {};
+
+                    switch(evdata[0].type) {
+                        case 'WatchEvent':
+                            if(evdata[0].payload.action === 'started') {
+                                action = 'starred this repository';
+                            } else {
+                                // not sure, is there a "watched"?
+                                action = 'unknown action - ' + evdata[0].payload.action;
+                                console.log(action);
+                            }
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        case 'ForkEvent':
+                            action = 'forked this repository';
+                            actor.name = evdata[0].payload.forkee.owner.login;
+                            actor.avat = evdata[0].payload.forkee.owner.avatar_url;
+                            break;
+
+                        case 'PushEvent':
+                            action = 'pushed to this repository';
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        case 'IssueCommentEvent':
+                            action = 'commented on an issue';
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        case 'IssuesEvent':
+                            action = evdata[0].payload.action + ' an issue';
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        case 'CreateEvent':
+                            //action = 'created a ' + evdata[0].payload.ref_type + ' - ' + evdata[0].payload.ref;
+                            action = 'created a ' + evdata[0].payload.ref_type;
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        case 'ReleaseEvent':
+                            //action = 'published a release' + evdata[0].payload.release.tag_name;
+                            action = 'published a release';
+                            actor.name = evdata[0].actor.login;
+                            actor.avat = evdata[0].actor.avatar_url;
+                            break;
+
+                        default:
+                            action = 'unknown type - ' + evdata[0].type;
+                            console.log(action);
+                            break;
+                    };
+
+                    if(action !== '') {
+                        action += ' ' + relative_time(evdata[0].created_at) + ' ago.';
+                        var out = '<img src="' + actor.avat + '"/> ';
+                        out += actor.name + ' has ' + action; // + ' this repository';
+                        $('#'+r[TARG]).html(out);
+                        $('#'+r[TARG]).css('display','block');
+                    }
+                } else {
+                    console.log('getRepoEvents() - no ev data ' + r[REPN]);
+                    $('#'+r[TARG]).html('<i>Github has no event data.</i>');
+                    $('#'+r[TARG]).css('display','block');
+                }
+            });
+        });
+    }
+};
 
 function relative_time(a) {
     if (!a) {
@@ -332,6 +469,9 @@ waitforit = true
                 c += '        <a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
                 c += '        <p>' + (b[i].description === null ? '<i>No Description Provided</i>' : b[i].description.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; ')) + '</p>';
                 c += '        <p class="date">' + relative_time(b[i].created_at) + ' ago - update ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '        <p id="repo_event-' +  b[i].name + '" class="repoevent"></p>';
+                // queue the repo event request
+                queueRepoEvReqs('repo_event-' +  b[i].name, b[i].name, b[i].events_url);
                 c += '    </div>';
                 c += '    <div class="contributor">';
 
@@ -349,8 +489,12 @@ waitforit = true
                 c += '</div>'
             });
             $(z + ':eq(' + x + ') .feed-repos').html(c)
-
+            // should work with filter nor not
+            $('.github-feed sup.repc').html(b.length);
             loadDone(_REPO, z, x);
+            // process queued repo event requests, just 
+            // wait a short time before getting them
+            setTimeout(getRepoEvents, 1000);
         });
     }
 
