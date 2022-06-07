@@ -302,6 +302,7 @@
     width: 1rem;
 }
 
+.github-feed .bod .result .gfpost .repoevent, 
 .github-feed .bod .result .gfpost .date {
     margin: 0;
     padding: 0;
