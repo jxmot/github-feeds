@@ -66,7 +66,7 @@ function getRepoEvents() {
                             } else {
                                 // not sure, is there a "watched"?
                                 action = 'unknown action - ' + evdata[0].payload.action;
-                                console.log(action);
+                                console.log('getRepoEvents() - ' + action);
                             }
                             actor.name = evdata[0].actor.login;
                             actor.avat = evdata[0].actor.avatar_url;
@@ -110,7 +110,7 @@ function getRepoEvents() {
 
                         default:
                             action = 'unknown type - ' + evdata[0].type;
-                            console.log(action);
+                            console.log('getRepoEvents() - ' + action);
                             break;
                     };
 
@@ -318,7 +318,7 @@ waitforit = true
         });
 // added all .fail() functions
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            console.log('profile() - Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
@@ -400,7 +400,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            console.log('repos() - Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
@@ -475,7 +475,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            console.log('events() - Request failed: ' + textStatus);
         });
         ajx.done(function(d) {
 // keep track of rate limit
@@ -704,7 +704,7 @@ waitforit = true
             cache: false
         });
         ajx.fail(function(jqXHR, textStatus) {
-            console.log('Request failed: ' + textStatus);
+            console.log('gists() - Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
 // keep track of rate limit
