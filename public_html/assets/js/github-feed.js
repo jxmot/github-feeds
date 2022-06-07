@@ -12,23 +12,6 @@
     Repository: https://github.com/jxmot/github-feeds
 */
 /*
-// global data, all of it...
-var ghdata = [
-    {empty:true},
-    {empty:true},
-    {empty:true},
-    {empty:true},
-    {empty:true}
-];
-// indices...
-// NOTE: _GHRFEVENTS is for a future implementation of "release events"
-const _GHFUSER = 0, _GHFREPOS = 1, _GHFGISTS = 2, _GHFEVENTS = 3, _GHRFEVENTS = 4;
-// save a distinct copy of the data, no references!
-function saveGHFData(ix, data) {
-    ghdata[ix] = JSON.parse(JSON.stringify(data));
-};
-*/
-/*
     Obtain the most recent event for all repositories 
     that have been rendered.
 */
@@ -61,7 +44,6 @@ function getRepoEvents() {
         repo = reporeqs.shift();
         var element = document.getElementById(repo[TARG]);
         respondToVisibility(element, repo, function(e, r) {
-            //console.log(`target = ${r[TARG]}\n`);
             var evurl = r[URL] + '?per_page=' + r[DPTH];
             var ajx = $.ajax({
                 url: evurl,
@@ -72,22 +54,7 @@ function getRepoEvents() {
                 console.log('getRepoEvents() - Request failed: ' + textStatus);
             });
             ajx.done(function(evdata) {
-                //var stats = {
-                //    limit: ajx.getResponseHeader('x-ratelimit-limit'),
-                //    remain: ajx.getResponseHeader('x-ratelimit-remaining'),
-                //    used: ajx.getResponseHeader('x-ratelimit-used'),
-                //    reset: [ 
-                //        ajx.getResponseHeader('x-ratelimit-reset'),
-                //        Date(ajx.getResponseHeader('x-ratelimit-reset')*1000).toLocaleString()
-                //    ]
-                //};
-                //s = 'Limit: ' + stats.limit + '   Remaining: ' + stats.remain + '   Reset: ' + stats.reset[1];
-                //console.log('#'+r[TARG] + '  ' + s);
-
                 if(evdata.length > 0) {
-                    //console.log('getRepoEvents() - for ' + r[TARG]);
-                    //console.log('getRepoEvents(A) - type  = ' + evdata[0].type);
-                    //console.log('getRepoEvents(A) - actor = ' + evdata[0].actor.login);
 
                     var action = '';
                     var actor  = {};
@@ -130,14 +97,12 @@ function getRepoEvents() {
                             break;
 
                         case 'CreateEvent':
-                            //action = 'created a ' + evdata[0].payload.ref_type + ' - ' + evdata[0].payload.ref;
                             action = 'created a ' + evdata[0].payload.ref_type;
                             actor.name = evdata[0].actor.login;
                             actor.avat = evdata[0].actor.avatar_url;
                             break;
 
                         case 'ReleaseEvent':
-                            //action = 'published a release' + evdata[0].payload.release.tag_name;
                             action = 'published a release';
                             actor.name = evdata[0].actor.login;
                             actor.avat = evdata[0].actor.avatar_url;
@@ -152,7 +117,7 @@ function getRepoEvents() {
                     if(action !== '') {
                         action += ' ' + relative_time(evdata[0].created_at) + ' ago.';
                         var out = '<img src="' + actor.avat + '"/> ';
-                        out += actor.name + ' has ' + action; // + ' this repository';
+                        out += actor.name + ' has ' + action;
                         $('#'+r[TARG]).html(out);
                         $('#'+r[TARG]).css('display','block');
                     }
@@ -356,9 +321,6 @@ waitforit = true
             consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
-            // make the data globally available for other uses
-            // saveGHFData(_GHFUSER, b);
-
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -419,7 +381,7 @@ waitforit = true
             $(this).addClass('aktip');
             $(z + ':eq(' + x + ') .' + 'feed-' + a).css('display', 'block');
             if(topontab === true) gfJumpToTop(d.toLowerCase(), true);
-            return false
+            return false;
         });
     };
 
@@ -441,8 +403,6 @@ waitforit = true
             consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
-            // make the data globally available for other uses
-            // saveGHFData(_GHFREPOS, b);
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -488,7 +448,7 @@ waitforit = true
                     c += '        <img class="" src="https://img.shields.io/github/forks/'+ d + '/' + b[i].name + '">';
                 } else {
 // NOTE: It would be nice to have the "subscribers_count" 
-// field. BUT it's not here, you will only see if getting 
+// field. BUT it's not here, you will only see it if getting 
 // a specific repo.
                     c += '        <a title="Open in new tab" href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
                     c += '        <a title="Open in new tab" href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
@@ -518,9 +478,6 @@ waitforit = true
             consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(d) {
-            // make the data globally available for other uses
-            // saveGHFData(_GHFEVENTS, d);
-
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
@@ -730,9 +687,6 @@ waitforit = true
             consolelog('Request failed: ' + textStatus);
         });
         ajx.done(function(b) {
-            // make the data globally available for other uses
-            // saveGHFData(_GHFGISTS, b);
-
 // keep track of rate limit
 // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
             var stats = {
