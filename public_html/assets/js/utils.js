@@ -27,20 +27,20 @@ function isEven(num) {
 };
 
 // render markdown flavored text as HTML
-function renderMD(input) {
-    if(input === null) return '';
-    var step = 0;
-    var loc = 0;
-    var output = input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\r/g, '').replace(/\n/g, '<br>').replace(/ & /g, ' &amp; ');
-    while((loc = output.lastIndexOf('`')) !== -1) {
-        output = replaceAt(output, loc, '<');
-        if(isEven(step)) {
-            output = insertAt(output, loc+1, '/code>');
-        } else {
-            output = insertAt(output, loc+1, 'code>');
-        }
-        step++;
+function renderMD(input, opt = {simpleLineBreaks: true}, dbg = false) {
+
+    if(dbg === true) {
+        // set breakpoint here
+        dbg = !dbg;
     }
+
+    if(input === null) return '';
+
+    // set up the converter...
+    var converter = new showdown.Converter(opt);
+    converter.setFlavor('github');
+
+    var output = converter.makeHtml(input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; '));
     return output;
 };
 
