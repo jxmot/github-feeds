@@ -30,7 +30,7 @@
 
 /* header */
 .github-feed .head {
-    font-size: 1em;
+    font-size: 1rem;
     width: 100%;
     padding: 10px;
     background: var(--feed-head-bgcolor);
@@ -52,7 +52,7 @@
     margin: 0;
     padding: 0;
     margin-bottom: 7px;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     font-weight: normal;
     overflow: hidden;
     white-space: nowrap;
@@ -134,7 +134,7 @@
 }
 
 .github-feed .gftabs .gftab {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     background: var(--feed-tabs-bgcolor);
     color: var(--feed-tabs-color);
     display: inline-block;
@@ -152,7 +152,7 @@
 
 .github-feed .gftabs .gftab sup {
     padding: 2px 5px;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     font-weight: 600;
     line-height: 1;
     color: var(--feed-tabs-count-color);
@@ -171,7 +171,7 @@
 
 /* body */
 .github-feed .bod {
-    font-size: 1em;
+    font-size: 1rem;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -234,7 +234,7 @@
 
     margin-left: 10px;
     width: 50px;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     text-align: right;
 }
 
@@ -256,7 +256,7 @@
 .github-feed .bod .result .gfpost p {
     margin: 0;
     padding: 0;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: var(--feed-color);
     clear: both;
 }
@@ -293,7 +293,7 @@
 .github-feed .bod .result .gfpost .date {
     margin: 0;
     padding: 0;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: var(--feed-body-result-post-date-color);
 }
 
@@ -302,7 +302,7 @@
     background: var(--feed-foot-bgcolor);
     width: 100%;
     border-top: 1px solid var(--feed-foot-border-color);
-    font-size: 0.8em;
+    font-size: 0.8rem;
 
     height: 2rem;
     position: relative;
