@@ -253,7 +253,17 @@
     color: var(--feed-body-result-link-span-color);
 }
 
-.github-feed .bod .result .gfpost ul,
+.github-feed .bod .result .gfpost ul ul {
+    margin-left: 1rem;
+}
+
+.github-feed .bod .result .gfpost ul {
+    /* padding: 0; */
+    font-size: 0.8rem;
+    color: var(--feed-color);
+    /* clear: both; */
+}
+
 .github-feed .bod .result .gfpost p {
     margin: 0;
     padding: 0;
