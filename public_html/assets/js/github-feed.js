@@ -614,11 +614,12 @@ waitforit = true
                         e += '        <span class="octicon octicon-git-branch"></span>';
                         e += '    </div>';
                         e += '    <div class="gfpost event-post">';
+                        e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created branch ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/' + d[i].payload.ref + '" target="_blank">' + d[i].payload.ref + '</a> at ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+//                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
                         e += '    </div>';
                         e += '</div>'
                     } else if (d[i].payload.ref_type == "repository") {
@@ -627,10 +628,11 @@ waitforit = true
                         e += '        <span class="octicon octicon-plus"></span>';
                         e += '    </div>';
                         e += '    <div class="gfpost event-post">';
+                        e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created repository ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+//                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
                         e += '    </div>';
                         e += '</div>'
                     } else if (d[i].payload.ref_type == "tag") {
@@ -639,11 +641,12 @@ waitforit = true
                         e += '        <span class="octicon octicon-tag"></span>';
                         e += '    </div>';
                         e += '    <div class="gfpost event-post">';
+                        e += '        <p class="date">' + relative_time(d[i].created_at) + ' ago</p>';
                         e += '        <a href="https://github.com/' + d[i].actor.login + '" target="_blank">' + d[i].actor.login + '</a> ';
                         e += '        created tag ';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '/tree/'+d[i].payload.ref+'" target="_blank">' + d[i].payload.ref + '</a> at';
                         e += '        <a href="https://github.com/' + d[i].repo.name + '" target="_blank">' + d[i].repo.name + '</a>';
-                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
+//                        e += '        <span class="date">' + relative_time(d[i].created_at) + ' ago</span>';
                         e += '    </div>';
                         e += '</div>'
                     }
