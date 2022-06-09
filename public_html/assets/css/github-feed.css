@@ -291,6 +291,10 @@
     border-radius: 6px;
 }
 
+.github-feed .bod .result .gfpost .shalink {
+    font-family: monospace, monospace;
+}
+
 .github-feed .bod .result .gfpost p a {
     font-weight: normal;
 }

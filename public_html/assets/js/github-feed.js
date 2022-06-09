@@ -595,15 +595,15 @@ waitforit = true
                     var c = d[i].payload.commits.length;
 
                     if (c === 2) {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a class="shalink" href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a class="shalink" href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">View comparison for these 2 commits &raquo;</a></p>'
                     } else if (c > 2) {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a class="shalink" href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a class="shalink" href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[1].sha + '" target="_blank">' + d[i].payload.commits[1].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[1].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                         e += '    <br><p><a href="https://github.com/' + d[i].repo.name + '/compare/' + d[i].payload.before + '...' + d[i].payload.head + '" target="_blank">' + (c - 2) + ' more commit &raquo;</a></p>'
                     } else {
-                        e += '    <p><a href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
+                        e += '    <p><a class="shalink" href="https://github.com/' + d[i].repo.name + '/commit/' + d[i].payload.commits[0].sha + '" target="_blank">' + d[i].payload.commits[0].sha.substr(0, 6) + '</a> - ' + renderMD(d[i].payload.commits[0].message, {simpleLineBreaks: true, _noPwrap: true}) + '</p>';
                     }
                     e += '    </div>';
                     e += '</div>'
