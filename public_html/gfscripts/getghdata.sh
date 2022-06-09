@@ -20,7 +20,7 @@ curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$
 echo $owner"repos.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
 echo $owner"events.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events" > "./"$owner"events.json" 2>/dev/null
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events?per_page=50" > "./"$owner"events.json" 2>/dev/null
 # GIST: The use of this file is optional, uncomment 
 # the next 2 lines if you've enabled Gists in 
 # github-feed.js

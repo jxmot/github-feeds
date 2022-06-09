@@ -12,12 +12,12 @@ owner="jxmot"
 # Edit as needed.
 docroot="$HOME/public_html"
 # Edit as needed.
-gfdata="$docroot/ghfeeds/gfdata"
+gfdata="$docroot/gfdata"
 # Get the GitHub data and save it to 
 # JSON files.
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner" > $gfdata/$owner"user.json" 2>/dev/null
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?type=sources&sort=updated&per_page=100" > $gfdata/$owner"repos.json" 2>/dev/null
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events" > $gfdata/$owner"events.json" 2>/dev/null
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events?per_page=50" > $gfdata/$owner"events.json" 2>/dev/null
 # GIST: The use of this file is optional, uncomment 
 # the next line if you've enabled Gists in 
 # github-feed.js
