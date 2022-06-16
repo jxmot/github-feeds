@@ -63,7 +63,13 @@ if(!defined('_DEBUG') || _DEBUG === false) {
             $fileid = fopen($datafile,'r');
 
             if(strpos($datafile, 'repos') === false) {
-                $result = fread($fileid,filesize($datafile));
+                if(strpos($datafile, 'events') === false) {
+                    $result = fread($fileid,filesize($datafile));
+                } else {
+                    // NOTE: this is optional, if the filter.json file does 
+                    // not exist then raw data is returned.
+                    $result = filterEvents(fread($fileid,filesize($datafile)));
+                }
             } else {
                 // NOTE: this is optional, if the filter.json file does 
                 // not exist then raw data is returned.

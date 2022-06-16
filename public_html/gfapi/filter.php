@@ -30,4 +30,31 @@ function filterRepos($raw, $filtfile = './filter.json') {
     }
     return $result;
 }
+
+function filterEvents($raw, $filtfile = './filter.json') {
+    if(file_exists($filtfile)) {
+        $data   = json_decode($raw);
+        $filter = json_decode(file_get_contents($filtfile), true);
+        $result = '[';
+        $keep   = 0;
+
+        for($ix = 0; $ix < count($data); $ix++) {
+// NOTE: the next two lines are the only difference 
+// from filterRepos(). 
+// TODO: refactor and reduce lines of code here and in filterRepos()
+            $name = strtolower($data[$ix]->repo->name);
+            $name = substr($name, strrpos($name, '/')+1);
+           if(@$filter["{$name}"]) {
+                if(@$filter["{$name}"]["render"]) {
+                    $result .= ($keep > 0 ? ',' : '') . (json_encode($data[$ix]));
+                    $keep += 1;
+                }
+            } 
+        }
+        $result .= ']';
+    } else {
+        $result = $raw;
+    }
+    return $result;
+}
 ?>
