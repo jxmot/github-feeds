@@ -576,7 +576,7 @@ waitforit = true
                     }
                     e += '    </div>';
                     e += '</div>'
-                } else if (d[i].type == "PushEvent") {
+                } else if((d[i].type == "PushEvent") && (d[i].payload.commits.length > 0)) {
                     if (d[i].payload.ref.substring(0, 11) === 'refs/heads/') {
                         rep = d[i].payload.ref.substring(11);
                     } else {
