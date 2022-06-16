@@ -34,7 +34,7 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Can render *markdown* nearly as well as GitHub. This can be seen in issue comments that have had text bounded by back-ticks (`).
   * Improved content, added optional content to the activities entries. Added activity events.
   * Added GitHub "PullRequestEvent" data to the "Activities" tab.
-  * Added an optional repository filter. This filter will limit the repositories seen by matching them to repository names in a filter JSON file.
+  * Added an optional repository filter. This filter will limit the repositories and events seen by matching them to repository names in a filter JSON file.
   * Repository events, the original seemed incomplete to me. The repositories tab would show *updated* repositories but no other information was provided. I have changed this by using the GitHub API *directly* to obtain **repository events** from GitHub for *each repository that is rendered*.
   * Correctly interprets Markdown, anywhere GitHub allows Markdown will now be rendered correctly. I'm using  a *slightly* modified version of [ShowdownJS](<https://github.com/showdownjs/showdown>).
 
@@ -179,13 +179,13 @@ githubuser/gists
 
 Where "githubuser" is the GitHub user, as in `https://github.com/`**`githubuser`**. See `public_html/gfapi/index.php` for more details about parsing the queries.
 
-### Optional Repository Filter
+### Optional Repository and Event Filter
 
 In some situations there can be large number of public repositories for the specified GitHub user. The maximum number is 100 since the current version of "GitHub Feeds" does not do any pagination when retrieving the repository data. 
 
-And it may be possible that not all of them are desired in the rendered repository list.
+And it may be possible that not all of them are desired in the rendered repository or events list.
 
-Before the requested repository data is returned to the client it will be passed through `gfapi/filter.php:filterRepos()`. That function will look for a file named `gfapi/filter.json`, if it is found it contents will be used to determine which repositories are desired.
+Before the requested repository or event data is returned to the client it will be passed through `gfapi/filter.php:filterRepos()` or `gfapi/filter.php:filterEvents()`. Either function will look for a file named `gfapi/filter.json`, if it is found it contents will be used to determine which repositories and events are desired.
 
 `gfapi/example_filter.json`:
 
@@ -208,7 +208,7 @@ Here is how filtering works:
 <!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
         <img src="./mdimg/filter.png" style="width:35%;border: 2px solid black;margin-left: 1rem;"; alt="Repository Filtering Flow Chart" title="Repository Filtering Flow Chart"/>
         <br>
-        <figcaption><strong>Repository Filtering</strong></figcaption>
+        <figcaption><strong>Repository or Event Filtering</strong></figcaption>
     </figure>
 </div>
 <br>
