@@ -29,12 +29,15 @@ if(!defined('_DEBUG') || _DEBUG === false) {
         /*
             Possible incoming query strings could be:
 
+                ghfver
                 githubuser
                 githubuser/repos?type=sources&sort=updated&per_page=100
                 githubuser/events
                 githubuser/gists
 
-            Where "githubuser" is the GitHub user, as in //github.com/githubuser
+            Where:
+              * "ghfver" is a request for the current version number
+              * "githubuser" is the GitHub user, as in //github.com/githubuser
 
             NOTE: When the client is jQuery ajax AND "cache: false" it 
             will cause "&_=[timestamp]" to be appended to the URL. This 
@@ -49,37 +52,42 @@ if(!defined('_DEBUG') || _DEBUG === false) {
             $qstr = $qstr . 'user';
         }
         parse_str($qstr, $queries);
-
-        $datafile = $datapath . current(array_keys($queries)) . '.json';
         clearstatcache();
-        if(file_exists($datafile)) {
-            // if the file is being updated its length
-            // will be 0. What until the update is done.
-            while(filesize($datafile) === 0) {
-                sleep(3);
-                clearstatcache();
-                error_log('github-feeds: waiting for non-zero :'.$datafile,0);
-            }
-            $fileid = fopen($datafile,'r');
 
-            if(strpos($datafile, 'repos') === false) {
-                if(strpos($datafile, 'events') === false) {
-                    $result = fread($fileid,filesize($datafile));
+        if(strpos($qstr, 'ghfver') !== false) {
+            if(file_exists('ver.json'))
+                $result = file_get_contents('ver.json');
+            else $result = '{"ver":"file.not.found"}';
+        } else {
+            $datafile = $datapath . current(array_keys($queries)) . '.json';
+            if(file_exists($datafile)) {
+                // if the file is being updated its length
+                // will be 0. What until the update is done.
+                while(filesize($datafile) === 0) {
+                    sleep(3);
+                    clearstatcache();
+                    error_log('github-feeds: waiting for non-zero :'.$datafile,0);
+                }
+                $fileid = fopen($datafile,'r');
+                if(strpos($datafile, 'repos') === false) {
+                    if(strpos($datafile, 'events') === false) {
+                        $result = fread($fileid,filesize($datafile));
+                    } else {
+                        // NOTE: this is optional, if the filter.json file does 
+                        // not exist then raw data is returned.
+                        $result = filterEvents(fread($fileid,filesize($datafile)));
+                    }
                 } else {
                     // NOTE: this is optional, if the filter.json file does 
                     // not exist then raw data is returned.
-                    $result = filterEvents(fread($fileid,filesize($datafile)));
+                    $result = filterRepos(fread($fileid,filesize($datafile)));
                 }
+                fclose($fileid);
             } else {
-                // NOTE: this is optional, if the filter.json file does 
-                // not exist then raw data is returned.
-                $result = filterRepos(fread($fileid,filesize($datafile)));
+                $result = '{"error":"Data file was not found - '. $datafile .'","qry":"'.QRYSTR.'"}';
+                error_log('github-feeds: Data file was not found :'.$datafile.'  query:'.QRYSTR,0);
             }
-            fclose($fileid);
-        } else {
-            $result = '{"error":"Data file was not found - '. $datafile .'","qry":"'.QRYSTR.'"}';
-            error_log('github-feeds: Data file was not found :'.$datafile.'  query:'.QRYSTR,0);
-        }
+        } // if(strpos($qstr, 'ghfver') !== false)
     }
 } else {
     // for testing the query string while _DEBUG is true
