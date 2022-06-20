@@ -437,7 +437,7 @@ waitforit = true
                 c += '    <div class="gfpost">';
                 c += '        <a href="' + b[i].html_url + '" target="_blank">' + b[i].name + '</a>';
                 c += '        <p>' + (b[i].description === null ? '<i>No Description Provided</i>' : b[i].description.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; ')) + '</p>';
-                c += '        <p class="date">created ' + relative_time(b[i].created_at) + ' ago - updated ' + relative_time(b[i].updated_at) + ' ago</p>';
+                c += '        <p class="date">created ' + relative_time(b[i].created_at) + ' ago</p>';
                 c += '        <p id="repo_event-' +  b[i].name + '" class="repoevent"></p>';
                 // queue the repo event request
                 queueRepoEvReqs('repo_event-' +  b[i].name, b[i].name, b[i].events_url);
