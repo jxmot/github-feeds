@@ -452,7 +452,8 @@ waitforit = true
                 } else {
 // NOTE: It would be nice to have the "subscribers_count" 
 // field. BUT it's not here, you will only see it if getting 
-// a specific repo.
+// a specific repo. Another alternative is to use the V4 
+// API (graphql). But that is a major rewrite.
                     c += '        <a title="Open in new tab" href="' + b[i].html_url + '/stargazers" target="_blank"><span>' + addCommas(b[i].stargazers_count) + '</span> <i class="octicon octicon-star"></i></a><br>';
                     c += '        <a title="Open in new tab" href="' + b[i].html_url + '/network/members" target="_blank"><span>' + addCommas(b[i].forks_count) + '</span> <i class="octicon octicon-repo-forked"></i></a><br>';
                     c += '        <a title="Open in new tab" href="' + b[i].html_url + '/issues" target="_blank"><span>' + addCommas(b[i].open_issues) + '</span> <i class="octicon octicon-issue-opened"></i></a>';
