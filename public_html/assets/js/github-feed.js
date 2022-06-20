@@ -131,9 +131,9 @@ function getRepoEvents() {
     }
 };
 
-function relative_time(a) {
+function getEpochValue(a) {
     if (!a) {
-        return
+        return -1;
     }
     a = $.trim(a);
     a = a.replace(/\.\d\d\d+/, "");
@@ -141,8 +141,15 @@ function relative_time(a) {
     a = a.replace(/T/, " ").replace(/Z/, " UTC");
     a = a.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2");
     var b = new Date(a);
-    var c = (arguments.length > 1) ? arguments[1] : new Date();
-    var d = parseInt((c.getTime() - b) / 1000);
+    return b.getTime();
+};
+
+function relative_time(a) {
+    if (!a) {
+        return
+    }
+    var c = new Date();
+    var d = parseInt((c.getTime() - getEpochValue(a)) / 1000);
     d = (d < 2) ? 2 : d;
     var r = '';
     if (d < 60) {
