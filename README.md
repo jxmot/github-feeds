@@ -34,7 +34,7 @@ Here is an overview of the modifications I made to [jQuery-Github-Feed](<https:/
   * Can render *markdown* nearly as well as GitHub. This can be seen in issue comments that have had text bounded by back-ticks (`).
   * Improved content, added optional content to the activities entries. Added activity events.
   * Added GitHub "PullRequestEvent" data to the "Activities" tab.
-  * Added an optional repository filter. This filter will limit the repositories and events seen by matching them to repository names in a filter JSON file.
+  * Added an optional repository filter. This filter will limit the repositories and user events seen by matching them to repository names in a filter JSON file.
   * Repository events, the original seemed incomplete to me. The repositories tab would show *updated* repositories but no other information was provided. I have changed this by using the GitHub API *directly* to obtain **repository events** from GitHub for *each repository that is rendered*.
   * Correctly interprets Markdown, anywhere GitHub allows Markdown will now be rendered correctly. I'm using  a *slightly* modified version of [ShowdownJS](<https://github.com/showdownjs/showdown>).
 
