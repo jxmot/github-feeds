@@ -55,9 +55,10 @@ if(!defined('_DEBUG') || _DEBUG === false) {
         clearstatcache();
 
         if(strpos($qstr, 'ghfver') !== false) {
-            if(file_exists('ver.json'))
-                $result = file_get_contents('ver.json');
-            else $result = '{"ver":"file.not.found"}';
+            $f = 'ghfver.json';
+            if(file_exists($f))
+                $result = file_get_contents($f);
+            else $result = '{"ver":"file.not.found","name":"'.$f.'"}';
         } else {
             $datafile = $datapath . current(array_keys($queries)) . '.json';
             if(file_exists($datafile)) {
