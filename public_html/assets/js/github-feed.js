@@ -191,7 +191,10 @@ $.fn.githubfeed = function({
 // default "base" address of the API we will use. 
 api = 'https://api.github.com/users/', 
 // sort repositories by...
-sort = 'updated', 
+// IMPORTANT NOTE: This arg has no effect when using the gfapi 
+// endpoint. It's because the data is gathered with a script 
+// and that has the sorting in it.
+sort = 'created', 
 // width of widget within the .ghfeed container
 width = '100%', 
 // height of the content space
