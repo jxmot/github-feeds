@@ -13,12 +13,21 @@ if [ -z "$1" ];then
 fi
 # GitHub repository owner
 owner=$1
+# optional sorting choice for repos
+# Can be one of: created, updated, pushed, full_name
+sortby=""
+if [ -z "$2" ];then
+    sortby="created"
+else
+    sortby=$2
+fi
+# 
 # Get the GitHub data and save it to 
 # JSON files.
 echo $owner"user.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner" > "./"$owner"user.json" 2>/dev/null
-echo $owner"repos.json"
-curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?type=sources&sort=updated&per_page=100" > "./"$owner"repos.json" 2>/dev/null
+echo $owner"repos.json - sort by "$sortby
+curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/repos?sort="$sortby"&per_page=100" > "./"$owner"repos.json" 2>/dev/null
 echo $owner"events.json"
 curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/$owner/events?per_page=50" > "./"$owner"events.json" 2>/dev/null
 # GIST: The use of this file is optional, uncomment 
