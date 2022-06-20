@@ -123,7 +123,7 @@ function getRepoEvents() {
                     }
                 } else {
                     console.log('getRepoEvents() - no ev data ' + r[REPN]);
-                    $('#'+r[TARG]).html('<i>Github has no event data.</i>');
+                    $('#'+r[TARG]).html('<i>Github has no event data for this repository.</i>');
                     $('#'+r[TARG]).css('display','block');
                 }
             });
