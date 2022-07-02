@@ -40,7 +40,8 @@ function renderMD(input, opt = {simpleLineBreaks: true}, dbg = false) {
     var converter = new showdown.Converter(opt);
     converter.setFlavor('github');
 
-    var output = converter.makeHtml(input.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/ & /g, ' &amp; '));
+    var output = converter.makeHtml(input.replace(/ & /g, ' &amp; ').replace('(<', '(').replace('>)', ')'));
+    output = output.replace('<a ', '<a target="_blank" title="Open in new tab" ');
     return output;
 };
 
