@@ -1,4 +1,9 @@
 <?php
+// NOT FOR GITHUB
+// This MUST be the first thing executed, you cannot set this
+// later when the reposonse header is being created.
+header('Access-Control-Allow-Origin: *');
+// ^NOT FOR GITHUB
 /*
     GitHub Feeds - a mock API endpoint that emulates what 
     GitHub would return.
@@ -64,10 +69,18 @@ if(!defined('_DEBUG') || _DEBUG === false) {
             if(file_exists($datafile)) {
                 // if the file is being updated its length
                 // will be 0. What until the update is done.
+                $waitlimit = 10;
                 while(filesize($datafile) === 0) {
                     sleep(3);
                     clearstatcache();
-                    error_log('github-feeds: waiting for non-zero :'.$datafile,0);
+                    $waitlimit = $waitlimit - 1;
+                    error_log('github-feeds('.$waitlimit.'): waiting for non-zero :'.$datafile,0);
+                    if($waitlimit <== 0) {
+                        error_log('github-feeds(): exceeded limit while waiting for non-zero :'.$datafile,0);
+                        header('HTTP/1.0 500 Internal Server Error');
+                        header('github-feeds-error-information: Exceeded wait limit for file:'.$datafile);
+                        exit;
+                    }
                 }
                 $fileid = fopen($datafile,'r');
                 if(strpos($datafile, 'repos') === false) {
