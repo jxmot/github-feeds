@@ -75,7 +75,7 @@ if(!defined('_DEBUG') || _DEBUG === false) {
                     clearstatcache();
                     $waitlimit = $waitlimit - 1;
                     error_log('github-feeds('.$waitlimit.'): waiting for non-zero :'.$datafile,0);
-                    if($waitlimit <== 0) {
+                    if($waitlimit <= 0) {
                         error_log('github-feeds(): exceeded limit while waiting for non-zero :'.$datafile,0);
                         header('HTTP/1.0 500 Internal Server Error');
                         header('github-feeds-error-information: Exceeded wait limit for file:'.$datafile);
