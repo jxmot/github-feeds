@@ -65,7 +65,7 @@ The rate limiting may not be an issue for you if the page containing the feeds d
 
 The solution is simple... get the data *in the background* and limit the number of API hits. The data is saved and when a visitor arrives to view it the saved data is used and *not* the API.
 
-To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 6 to 30 minutes*) and execute the script `gfscripts/getghdata-cron.sh`
+To achieve this CRON and a *shell script* are used. I set up CRON to run periodically (*every 5 to 30 minutes*) and execute the script `gfscripts/getghdata-cron.sh`
 
 **NOTE:** You may need to modify the script file to work in your environment. Before you run it double-check the paths in variables `ghfeeds` and `gfdata`.
 
@@ -78,10 +78,10 @@ The following will guide you through getting the files ready and setting up the 
 ## Set Up
 
 **You will need:**
-* A web server with PHP >5.6, Apache >2.x is recommended
+* A web server with PHP >=5.6, Apache >=2.4 is recommended
 * An understanding of CRON
 * A means to copy files to your server, and command-line access
-* Knowledge of where your *document root* is located
+* Knowledge of where your *document root* is located on the server
 
 ### For Experts Only
 
@@ -128,7 +128,7 @@ Before running the demo you will need some JSON data files. These files will con
 1) Change the current folder to the `gfscripts` folder. 
 2) Run this command to make the scripts *executable* - `chmod +x *.sh`
 3) Change the current folder to the **`gfdata`** folder.
-4) Run this command to get the GitHub data - `../gfscripts/getghdata.sh [USER]`, where **`[USER]`** is the GitHub user who you want the data from.
+4) Run this command to get the GitHub data - `../gfscripts/getghdata.sh [USER]`, where **`[USER]`** is the GitHub user who you want the data for.
 
 You should now have three(*four, depending if Gists are enabled*) JSON files(*using the scripts as found*):
 
@@ -141,7 +141,7 @@ The last file is `x-ratelimit.log`, it is a capture of HTTP headers that GitHub 
 
 ### Set Up CRON
 
-This depends on your server. Some that have cPanel have a nice interface for managing CRON jobs. And with others you may only have a command line to use for creating CRON jobs.
+This depends on your server. Some servers that have cPanel have a nice interface for managing CRON jobs. And with others you may only have a command line to use for creating CRON jobs.
 
 Basically, you want the `gfscripts/getghdata-cron.sh` file to run every 5 minutes. Don't use less time because you will overrun the GitHub rate limitation and the script will fail.
 
@@ -151,6 +151,10 @@ A sample CRON job:
 ```
 
 It would be a good idea to keep an eye on the `gfdata` folder and look for *new* files to appear there, and then wait a while and see that they get updated.
+
+#### Shared Server Notes
+
+When installing on a *shared server* do **not** install the `gfapi` and `gfdata` folders on to more than one domain. Because the domains share an IP address the GitHub API will only see *one* client. And the rate limits will likely be exceeded. To get around this only install those folders under one domain and access it from clients hosted elsewhere.
 
 ## Run 
 
@@ -178,6 +182,19 @@ githubuser/gists
 ```
 
 Where "githubuser" is the GitHub user, as in `https://github.com/`**`githubuser`**. See `public_html/gfapi/index.php` for more details about parsing the queries.
+
+### Error Notifications
+
+Occasionally the GitHub API might be down or unresponsive. From the client side these errors can manifest as 0-length JSON data files. But this can also occur during normal operations while the data is being retrieved from the API. The scripts executed by CRON will overwrite the JSON files and initially their length will be 0. 
+
+The code in `public_html/gfapi/index.php` will check for the 0-length condition and if found then it will retry for a fixed number of attempts. Currently there are 10 attempts with a 3 second delay between each attempt. Each attempt is logged in your servers PHP error log.
+
+When the attempts are exhausted the client will received a `500 Internal Server Error` response and an entry will be written to your server's PHP error log. The response header contents will be:
+
+```
+HTTP/1.0 500 Internal Server Error
+github-feeds-error-information: Exceeded wait limit for file: [USER][user|repos|events|gists].json
+```
 
 ### Optional Repository and Event Filter
 
@@ -309,6 +326,7 @@ The GitHub API is not perfect, it has bugs and some confusing documentation. I w
 
 * Repository `"WatchEvent"` - This was an odd one. I found out that a "star" event type is not what you would expect. Such as "starred". Instead the data contains "started". GitHub support told me - "*Having the action as "started" is intentional. This is also referenced in our documentation:*". There's only a brief mention with no explanation as to "why", it can be found [here](<https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types#watchevent>).
 * Where oh where is the watchers count? This is another confusing GitHub API anomaly. You may have noticed that the repository list shown in the plug-on has star counts, fork counts, and issue counts. But no watcher counts. Even though the API documentation seems to indicate it should be available in the field `"subscribers_count"`. What is **not made clear** is that `"subscribers_count"` will only be available when retrieving data for a specific repository. That means that none of the “search” endpoints will return that field, period.
+* GitHub API Failures - It can, and has happened. See [Error Notifications](#error_notifications) for details regarding how this is handled.
 
 ---
 <img src="http://webexperiment.info/extcounter/mdcount.php?id=github-feeds">
