@@ -320,6 +320,16 @@ This particular implementation of a "to top" scroll button can be applied to an 
 * `public_html/assets/css/totop.css` - button styling and relative location
 * `public_html/assets/js/github-feed.js` - contains `gfJumpToTop()`, a local function called when the button is clicked
 
+## Trouble Shooting
+
+### Missing Event Data
+
+When using the filter it is possible that you may not see any repository event data. This can occur when - 
+* When there as been a lot of activity in a repository
+* AND that repository is not in the filter list. Or is not set to "render".
+
+**RECOMMENDED**: If you've only got a few repositories then you won't likely need to filter them. Then make sure the `filter.json` file doesn't exist and nothing will be filtered.
+
 # Known GitHub API Issues
 
 The GitHub API is not perfect, it has bugs and some confusing documentation. I will try to clear up a few things here:
