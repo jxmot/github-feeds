@@ -5,6 +5,15 @@
     will open a "filter" JSON file and use its contents to 
     allow, or remove specific repos from the data before 
     returning it to the requestor.
+
+    NOTE: When using his filter it is possible that you may 
+    not see any repo event data. This can occur when - 
+        * When there as been a lot of activity in a repo
+        * AND that repo is not in the filter list.
+
+    RECOMMENDED: If you've only got a few repos then you won't 
+    likely need to filter the repos. Then make sure the filter.json 
+    file doesn't exist and nothiing will be filtered.
 */
 // simply remove or rename the filter.json file and this 
 // function will return raw data
